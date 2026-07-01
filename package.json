@@ -1,0 +1,10 @@
+{
+  "name": "aga-clean-services-app",
+  "version": "1.0.0",
+  "private": true,
+  "description": "AGA Clean Services full-stack frontend and backend",
+  "scripts": {
+    "dev": "node backend/server.js",
+    "start": "node backend/server.js"
+  }
+}

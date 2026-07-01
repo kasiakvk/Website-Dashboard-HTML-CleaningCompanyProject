@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AGA Clean Services | Frontend Dashboard</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Fraunces:wght@500;600;700&display=swap"
+    rel="stylesheet"
+  />
+  <link rel="stylesheet" href="/frontend/styles.css" />
+</head>
+<body>
+  <header class="site-header">
+    <div class="container nav-shell">
+      <a class="brand" href="/" aria-label="AGA Clean Services frontend home">
+        <img src="/aga_clean_services_logo.svg" alt="AGA Clean Services logo" class="brand-logo" />
+      </a>
+      <nav class="main-nav" aria-label="Frontend navigation">
+        <a href="#overview">Overview</a>
+        <a href="#services">Services</a>
+        <a href="#pricing">Pricing</a>
+        <a href="#launch">Launch</a>
+        <a href="#contact">Contact</a>
+      </nav>
+      <a class="nav-cta" href="/Aga_Clean_Services.html">Main Site</a>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div class="container hero-grid">
+        <div>
+          <p class="eyebrow">Frontend + Backend App</p>
+          <h1 id="brand-tagline">Loading content...</h1>
+          <p class="lead" id="brand-areas">Loading service area...</p>
+          <div class="hero-actions">
+            <a class="button button-primary" href="/multipage/index.html">Open Multipage Site</a>
+            <a class="button button-secondary" href="/Aga_Clean_Services_v1.1.html">Warm Variant</a>
+          </div>
+        </div>
+        <aside class="hero-panel">
+          <img
+            src="/Modern cleaning service logo design.png"
+            alt="AGA Clean Services brand artwork"
+            class="hero-art"
+          />
+        </aside>
+      </div>
+    </section>
+
+    <section id="overview" class="section">
+      <div class="container">
+        <div class="section-heading">
+          <p class="section-kicker">System</p>
+          <h2>Frontend dashboard backed by a local Node API.</h2>
+          <p>
+            This app reads the same business information used in the main HTML project and exposes
+            it through backend endpoints for reuse across future pages and integrations.
+          </p>
+        </div>
+        <div class="cards" id="links-grid"></div>
+      </div>
+    </section>
+
+    <section id="services" class="section alt">
+      <div class="container">
+        <div class="section-heading">
+          <p class="section-kicker">Services</p>
+          <h2>Connected service data from the backend.</h2>
+        </div>
+        <div class="cards" id="services-grid"></div>
+      </div>
+    </section>
+
+    <section id="pricing" class="section">
+      <div class="container">
+        <div class="section-heading">
+          <p class="section-kicker">Pricing</p>
+          <h2>Core rate card.</h2>
+        </div>
+        <div class="pricing-table" id="pricing-table"></div>
+      </div>
+    </section>
+
+    <section id="launch" class="section alt">
+      <div class="container">
+        <div class="section-heading">
+          <p class="section-kicker">Launch Plan</p>
+          <h2>Acquisition channels mapped into the app.</h2>
+        </div>
+        <div class="cards" id="launch-grid"></div>
+      </div>
+    </section>
+
+    <section id="contact" class="section">
+      <div class="container contact-grid">
+        <div>
+          <p class="section-kicker">Contact API</p>
+          <h2>Save enquiries into the backend.</h2>
+          <p class="lead small">
+            This demo frontend posts contact requests to `/api/contact` and stores them in
+            `backend/data/enquiries.ndjson`.
+          </p>
+        </div>
+        <form class="contact-form" id="contact-form">
+          <label>
+            Name
+            <input type="text" name="name" placeholder="Your name" required />
+          </label>
+          <label>
+            Phone
+            <input type="tel" name="phone" placeholder="07xxxxx" required />
+          </label>
+          <label>
+            Message
+            <textarea name="message" rows="5" placeholder="Tell us what you need" required></textarea>
+          </label>
+          <button type="submit" class="button button-primary">Save enquiry</button>
+          <p class="form-status" id="form-status"></p>
+        </form>
+      </div>
+    </section>
+  </main>
+
+  <script src="/frontend/app.js"></script>
+</body>
+</html>

@@ -6,6 +6,9 @@ This workspace now connects the core brand assets, the landing page, and the ope
 
 - `Aga_Clean_Services.html`: landing page with service list, pricing, launch channels, and contact stack.
 - `Aga_Clean_Services_v1.1.html`: alternate warm-template landing page with the same content and language support.
+- `frontend/index.html`: frontend dashboard powered by the local backend API.
+- `backend/server.js`: Node backend serving API routes and static project files.
+- `backend/content.json`: shared business content for the frontend dashboard API.
 - `styles.css`: shared visual system for the website.
 - `styles-v1.1.css`: alternate warm template stylesheet for `Aga_Clean_Services_v1.1.html`.
 - `site.js`: small client-side behavior for footer year and demo enquiry handling.
@@ -39,3 +42,20 @@ Use the converter in the project root:
 .\extract_docx_text.ps1 -InputDocx ".\BRAND STRUCTURE ⭐ AGA Clean Services.docx"
 .\extract_docx_text.ps1 -InputDocx ".\BRAND STRUCTURE ⭐ AGA Clean Services.docx" -OutputMd ".\brand-output.md"
 ```
+
+## Frontend and backend
+
+Run the local app:
+
+```powershell
+npm run dev
+```
+
+Default routes:
+
+- `/` -> frontend dashboard
+- `/Aga_Clean_Services.html` -> main single-page site
+- `/Aga_Clean_Services_v1.1.html` -> warm single-page variant
+- `/multipage/index.html` -> multipage site
+- `/api/content` -> shared JSON content
+- `/api/contact` -> local enquiry capture

@@ -1,0 +1,63 @@
+<svg width="1600" height="900" viewBox="0 0 1600 900" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="title desc">
+  <title id="title">AGA Clean Services Logo</title>
+  <desc id="desc">Modern professional logo for AGA Clean Services with navy text, blue house outline, mint highlights, and sparkle accents.</desc>
+
+  <rect width="1600" height="900" fill="#FFFFFF"/>
+
+  <!-- Soft premium background mark -->
+  <circle cx="800" cy="405" r="330" fill="#2F80ED" opacity="0.035"/>
+  <circle cx="800" cy="405" r="245" fill="#21C7A8" opacity="0.025"/>
+
+  <!-- Minimal house/building line behind text -->
+  <g stroke="#2F80ED" stroke-width="22" stroke-linecap="round" stroke-linejoin="round" opacity="0.95">
+    <path d="M435 310 L800 150 L1165 310"/>
+    <path d="M505 300 V510"/>
+    <path d="M1095 300 V510"/>
+    <path d="M505 510 H1095"/>
+  </g>
+
+  <!-- Sparkle icon -->
+  <g transform="translate(1120 160)">
+    <path d="M52 0 C58 34 70 46 104 52 C70 58 58 70 52 104 C46 70 34 58 0 52 C34 46 46 34 52 0Z" fill="#21C7A8"/>
+    <circle cx="122" cy="26" r="12" fill="#2F80ED"/>
+    <circle cx="22" cy="122" r="9" fill="#2F80ED" opacity="0.85"/>
+  </g>
+
+  <!-- Main brand text -->
+  <text x="800" y="440"
+        text-anchor="middle"
+        font-family="Montserrat, Poppins, Avenir Next, Arial, sans-serif"
+        font-size="205"
+        font-weight="800"
+        letter-spacing="16"
+        fill="#16233A">AGA</text>
+
+  <!-- Accent underline -->
+  <path d="M565 485 H1035" stroke="#21C7A8" stroke-width="10" stroke-linecap="round"/>
+
+  <!-- Secondary text -->
+  <text x="800" y="570"
+        text-anchor="middle"
+        font-family="Montserrat, Poppins, Avenir Next, Arial, sans-serif"
+        font-size="76"
+        font-weight="500"
+        letter-spacing="4"
+        fill="#16233A">Clean Services</text>
+
+  <!-- Divider -->
+  <path d="M475 625 H1125" stroke="#2F80ED" stroke-width="3" stroke-linecap="round" opacity="0.55"/>
+
+  <!-- Tagline -->
+  <text x="800" y="690"
+        text-anchor="middle"
+        font-family="Montserrat, Poppins, Avenir Next, Arial, sans-serif"
+        font-size="38"
+        font-weight="400"
+        letter-spacing="5"
+        fill="#16233A" opacity="0.88">Home • Office • Commercial Cleaning</text>
+
+  <!-- Premium trust line -->
+  <g font-family="Montserrat, Poppins, Avenir Next, Arial, sans-serif" font-size="28" font-weight="500" fill="#16233A" opacity="0.82">
+    <text x="800" y="765" text-anchor="middle">Fully insured  •  Local trusted service  •  Flexible hours</text>
+  </g>
+</svg>

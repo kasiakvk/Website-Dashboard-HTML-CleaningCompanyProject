@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta
+    id="meta-description"
+    name="description"
+    content="AGA Clean Services offers domestic, deep, end-of-tenancy, office, Airbnb and after-hours commercial cleaning in Newcastle, Gateshead and Durham."
+  />
+  <title>AGA Clean Services | Prices</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Fraunces:wght@500;600;700&display=swap"
+    rel="stylesheet"
+  />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <header class="site-header">
+    <div class="container nav-shell">
+      <a class="brand" href="index.html" aria-label="AGA Clean Services home">
+        <img src="../aga_clean_services_logo.svg" alt="AGA Clean Services logo" class="brand-logo" />
+      </a>
+      <nav class="main-nav" aria-label="Primary">
+        <a href="index.html">Home</a>
+        <a href="services.html" data-i18n="nav.services">Services</a>
+        <a class="active" href="prices.html" data-i18n="nav.pricing">Pricing</a>
+        <a href="about.html">About</a>
+        <a href="reviews.html">Reviews</a>
+        <a href="contact.html" data-i18n="nav.contact">Contact</a>
+      </nav>
+      <div class="nav-tools">
+        <div class="lang-switch" aria-label="Language switcher">
+          <button type="button" class="lang-button is-active" data-lang="en">EN</button>
+          <button type="button" class="lang-button" data-lang="pl">PL</button>
+        </div>
+        <a class="nav-cta" href="contact.html" data-i18n="nav.cta">Free Quote</a>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <section class="page-hero">
+      <div class="container">
+        <p class="eyebrow" data-i18n="pricing.kicker">Pricing</p>
+        <h1 data-i18n="pricing.title">Simple rates to show clients immediately.</h1>
+        <p class="page-copy">
+          These are the same core prices used in the main project. They are suitable for website
+          display, agent outreach and direct client messaging.
+        </p>
+      </div>
+    </section>
+
+    <section class="section pricing-section">
+      <div class="container">
+        <div class="pricing-table" role="table" aria-label="AGA Clean Services pricing">
+          <div class="pricing-row pricing-head" role="row">
+            <span role="columnheader" data-i18n="pricing.headService">Service</span>
+            <span role="columnheader" data-i18n="pricing.headPrice">Price</span>
+          </div>
+          <div class="pricing-row" role="row">
+            <span role="cell" data-i18n="pricing.regular">Regular cleaning</span>
+            <span role="cell">£20/hour</span>
+          </div>
+          <div class="pricing-row" role="row">
+            <span role="cell" data-i18n="pricing.deep">Deep cleaning</span>
+            <span role="cell">£120-£300</span>
+          </div>
+          <div class="pricing-row" role="row">
+            <span role="cell" data-i18n="pricing.tenancy">End of tenancy</span>
+            <span role="cell">£180-£400</span>
+          </div>
+          <div class="pricing-row" role="row">
+            <span role="cell" data-i18n="pricing.office">Office cleaning</span>
+            <span role="cell">£25/hour</span>
+          </div>
+          <div class="pricing-row" role="row">
+            <span role="cell" data-i18n="pricing.airbnb">Airbnb cleaning</span>
+            <span role="cell">From £45</span>
+          </div>
+        </div>
+
+        <div class="cards two">
+          <article class="card">
+            <h3>How to use this pricing</h3>
+            <ul class="clean-list">
+              <li>Show it on the website</li>
+              <li>Send it to leads on WhatsApp</li>
+              <li>Use it in Facebook and Marketplace enquiries</li>
+            </ul>
+          </article>
+          <article class="card">
+            <h3>Best high-value service lines</h3>
+            <ul class="clean-list">
+              <li>End-of-tenancy cleaning</li>
+              <li>Office and after-hours cleaning</li>
+              <li>Airbnb turnaround work</li>
+            </ul>
+          </article>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-shell">
+      <p>© <span id="year"></span> AGA Clean Services</p>
+      <p data-i18n="footer.services">Domestic • Commercial • Airbnb • End of Tenancy</p>
+    </div>
+  </footer>
+  <script src="../site.js"></script>
+</body>
+</html>

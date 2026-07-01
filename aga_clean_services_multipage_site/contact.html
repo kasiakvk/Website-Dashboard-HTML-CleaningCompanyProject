@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta
+    id="meta-description"
+    name="description"
+    content="AGA Clean Services offers domestic, deep, end-of-tenancy, office, Airbnb and after-hours commercial cleaning in Newcastle, Gateshead and Durham."
+  />
+  <title>AGA Clean Services | Contact</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Fraunces:wght@500;600;700&display=swap"
+    rel="stylesheet"
+  />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <header class="site-header">
+    <div class="container nav-shell">
+      <a class="brand" href="index.html" aria-label="AGA Clean Services home">
+        <img src="../aga_clean_services_logo.svg" alt="AGA Clean Services logo" class="brand-logo" />
+      </a>
+      <nav class="main-nav" aria-label="Primary">
+        <a href="index.html">Home</a>
+        <a href="services.html" data-i18n="nav.services">Services</a>
+        <a href="prices.html" data-i18n="nav.pricing">Pricing</a>
+        <a href="about.html">About</a>
+        <a href="reviews.html">Reviews</a>
+        <a class="active" href="contact.html" data-i18n="nav.contact">Contact</a>
+      </nav>
+      <div class="nav-tools">
+        <div class="lang-switch" aria-label="Language switcher">
+          <button type="button" class="lang-button is-active" data-lang="en">EN</button>
+          <button type="button" class="lang-button" data-lang="pl">PL</button>
+        </div>
+        <a class="nav-cta" href="contact.html" data-i18n="nav.cta">Free Quote</a>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <section class="page-hero">
+      <div class="container">
+        <p class="eyebrow" data-i18n="contact.kicker">Contact</p>
+        <h1 data-i18n="contact.title">Set up the final contact stack before publishing.</h1>
+        <p class="page-copy">
+          Keep the same contact structure as the main project so every enquiry source points to one
+          consistent WhatsApp and phone flow.
+        </p>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container contact-grid">
+        <div class="contact-copy">
+          <ul class="contact-list dark-list">
+            <li data-i18n="contact.point1">WhatsApp</li>
+            <li data-i18n="contact.point2">Phone number</li>
+            <li data-i18n="contact.point3">Facebook page</li>
+            <li data-i18n="contact.point4">Google Business profile</li>
+          </ul>
+          <p class="contact-note dark-note" data-i18n-html="contact.note">
+            Best format to display everywhere: <strong>Call / WhatsApp: 07xxxxx</strong>
+          </p>
+        </div>
+
+        <form class="contact-form">
+          <label>
+            <span data-i18n="form.name">Name</span>
+            <input type="text" name="name" placeholder="Your name" data-i18n-placeholder="form.namePlaceholder" />
+          </label>
+          <label>
+            <span data-i18n="form.phone">Phone or WhatsApp</span>
+            <input type="tel" name="phone" placeholder="07xxxxx" data-i18n-placeholder="form.phonePlaceholder" />
+          </label>
+          <label>
+            <span data-i18n="form.service">Service</span>
+            <select name="service">
+              <option data-i18n="form.serviceOption1">Regular cleaning</option>
+              <option data-i18n="form.serviceOption2">Deep cleaning</option>
+              <option data-i18n="form.serviceOption3">End of tenancy</option>
+              <option data-i18n="form.serviceOption4">Office cleaning</option>
+              <option data-i18n="form.serviceOption5">Airbnb cleaning</option>
+              <option data-i18n="form.serviceOption6">Pub or club cleaning</option>
+            </select>
+          </label>
+          <label>
+            <span data-i18n="form.message">Message</span>
+            <textarea name="message" rows="5" placeholder="Tell us what you need" data-i18n-placeholder="form.messagePlaceholder"></textarea>
+          </label>
+          <button type="submit" class="button button-primary" data-i18n="form.submit">Send enquiry</button>
+          <p class="form-help" data-i18n="form.help">This demo form keeps the enquiry locally until a live inbox or WhatsApp link is added.</p>
+        </form>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-shell">
+      <p>© <span id="year"></span> AGA Clean Services</p>
+      <p data-i18n="footer.services">Domestic • Commercial • Airbnb • End of Tenancy</p>
+    </div>
+  </footer>
+  <script src="../site.js"></script>
+</body>
+</html>

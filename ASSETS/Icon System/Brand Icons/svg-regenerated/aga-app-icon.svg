@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" fill="none">
+  <defs>
+    <linearGradient id="appGold" x1="9" y1="8" x2="53" y2="55" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#F6D879"/>
+      <stop offset="0.45" stop-color="#FFF0B2"/>
+      <stop offset="1" stop-color="#B98414"/>
+    </linearGradient>
+    <linearGradient id="appSilver" x1="8" y1="40" x2="56" y2="54" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#F8FBFF"/>
+      <stop offset="0.48" stop-color="#D8DEE8"/>
+      <stop offset="1" stop-color="#B9C2CF"/>
+    </linearGradient>
+  </defs>
+  <rect x="4" y="4" width="56" height="56" rx="16" fill="#0C285C" stroke="url(#appGold)" stroke-width="3"/>
+  <path d="M16 31L32 18L48 31" stroke="url(#appGold)" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M21 29V45H43V29" stroke="#FFF8EA" stroke-width="4" stroke-linejoin="round"/>
+  <path d="M46.5 16L48.2 19.8L52 21.5L48.2 23.2L46.5 27L44.8 23.2L41 21.5L44.8 19.8L46.5 16Z" fill="url(#appGold)"/>
+  <path d="M7 45C16 41.5 25 42.5 34.5 47C42.2 50.7 49.1 50.7 57 47V53.5C48.9 56.7 42 56.7 34 53C24.7 48.7 16.2 47.7 7 50.7V45Z" fill="url(#appSilver)"/>
+  <path d="M7 42.5C16 39 25 40 34.5 44.5C42.2 48.2 49.1 48.2 57 44.5" stroke="url(#appGold)" stroke-width="2.8" stroke-linecap="round"/>
+</svg>

@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 220 40" fill="none">
+  <defs>
+    <linearGradient id="waveGold" x1="8" y1="12" x2="212" y2="26" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#B98110"/>
+      <stop offset="0.3" stop-color="#F5D86D"/>
+      <stop offset="0.55" stop-color="#FFF0AA"/>
+      <stop offset="0.82" stop-color="#D19A1D"/>
+      <stop offset="1" stop-color="#A87512"/>
+    </linearGradient>
+    <linearGradient id="waveSilver" x1="8" y1="22" x2="212" y2="30" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#F8FBFF"/>
+      <stop offset="0.48" stop-color="#D8DEE8"/>
+      <stop offset="1" stop-color="#B9C2CF"/>
+    </linearGradient>
+  </defs>
+  <path d="M8 22C45 10 82 10 124 20C156 28 182 28 212 16" stroke="url(#waveGold)" stroke-width="4.2" stroke-linecap="round"/>
+  <path d="M8 28C45 16 82 16 124 26C156 34 182 34 212 22" stroke="url(#waveSilver)" stroke-width="5.2" stroke-linecap="round"/>
+  <path d="M8 32C45 22 82 22 124 30C156 37 182 37 212 27" stroke="#0C285C" stroke-width="3.6" stroke-linecap="round"/>
+</svg>

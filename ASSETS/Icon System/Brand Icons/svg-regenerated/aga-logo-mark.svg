@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 120" fill="none">
+  <defs>
+    <linearGradient id="agaMarkGold" x1="24" y1="16" x2="210" y2="98" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#F6D879"/>
+      <stop offset="0.42" stop-color="#FFF0B2"/>
+      <stop offset="1" stop-color="#B98414"/>
+    </linearGradient>
+    <linearGradient id="agaMarkSilver" x1="32" y1="68" x2="216" y2="100" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#F8FBFF"/>
+      <stop offset="0.48" stop-color="#D8DEE8"/>
+      <stop offset="1" stop-color="#B9C2CF"/>
+    </linearGradient>
+    <linearGradient id="agaMarkNavy" x1="28" y1="22" x2="206" y2="100" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#17366D"/>
+      <stop offset="0.48" stop-color="#0C285C"/>
+      <stop offset="1" stop-color="#091D47"/>
+    </linearGradient>
+  </defs>
+  <path d="M50 52L88 24L126 52" stroke="url(#agaMarkGold)" stroke-width="5.5" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M65 50V80H111V50" stroke="#FFF8EA" stroke-width="5" stroke-linejoin="round"/>
+  <rect x="82" y="62" width="12" height="18" fill="url(#agaMarkGold)"/>
+  <path d="M127 16L129.8 22.2L136 25L129.8 27.8L127 34L124.2 27.8L118 25L124.2 22.2L127 16Z" fill="url(#agaMarkGold)"/>
+  <path d="M145 24L146.8 27.7L150.5 29.5L146.8 31.3L145 35L143.2 31.3L139.5 29.5L143.2 27.7L145 24Z" fill="#D9DEE8"/>
+  <path d="M18 88C49 79 78 79 111 88C139 95 169 95 220 79" stroke="url(#agaMarkGold)" stroke-width="4.5" stroke-linecap="round"/>
+  <path d="M18 95C49 86 78 87 111 96C139 103 169 103 220 87" stroke="url(#agaMarkSilver)" stroke-width="5" stroke-linecap="round"/>
+  <path d="M18 100C49 91 78 92 111 101C139 108 169 108 220 92" stroke="url(#agaMarkNavy)" stroke-width="4" stroke-linecap="round"/>
+</svg>

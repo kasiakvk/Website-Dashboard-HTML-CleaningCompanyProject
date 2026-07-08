@@ -7,9 +7,9 @@ const translations = {
     "nav.pricing": "Pricing",
     "nav.plan": "Launch Plan",
     "nav.contact": "Contact",
-    "nav.cta": "Free Quote",
+    "nav.cta": "Get Free Quote",
     "hero.eyebrow": "Newcastle • Gateshead • Durham",
-    "hero.title": "Professional cleaning built on trust, calm and consistency.",
+    "hero.title": "Reliable Home & Commercial Cleaning.",
     "hero.lead":
       "AGA Clean Services delivers reliable domestic and commercial cleaning with flexible hours, clear pricing and a service style designed to make life easier for busy homes, landlords, Airbnb hosts and local businesses.",
     "hero.primaryCta": "Message for a Quote",
@@ -26,10 +26,23 @@ const translations = {
     "trust.title": "What clients are really buying",
     "trust.lead":
       "Clean rooms matter, but the stronger promise is reliability, peace of mind and someone who does not let the client down.",
-    "trust.point1": "Reliable and friendly service",
-    "trust.point2": "Flexible booking hours",
-    "trust.point3": "Affordable, transparent pricing",
-    "trust.point4": "Local service with strong word-of-mouth potential",
+    "trust.point1": "Reliable Service",
+    "trust.point2": "Flexible Hours",
+    "trust.point3": "Friendly Local Cleaner",
+    "trust.point4": "Clear Pricing",
+    "why.kicker": "Why Choose Us",
+    "why.title": "Premium but friendly, local but professional.",
+    "why.lead":
+      "The brand is built to feel calm, trusted and premium while still staying local, approachable and easy to book.",
+    "why.point1Title": "Reliable service",
+    "why.point1Lead":
+      "Clients need someone who arrives, communicates clearly and gets the job done well.",
+    "why.point2Title": "Flexible hours",
+    "why.point2Lead":
+      "Booking needs to work around homes, offices, Airbnb changeovers and after-hours sites.",
+    "why.point3Title": "Clear pricing",
+    "why.point3Lead":
+      "Simple, transparent prices reduce friction and make first contact easier.",
     "services.kicker": "Service List",
     "services.title": "Cleaning services for homes, landlords and local businesses.",
     "service.domestic.title": "Domestic Cleaning",
@@ -104,6 +117,23 @@ const translations = {
     "plan.timeline.point1": "Days 1-3: Facebook posts, Gumtree, Google profile",
     "plan.timeline.point2": "Days 4-7: direct outreach to agents and hosts",
     "plan.timeline.point3": "Week 2: first clients and review collection",
+    "founder.kicker": "About Agnieszka",
+    "founder.title": "A local cleaner clients can trust in their home or business.",
+    "founder.lead":
+      "AGA Clean Services is built around Agnieszka's reliable, friendly approach to cleaning. The goal is simple: high standards, calm communication and a premium finish without a cold corporate feel.",
+    "founder.point1": "Local trusted service",
+    "founder.point2": "Flexible booking",
+    "founder.point3": "Home, office and commercial experience",
+    "contactstack.kicker": "Contact Set",
+    "contactstack.title": "Ready to copy and paste anywhere.",
+    "contactstack.line1": "Home • Office • Commercial Cleaning",
+    "contactstack.line2": "Newcastle • Gateshead • Durham",
+    "contactstack.phone": "Call / WhatsApp: 07XXXXXXXXX",
+    "contactstack.email": "Email: agacleanservices@gmail.com",
+    "contactstack.web": "Website: agacleanservices.co.uk",
+    "contactstack.badge1": "Reliable & Friendly Service",
+    "contactstack.badge2": "Flexible Hours",
+    "contactstack.badge3": "Free Quotes Available",
     "ads.kicker": "Ready Ad Copy",
     "ads.title": "Social and marketplace message",
     "ads.body":
@@ -113,11 +143,11 @@ const translations = {
     "ads.point3": "End of tenancy",
     "ads.point4": "Offices and small businesses",
     "ads.footer":
-      "Reliable and friendly service. Flexible hours. Affordable prices.<br />Message now for a free quote. WhatsApp: 07xxxxx",
+      "Reliable and friendly service. Flexible hours. Affordable prices.<br />Message now for a free quote. WhatsApp: 07XXXXXXXXX",
     "flyer.kicker": "Offline Short Version",
     "flyer.title": "Flyer headline",
     "flyer.body":
-      "Cleaning Services – AGA Clean Services<br />Domestic • Commercial • Airbnb<br />Call or WhatsApp: 07xxxxx",
+      "AGA Clean Services<br />Domestic • Commercial • Airbnb Cleaning<br />WhatsApp: 07XXXXXXXXX<br />Message now for a free quote",
     "flyer.lead":
       "Use this version on leaflets, noticeboards and simple one-page handouts for local distribution.",
     "contact.kicker": "Contact",
@@ -126,11 +156,15 @@ const translations = {
     "contact.point2": "Phone number",
     "contact.point3": "Facebook page",
     "contact.point4": "Google Business profile",
-    "contact.note": "Best format to display everywhere: <strong>Call / WhatsApp: 07xxxxx</strong>",
+    "contact.note":
+      "AGA Clean Services<br /><strong>Home • Office • Commercial Cleaning</strong><br />Newcastle • Gateshead • Durham<br />Call / WhatsApp: 07XXXXXXXXX<br />Email: agacleanservices@gmail.com<br />Website: agacleanservices.co.uk",
+    "mini.phone": "Call / WhatsApp: 07XXXXXXXXX",
+    "mini.email": "Email: agacleanservices@gmail.com",
+    "mini.web": "Website: agacleanservices.co.uk",
     "form.name": "Name",
     "form.namePlaceholder": "Your name",
     "form.phone": "Phone or WhatsApp",
-    "form.phonePlaceholder": "07xxxxx",
+    "form.phonePlaceholder": "07XXXXXXXXX",
     "form.service": "Service",
     "form.serviceOption1": "Regular cleaning",
     "form.serviceOption2": "Deep cleaning",
@@ -145,7 +179,9 @@ const translations = {
       "This demo form keeps the enquiry locally until a live inbox or WhatsApp link is added.",
     "form.savedPrefix": "Thanks",
     "form.savedSuffix": "request saved",
-    "footer.services": "Domestic • Commercial • Airbnb • End of Tenancy"
+    "footer.locations": "Newcastle • Gateshead • Durham",
+    "footer.services": "Domestic • Commercial • End of Tenancy • Airbnb",
+    "footer.contact": "Call / WhatsApp: 07XXXXXXXXX"
   },
   pl: {
     metaTitle: "AGA Clean Services | Usługi Sprzątania Newcastle",
@@ -157,7 +193,7 @@ const translations = {
     "nav.contact": "Kontakt",
     "nav.cta": "Darmowa Wycena",
     "hero.eyebrow": "Newcastle • Gateshead • Durham",
-    "hero.title": "Profesjonalne sprzątanie oparte na zaufaniu, spokoju i solidności.",
+    "hero.title": "Niezawodne sprzątanie domów i firm.",
     "hero.lead":
       "AGA Clean Services zapewnia niezawodne sprzątanie domowe i komercyjne, elastyczne godziny, jasny cennik i standard obsługi stworzony dla zabieganych rodzin, właścicieli nieruchomości, gospodarzy Airbnb i lokalnych firm.",
     "hero.primaryCta": "Napisz po wycenę",
@@ -174,10 +210,23 @@ const translations = {
     "trust.title": "Co klienci naprawdę kupują",
     "trust.lead":
       "Czyste pomieszczenia są ważne, ale mocniejsza obietnica to niezawodność, spokój i osoba, która nie zawodzi.",
-    "trust.point1": "Miła i rzetelna obsługa",
-    "trust.point2": "Elastyczne godziny rezerwacji",
-    "trust.point3": "Przystępne i przejrzyste ceny",
-    "trust.point4": "Lokalna usługa z dużym potencjałem poleceń",
+    "trust.point1": "Rzetelna obsługa",
+    "trust.point2": "Elastyczne godziny",
+    "trust.point3": "Przyjazna lokalna firma",
+    "trust.point4": "Jasny cennik",
+    "why.kicker": "Dlaczego My",
+    "why.title": "Premium, ale przyjaźnie. Lokalnie, ale profesjonalnie.",
+    "why.lead":
+      "Marka ma być spokojna, zaufana i premium, ale nadal lokalna, przystępna i łatwa do zamówienia.",
+    "why.point1Title": "Rzetelna obsługa",
+    "why.point1Lead":
+      "Klienci potrzebują osoby, która przychodzi na czas, dobrze komunikuje się i wykonuje pracę na wysokim poziomie.",
+    "why.point2Title": "Elastyczne godziny",
+    "why.point2Lead":
+      "Rezerwacja musi pasować do domów, biur, zmian gości Airbnb i lokali po godzinach.",
+    "why.point3Title": "Jasny cennik",
+    "why.point3Lead":
+      "Proste, przejrzyste ceny zmniejszają opór i ułatwiają pierwszy kontakt.",
     "services.kicker": "Lista Usług",
     "services.title": "Usługi sprzątania dla domów, wynajmujących i lokalnych firm.",
     "service.domestic.title": "Sprzątanie Domowe",
@@ -252,6 +301,23 @@ const translations = {
     "plan.timeline.point1": "Dni 1-3: posty na Facebooku, Gumtree, profil Google",
     "plan.timeline.point2": "Dni 4-7: bezpośredni outreach do agentów i hostów",
     "plan.timeline.point3": "Tydzień 2: pierwsi klienci i zbieranie opinii",
+    "founder.kicker": "O Agnieszce",
+    "founder.title": "Lokalna osoba, której klienci mogą zaufać w domu i firmie.",
+    "founder.lead":
+      "AGA Clean Services opiera się na rzetelnym i przyjaznym podejściu Agnieszki do sprzątania. Cel jest prosty: wysoki standard, spokojna komunikacja i premium efekt bez chłodnego korporacyjnego tonu.",
+    "founder.point1": "Lokalna zaufana usługa",
+    "founder.point2": "Elastyczna rezerwacja",
+    "founder.point3": "Doświadczenie w domach, biurach i obiektach komercyjnych",
+    "contactstack.kicker": "Zestaw Kontaktowy",
+    "contactstack.title": "Gotowe do wklejenia wszędzie.",
+    "contactstack.line1": "Home • Office • Commercial Cleaning",
+    "contactstack.line2": "Newcastle • Gateshead • Durham",
+    "contactstack.phone": "Telefon / WhatsApp: 07XXXXXXXXX",
+    "contactstack.email": "Email: agacleanservices@gmail.com",
+    "contactstack.web": "Strona: agacleanservices.co.uk",
+    "contactstack.badge1": "Rzetelna i przyjazna obsługa",
+    "contactstack.badge2": "Elastyczne godziny",
+    "contactstack.badge3": "Darmowe wyceny",
     "ads.kicker": "Gotowy Tekst Ogłoszenia",
     "ads.title": "Treść do social mediów i marketplace",
     "ads.body":
@@ -261,11 +327,11 @@ const translations = {
     "ads.point3": "End of tenancy",
     "ads.point4": "Biura i małe firmy",
     "ads.footer":
-      "Miła i rzetelna obsługa. Elastyczne godziny. Przystępne ceny.<br />Napisz teraz po darmową wycenę. WhatsApp: 07xxxxx",
+      "Miła i rzetelna obsługa. Elastyczne godziny. Przystępne ceny.<br />Napisz teraz po darmową wycenę. WhatsApp: 07XXXXXXXXX",
     "flyer.kicker": "Krótka Wersja Offline",
     "flyer.title": "Nagłówek ulotki",
     "flyer.body":
-      "Usługi Sprzątania – AGA Clean Services<br />Domowe • Komercyjne • Airbnb<br />Zadzwoń lub WhatsApp: 07xxxxx",
+      "AGA Clean Services<br />Domowe • Komercyjne • Airbnb Cleaning<br />WhatsApp: 07XXXXXXXXX<br />Napisz teraz po darmową wycenę",
     "flyer.lead":
       "Użyj tej wersji na ulotkach, tablicach ogłoszeń i prostych lokalnych materiałach drukowanych.",
     "contact.kicker": "Kontakt",
@@ -274,11 +340,15 @@ const translations = {
     "contact.point2": "Numer telefonu",
     "contact.point3": "Strona na Facebooku",
     "contact.point4": "Profil Firmy Google",
-    "contact.note": "Najlepszy format do pokazania wszędzie: <strong>Telefon / WhatsApp: 07xxxxx</strong>",
+    "contact.note":
+      "AGA Clean Services<br /><strong>Home • Office • Commercial Cleaning</strong><br />Newcastle • Gateshead • Durham<br />Telefon / WhatsApp: 07XXXXXXXXX<br />Email: agacleanservices@gmail.com<br />Strona: agacleanservices.co.uk",
+    "mini.phone": "Telefon / WhatsApp: 07XXXXXXXXX",
+    "mini.email": "Email: agacleanservices@gmail.com",
+    "mini.web": "Strona: agacleanservices.co.uk",
     "form.name": "Imię",
     "form.namePlaceholder": "Twoje imię",
     "form.phone": "Telefon lub WhatsApp",
-    "form.phonePlaceholder": "07xxxxx",
+    "form.phonePlaceholder": "07XXXXXXXXX",
     "form.service": "Usługa",
     "form.serviceOption1": "Regularne sprzątanie",
     "form.serviceOption2": "Deep cleaning",
@@ -293,7 +363,9 @@ const translations = {
       "Ten formularz demo zapisuje zapytanie lokalnie, dopóki nie dodasz prawdziwej skrzynki lub linku WhatsApp.",
     "form.savedPrefix": "Dziękujemy",
     "form.savedSuffix": "zapytanie zapisane",
-    "footer.services": "Domowe • Komercyjne • Airbnb • End of Tenancy"
+    "footer.locations": "Newcastle • Gateshead • Durham",
+    "footer.services": "Domowe • Komercyjne • End of Tenancy • Airbnb",
+    "footer.contact": "Telefon / WhatsApp: 07XXXXXXXXX"
   }
 };
 

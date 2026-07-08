@@ -13,7 +13,7 @@ This workspace now connects the core brand assets, the landing page, and the ope
 - `styles-v1.1.css`: alternate warm template stylesheet for `Aga_Clean_Services_v1.1.html`.
 - `site.js`: small client-side behavior for footer year and demo enquiry handling.
 - `extract_docx_text.ps1`: PowerShell converter from `.docx` to `.md`.
-- `aga_clean_services_logo.svg`: primary brand logo used by the site.
+- `AGA Clean Services logo design.png`: primary brand logo used by the site.
 - `Modern cleaning service logo design.png`: supporting brand artwork used in the hero panel.
 - `brand-structure-aga-clean-services.md`: root-level Markdown version of the brand brief.
 

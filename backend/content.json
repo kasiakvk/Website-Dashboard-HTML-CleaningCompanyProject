@@ -2,9 +2,11 @@
   "brand": {
     "name": "AGA Clean Services",
     "tagline": "Professional cleaning built on trust, calm and consistency.",
-    "areas": ["Newcastle", "Gateshead", "Durham"],
-    "phone": "07xxxxx",
-    "whatsapp": "07xxxxx"
+    "areas": ["Newcastle", "Gateshead", "Chester-le-Street", "Durham"],
+    "phone": "07448738971",
+    "whatsapp": "07448738971",
+    "email": "agucleanservices@gmail.com",
+    "website": "www.agucleanservices.co.uk"
   },
   "services": [
     {

@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 40 40" fill="none">
+  <defs>
+    <radialGradient id="starGold" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(20 20) rotate(90) scale(18)">
+      <stop stop-color="#FFF7D6"/>
+      <stop offset="0.55" stop-color="#F2C94C"/>
+      <stop offset="1" stop-color="#B98414"/>
+    </radialGradient>
+  </defs>
+  <path d="M20 38C23.6 27 27 23.6 38 20C27 16.4 23.6 13 20 2C16.4 13 13 16.4 2 20C13 23.6 16.4 27 20 38Z" fill="url(#starGold)"/>
+</svg>

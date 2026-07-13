@@ -4,19 +4,29 @@
       <article class="contact-card">
         <div class="contact-row">
           <div class="icon-badge"><img src="../frontend/assets/contact/whatsapp.png" alt="Call and WhatsApp icon" /></div>
-          <div><div class="contact-label" data-i18n="contact.callLabel">Call / WhatsApp</div><div class="contact-value">07448738971</div></div>
+          <div>
+            <div class="contact-label" data-i18n="contact.callLabel">Call / WhatsApp</div>
+            <div class="contact-value">
+              <a href="tel:07448738971">07448738971</a>
+              <span> • </span>
+              <a href="https://wa.me/447448738971" target="_blank" rel="noopener">WhatsApp</a>
+            </div>
+          </div>
         </div>
       </article>
       <article class="contact-card">
         <div class="contact-row">
           <div class="icon-badge"><img src="../frontend/assets/contact/email.png" alt="Email icon" /></div>
-          <div><div class="contact-label" data-i18n="contact.emailLabel">Email</div><div class="contact-value">agucleanservices@gmail.com</div></div>
+          <div>
+            <div class="contact-label" data-i18n="contact.emailLabel">Email</div>
+            <div class="contact-value"><a href="mailto:agucleanservices@gmail.com">agucleanservices@gmail.com</a></div>
+          </div>
         </div>
       </article>
       <article class="contact-card">
         <div class="contact-row">
           <div class="icon-badge"><img src="../frontend/assets/contact/mobile.png" alt="Owner contact icon" /></div>
-          <div><div class="contact-label">Owner</div><div class="contact-value">Agnieszka Kalina vel Kalinowska</div></div>
+          <div><div class="contact-label">Owner</div><div class="contact-value">Agnieszka Kalina</div></div>
         </div>
       </article>
       <article class="contact-card">
@@ -50,11 +60,11 @@
             <label for="service" data-i18n="nav.services">Service</label>
             <select id="service" name="service" aria-label="Service required">
               <option value="" data-i18n="contact.select">Select service</option>
-              <option data-i18n="price.regular.h">Regular cleaning</option>
-              <option data-i18n="price.deep.h">Deep cleaning</option>
-              <option data-i18n="price.tenancy.h">End of tenancy</option>
-              <option data-i18n="price.commercial.h">Commercial cleaning</option>
-              <option data-i18n="prices.airbnbH">Airbnb cleaning</option>
+              <option value="Regular cleaning" data-i18n="price.regular.h">Regular cleaning</option>
+              <option value="Deep cleaning" data-i18n="price.deep.h">Deep cleaning</option>
+              <option value="End of tenancy" data-i18n="price.tenancy.h">End of tenancy</option>
+              <option value="Commercial cleaning" data-i18n="price.commercial.h">Commercial cleaning</option>
+              <option value="Airbnb cleaning" data-i18n="prices.airbnbH">Airbnb cleaning</option>
             </select>
           </div>
         </div>

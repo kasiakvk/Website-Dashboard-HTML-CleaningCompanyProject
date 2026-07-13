@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 24" fill="none">
+  <defs>
+    <linearGradient id="dividerGold" x1="8" y1="12" x2="232" y2="12" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#C89219"/>
+      <stop offset="0.5" stop-color="#FFF0B2"/>
+      <stop offset="1" stop-color="#C89219"/>
+    </linearGradient>
+  </defs>
+  <path d="M8 12H102" stroke="url(#dividerGold)" stroke-width="3.2" stroke-linecap="round"/>
+  <path d="M138 12H232" stroke="url(#dividerGold)" stroke-width="3.2" stroke-linecap="round"/>
+  <path d="M120 20C122.4 13.2 125.2 10.4 132 8C125.2 5.6 122.4 2.8 120  -4C117.6 2.8 114.8 5.6 108 8C114.8 10.4 117.6 13.2 120 20Z" fill="#D4A93E"/>
+</svg>

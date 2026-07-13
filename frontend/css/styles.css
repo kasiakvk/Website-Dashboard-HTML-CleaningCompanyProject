@@ -420,6 +420,13 @@ a {
   color: var(--text-700);
 }
 
+.hero-card-image {
+  width: 100%;
+  border-radius: var(--radius-md);
+  border: 1px solid rgba(196, 203, 215, 0.5);
+  margin-top: 14px;
+}
+
 .hero-stat-grid {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));

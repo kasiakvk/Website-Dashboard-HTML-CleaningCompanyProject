@@ -705,3 +705,64 @@ if (quoteForm) {
     }
   });
 }
+
+const reviewForm = document.querySelector("#review-form");
+if (reviewForm) {
+  reviewForm.addEventListener("submit", async (event) => {
+    event.preventDefault();
+
+    const submitButton = reviewForm.querySelector('button[type="submit"]');
+    const formData = new FormData(reviewForm);
+    const payload = Object.fromEntries(formData.entries());
+    const safeValue = (value) => (typeof value === "string" ? value.trim() : "").trim();
+    const selectedRating = Math.min(Math.max(Number(payload.rating || 0), 1), 5) || 0;
+    const stars = selectedRating ? `${"★".repeat(selectedRating)}${"☆".repeat(5 - selectedRating)}` : "No rating";
+    const subject = `AGU Clean Services review: ${safeValue(payload.name) || "New review"}`;
+    const lines = [
+      `Customer: ${safeValue(payload.name) || "Not provided"}`,
+      `Email: ${safeValue(payload.email) || "Not provided"}`,
+      `Rating: ${stars} (${selectedRating || "Not provided"}/5)`,
+      `Opinion: ${safeValue(payload.message) || "Not provided"}`,
+      "",
+      `Submitted from: ${window.location.href}`
+    ];
+    const mailtoUrl = `mailto:agucleanservices@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(lines.join("\n"))}`;
+
+    if (submitButton) {
+      submitButton.disabled = true;
+      submitButton.dataset.originalLabel = submitButton.textContent || "Add review";
+      submitButton.textContent = "Sending...";
+    }
+
+    try {
+      try {
+        const response = await fetch("/api/review", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify({
+            ...payload,
+            kind: "review"
+          })
+        });
+
+        if (!response.ok) {
+          console.warn("Review API unavailable, falling back to Gmail connector.");
+        }
+      } catch {
+        console.warn("Review API unavailable, falling back to Gmail connector.");
+      }
+
+      reviewForm.reset();
+      window.location.href = mailtoUrl;
+    } catch {
+      window.location.href = mailtoUrl;
+    } finally {
+      if (submitButton) {
+        submitButton.disabled = false;
+        submitButton.textContent = submitButton.dataset.originalLabel || "Add review";
+      }
+    }
+  });
+}

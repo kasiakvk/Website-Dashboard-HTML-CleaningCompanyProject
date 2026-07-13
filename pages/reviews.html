@@ -19,11 +19,12 @@
       <button class="nav-toggle" type="button" aria-label="Open navigation" aria-expanded="false" data-nav-toggle><span></span><span></span><span></span></button>
       <ul class="nav-links" data-nav-links>
         <li><a href="index.html" data-page-link="home" data-i18n="nav.home">Home</a></li>
-        <li><a href="about.html" data-page-link="about" data-i18n="nav.about">About</a></li>
+        <li><a href="about.html" data-page-link="about" data-i18n="nav.about">About Us</a></li>
         <li><a href="services.html" data-page-link="services" data-i18n="nav.services">Services</a></li>
-        <li><a href="prices.html" data-page-link="prices" data-i18n="nav.prices">Prices</a></li>
-        <li><a href="reviews.html" data-page-link="reviews" data-i18n="nav.reviews">Reviews</a></li>
-        <li><a href="contact.html" data-page-link="contact" data-i18n="nav.contact">Contact</a></li>
+        <li><a href="prices.html" data-page-link="prices" data-i18n="nav.prices">Pricing</a></li>
+        <li><a href="areas.html" data-page-link="areas" data-i18n="nav.areas">Areas We Cover</a></li>
+        <li><a href="reviews.html" data-page-link="reviews" data-i18n="nav.reviews">Testimonials</a></li>
+        <li><a href="contact.html" data-page-link="contact" data-i18n="nav.contact">Contact Us</a></li>
       </ul>
       <div class="nav-actions">
         <div class="lang-switch"><button class="lang-btn" type="button" data-lang="en">EN</button><button class="lang-btn" type="button" data-lang="pl">PL</button></div>
@@ -35,10 +36,10 @@
   <main>
     <section class="page-hero">
       <div class="container page-hero-content">
-        <div class="crumbs"><span data-i18n="nav.home">Home</span><span>•</span><span data-i18n="nav.reviews">Reviews</span></div>
-        <div class="eyebrow" data-i18n="reviews.eyebrow">Client Reviews</div>
-        <h1 data-i18n="reviews.h1">Leave a Review</h1>
-        <p data-i18n="reviews.lead">Share your opinion with the AGU Clean Services team.</p>
+        <div class="crumbs"><span data-i18n="nav.home">Home</span><span>•</span><span data-i18n="nav.reviews">Testimonials</span></div>
+        <div class="eyebrow" data-i18n="reviews.eyebrow">Testimonials</div>
+        <h1 data-i18n="reviews.h1">What clients say about AGU Clean Services</h1>
+        <p data-i18n="reviews.lead">Friendly, reliable service and strong results are the standards we want every booking to reflect.</p>
         <img class="section-divider" src="../frontend/assets/brand/divider.svg" alt="" />
       </div>
     </section>
@@ -46,25 +47,25 @@
     <section class="section">
       <div class="container">
         <div class="section-header">
-          <h2>Client Reviews</h2>
-          <p>Share your opinion and help others choose the right cleaning partner.</p>
+          <h2 data-i18n="reviews.secH">Trusted feedback from local clients</h2>
+          <p data-i18n="reviews.secP">Testimonials help new customers feel confident about booking a cleaner they can trust in their home, office or rental property.</p>
         </div>
         <article class="contact-card">
-          <h3>Add your review</h3>
-          <p style="margin:0 0 18px;color:var(--text-700)">Tell us what you liked, what we can improve, and rate your service.</p>
+          <h3 data-i18n="reviews.formH">Share your testimonial</h3>
+          <p style="margin:0 0 18px;color:var(--text-700)" data-i18n="reviews.formP">Tell us what worked well and how the service helped you.</p>
           <form class="form-grid" id="review-form">
             <div class="form-row">
               <div>
-                <label for="review-name">Your name</label>
+                <label for="review-name" data-i18n="reviews.name">Your name</label>
                 <input id="review-name" name="name" type="text" placeholder="Full name" />
               </div>
               <div>
-                <label for="review-email">Your email</label>
+                <label for="review-email" data-i18n="reviews.email">Your email</label>
                 <input id="review-email" name="email" type="email" placeholder="you@example.com" />
               </div>
             </div>
             <div>
-              <label>Rating</label>
+              <label data-i18n="reviews.rating">Rating</label>
               <div class="form-row" style="gap:10px;align-items:center;max-width:280px;">
                 <label style="cursor:pointer;display:flex;align-items:center;gap:4px;"><input type="radio" name="rating" value="5" checked /> ★★★★★</label>
                 <label style="cursor:pointer;display:flex;align-items:center;gap:4px;"><input type="radio" name="rating" value="4" /> ★★★★☆</label>
@@ -74,16 +75,16 @@
               </div>
             </div>
             <div>
-              <label for="review-message">Your opinion</label>
-              <textarea id="review-message" name="message" rows="5" placeholder="Tell us about your experience."></textarea>
+              <label for="review-message" data-i18n="reviews.message">Your testimonial</label>
+              <textarea id="review-message" name="message" rows="5" placeholder="Tell us about your experience." data-i18n-placeholder="reviews.messagePh"></textarea>
             </div>
             <div>
-              <button class="button" type="submit">Add review</button>
+              <button class="button" type="submit" data-i18n="reviews.submit">Send testimonial</button>
             </div>
           </form>
         </article>
         <article class="contact-card" style="margin-top:18px">
-          <p style="margin:0;color:var(--text-700)">Thank you for helping local customers make better cleaning choices. All opinions are reviewed before publication.</p>
+          <p style="margin:0;color:var(--text-700)" data-i18n="reviews.thanks">Thank you for helping local customers make informed cleaning choices. All testimonials are reviewed before publication.</p>
         </article>
       </div>
     </section>
@@ -92,10 +93,11 @@
     <div class="container">
       <div class="footer-grid">
         <div><img class="brand-mark" src="../frontend/assets/brand/logo.png" alt="AGU CLEANING SERVICES logo" /><p>Professional local cleaning with a trustworthy public-facing brand.</p></div>
-        <div><h4>Pages</h4><ul><li><a href="index.html">Home</a></li><li><a href="about.html">About</a></li><li><a href="about-me.html">About Me</a></li><li><a href="services.html">Services</a></li><li><a href="prices.html">Prices</a></li><li><a href="contact.html">Contact</a></li></ul></div>
-        <div><h4>Contact</h4><ul><li><a href="tel:07448738971">Call / WhatsApp: 07448738971</a></li><li><a href="mailto:agucleanservices@gmail.com">agucleanservices@gmail.com</a></li><li>Newcastle • Gateshead • Chester-le-Street • Durham</li></ul></div>
+        <div><h4 data-i18n="footer.pages">Main Menu</h4><ul><li><a href="index.html" data-i18n="nav.home">Home</a></li><li><a href="about.html" data-i18n="nav.about">About Us</a></li><li><a href="services.html" data-i18n="nav.services">Services</a></li><li><a href="prices.html" data-i18n="nav.prices">Pricing</a></li><li><a href="areas.html" data-i18n="nav.areas">Areas We Cover</a></li><li><a href="reviews.html" data-i18n="nav.reviews">Testimonials</a></li><li><a href="contact.html" data-i18n="nav.contact">Contact Us</a></li></ul></div>
+        <div><h4 data-i18n="footer.legal">Legal</h4><ul><li><a href="privacy.html" data-i18n="nav.privacy">Privacy Policy</a></li><li><a href="terms.html" data-i18n="nav.terms">Terms & Conditions</a></li><li><a href="mailto:agucleanservices@gmail.com">agucleanservices@gmail.com</a></li><li><a href="tel:07448738971">07448738971</a></li></ul></div>
       </div>
-      <div class="footer-note">© 2026 AGU CLEANING SERVICES.</div>
+      <div class="footer-note" data-i18n="footer.note">© 2026 AGU Clean Services. All rights reserved.</div>
+      <div class="footer-note" data-i18n="footer.trade">AGU Clean Services is a trading name of Agnieszka Kalina vel Kalinowska.</div>
     </div>
   </footer>
   <a class="floating-whatsapp" href="https://wa.me/447448738971" aria-label="Chat on WhatsApp">✆</a>

@@ -1,7 +1,0 @@
-
-> aga-clean-services-app@1.0.0 dev
-> node backend/server.js
-
-Port 3000 is busy. Retrying on http://localhost:3001
-AGA Clean Services app running on http://localhost:3000
-AGA Clean Services app running on http://localhost:3001

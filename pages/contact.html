@@ -9,13 +9,13 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
-  <link rel="icon" type="image/svg+xml" href="../ASSETS/Icon System/Brand Icons/svg-regenerated/agu-favicon-icon.svg" />
-  <link rel="stylesheet" href="styles.css" />
+  <link rel="icon" type="image/svg+xml" href="../frontend/assets/brand/favicon.svg" />
+  <link rel="stylesheet" href="../frontend/css/styles.css" />
 </head>
 <body data-page="contact">
   <header class="topbar">
     <div class="container nav">
-      <a class="brand" href="index.html"><img class="brand-mark" src="../ASSETS/Icon System/Brand Icons/AGU Clean Services logo design.png" alt="AGU CLEANING SERVICES logo" /></a>
+      <a class="brand" href="index.html"><img class="brand-mark" src="../frontend/assets/brand/logo.png" alt="AGU CLEANING SERVICES logo" /></a>
       <button class="nav-toggle" type="button" aria-label="Open navigation" aria-expanded="false" data-nav-toggle><span></span><span></span><span></span></button>
       <ul class="nav-links" data-nav-links>
         <li><a href="index.html" data-page-link="home" data-i18n="nav.home">Home</a></li>
@@ -36,10 +36,10 @@
     <section class="page-hero">
       <div class="container page-hero-content">
         <div class="crumbs"><span data-i18n="nav.home">Home</span><span>•</span><span data-i18n="nav.contact">Contact</span></div>
-        <div class="eyebrow" data-i18n="contact.eyebrow">Free Quote</div>
-        <h1 data-i18n="contact.h1">Contact AGU CLEANING SERVICES for a clear, friendly quote.</h1>
-        <p data-i18n="contact.lead">Use whichever method is easiest. Call, WhatsApp or send the contact form with your service type and property details.</p>
-        <img class="section-divider" src="../ASSETS/Icon System/Brand Icons/svg-regenerated/gold-divider.svg" alt="" />
+        <div class="eyebrow" data-i18n="contact.eyebrow">Contact AGU Clean Services</div>
+        <h1 data-i18n="contact.h1">Contact AGU Clean Services</h1>
+        <p data-i18n="contact.lead">Get your free quote today. We usually respond within 1 to 2 hours by WhatsApp, phone or contact form.</p>
+        <img class="section-divider" src="../frontend/assets/brand/divider.svg" alt="" />
       </div>
     </section>
 
@@ -48,45 +48,51 @@
         <div class="contact-stack">
           <article class="contact-card">
             <div class="contact-row">
-              <div class="icon-badge"><img src="../ASSETS/Icon System/Contact Icons/WhatsApp.png" alt="Call and WhatsApp icon" /></div>
+              <div class="icon-badge"><img src="../frontend/assets/contact/whatsapp.png" alt="Call and WhatsApp icon" /></div>
               <div><div class="contact-label" data-i18n="contact.callLabel">Call / WhatsApp</div><div class="contact-value">07448738971</div></div>
             </div>
           </article>
           <article class="contact-card">
             <div class="contact-row">
-              <div class="icon-badge"><img src="../ASSETS/Icon System/Contact Icons/Email.png" alt="Email icon" /></div>
+              <div class="icon-badge"><img src="../frontend/assets/contact/email.png" alt="Email icon" /></div>
               <div><div class="contact-label" data-i18n="contact.emailLabel">Email</div><div class="contact-value">agucleanservices@gmail.com</div></div>
             </div>
           </article>
           <article class="contact-card">
             <div class="contact-row">
-              <div class="icon-badge"><img src="../ASSETS/Icon System/Contact Icons/Mobile.png" alt="Owner contact icon" /></div>
+              <div class="icon-badge"><img src="../frontend/assets/contact/mobile.png" alt="Owner contact icon" /></div>
               <div><div class="contact-label">Owner</div><div class="contact-value">Agnieszka Kalina vel Kalinowska</div></div>
             </div>
           </article>
           <article class="contact-card">
             <div class="contact-row">
-              <div class="icon-badge"><img src="../ASSETS/Icon System/Contact Icons/lOCALISATION.png" alt="Service area icon" /></div>
+              <div class="icon-badge"><img src="../frontend/assets/contact/location.png" alt="Service area icon" /></div>
               <div><div class="contact-label" data-i18n="contact.areaLabel">Service Area</div><div class="contact-value">Newcastle • Gateshead • Chester-le-Street • Durham</div></div>
             </div>
           </article>
           <article class="contact-card">
             <div class="contact-row">
-              <div class="icon-badge"><img src="../ASSETS/Icon System/Bookin Icons/Booking Form.png" alt="Services booking icon" /></div>
+              <div class="icon-badge"><img src="../frontend/assets/booking/calendar.png" alt="Working hours icon" /></div>
+              <div><div class="contact-label">Working Hours</div><div class="contact-value">Monday-Saturday 8:00-18:00, flexible by arrangement</div></div>
+            </div>
+          </article>
+          <article class="contact-card">
+            <div class="contact-row">
+              <div class="icon-badge"><img src="../frontend/assets/booking/booking-form.png" alt="Services booking icon" /></div>
               <div><div class="contact-label" data-i18n="nav.services">Services</div><div class="contact-value" data-i18n="contact.servicesValue">Domestic • Commercial • Tenancy • Airbnb</div></div>
             </div>
           </article>
           <article class="contact-card">
             <div class="contact-row">
-              <div class="icon-badge"><img src="../ASSETS/Icon System/Contact Icons/Website.png" alt="Website icon" /></div>
+              <div class="icon-badge"><img src="../frontend/assets/contact/website.png" alt="Website icon" /></div>
               <div><div class="contact-label">Website</div><div class="contact-value">www.agucleanservices.co.uk</div></div>
             </div>
           </article>
         </div>
 
         <article class="contact-card">
-          <h3 data-i18n="contact.formH">Get a free quote</h3>
-          <p style="margin:0 0 20px;color:var(--text-700);" data-i18n="contact.formP">Share the property type, location and service needed. This layout is ready for future backend integration.</p>
+          <h3 data-i18n="contact.formH">Request your free quote</h3>
+          <p style="margin:0 0 20px;color:var(--text-700);" data-i18n="contact.formP">Send your service type, property details and preferred contact method. We will get back to you quickly with a tailored quote.</p>
           <form class="form-grid" id="quote-form">
             <div class="form-row">
               <div>
@@ -120,9 +126,13 @@
               <textarea id="message" name="message" placeholder="Property size, location and any details that help with the quote" data-i18n-placeholder="contact.messagePh"></textarea>
             </div>
             <div>
-              <button class="button" type="submit" data-i18n="contact.send">Send enquiry</button>
+              <button class="button" type="submit" data-i18n="contact.send">Request Free Quote</button>
             </div>
           </form>
+          <div class="hero-actions" style="margin-top:20px;margin-bottom:0;">
+            <a class="button-secondary" href="https://wa.me/447448738971">Chat on WhatsApp</a>
+            <a class="button-outline" href="tel:07448738971">Call Now: 07448738971</a>
+          </div>
         </article>
       </div>
     </section>
@@ -134,9 +144,9 @@
           <p>This contact page now reflects the real booking route from the business plan instead of reading like a generic template form.</p>
         </div>
         <div class="grid-3">
-          <article class="card"><div class="icon-badge"><img src="../ASSETS/Icon System/Bookin Icons/Free Quote.png" alt="Free quote icon" /></div><h3>1. Free quote</h3><p>Send the property type, location and service needed by phone, WhatsApp or the website form.</p></article>
-          <article class="card"><div class="icon-badge"><img src="../ASSETS/Icon System/Bookin Icons/Schedule.png" alt="Schedule icon" /></div><h3>2. Booking slot</h3><p>Jobs are arranged around weekly domestic visits, tenancy deadlines, guest turnovers and business hours.</p></article>
-          <article class="card"><div class="icon-badge"><img src="../ASSETS/Icon System/Trust Icons/Reliable ✔ Check Shield.png" alt="Reliable trust icon" /></div><h3>3. Confirmed service</h3><p>The enquiry flow stays calm and official, with clear next steps and a more trustworthy presentation.</p></article>
+          <article class="card"><div class="icon-badge"><img src="../frontend/assets/booking/free-quote.png" alt="Free quote icon" /></div><h3>1. Free quote</h3><p>Send the property type, location and service needed by phone, WhatsApp or the website form.</p></article>
+          <article class="card"><div class="icon-badge"><img src="../frontend/assets/booking/schedule.png" alt="Schedule icon" /></div><h3>2. Booking slot</h3><p>Jobs are arranged around weekly domestic visits, tenancy deadlines, guest turnovers and business hours.</p></article>
+          <article class="card"><div class="icon-badge"><img src="../frontend/assets/trust/reliable.png" alt="Reliable trust icon" /></div><h3>3. Confirmed service</h3><p>The enquiry flow stays calm and official, with clear next steps and a more trustworthy presentation.</p></article>
         </div>
       </div>
     </section>
@@ -144,7 +154,7 @@
   <footer class="footer">
     <div class="container">
       <div class="footer-grid">
-        <div><img class="brand-mark" src="../ASSETS/Icon System/Brand Icons/AGU Clean Services logo design.png" alt="AGU CLEANING SERVICES logo" /><p>Fast quote routes and a more official contact presentation.</p></div>
+        <div><img class="brand-mark" src="../frontend/assets/brand/logo.png" alt="AGU CLEANING SERVICES logo" /><p>Fast quote routes and a more official contact presentation.</p></div>
         <div><h4>Pages</h4><ul><li><a href="index.html">Home</a></li><li><a href="about.html">About</a></li><li><a href="about-me.html">About Me</a></li><li><a href="services.html">Services</a></li><li><a href="prices.html">Prices</a></li><li><a href="reviews.html">Reviews</a></li></ul></div>
         <div><h4>Contact</h4><ul><li><a href="tel:07448738971">Call / WhatsApp: 07448738971</a></li><li><a href="mailto:agucleanservices@gmail.com">agucleanservices@gmail.com</a></li><li>Agnieszka Kalina vel Kalinowska</li><li>Newcastle • Gateshead • Chester-le-Street • Durham</li></ul></div>
       </div>
@@ -152,6 +162,7 @@
     </div>
   </footer>
   <a class="floating-whatsapp" href="https://wa.me/447448738971" aria-label="Chat on WhatsApp">✆</a>
-  <script src="app.js"></script>
+  <script src="../frontend/js/app.js"></script>
 </body>
 </html>
+

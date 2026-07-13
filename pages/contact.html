@@ -19,11 +19,12 @@
       <button class="nav-toggle" type="button" aria-label="Open navigation" aria-expanded="false" data-nav-toggle><span></span><span></span><span></span></button>
       <ul class="nav-links" data-nav-links>
         <li><a href="index.html" data-page-link="home" data-i18n="nav.home">Home</a></li>
-        <li><a href="about.html" data-page-link="about" data-i18n="nav.about">About</a></li>
+        <li><a href="about.html" data-page-link="about" data-i18n="nav.about">About Us</a></li>
         <li><a href="services.html" data-page-link="services" data-i18n="nav.services">Services</a></li>
-        <li><a href="prices.html" data-page-link="prices" data-i18n="nav.prices">Prices</a></li>
-        <li><a href="reviews.html" data-page-link="reviews" data-i18n="nav.reviews">Reviews</a></li>
-        <li><a href="contact.html" data-page-link="contact" data-i18n="nav.contact">Contact</a></li>
+        <li><a href="prices.html" data-page-link="prices" data-i18n="nav.prices">Pricing</a></li>
+        <li><a href="areas.html" data-page-link="areas" data-i18n="nav.areas">Areas We Cover</a></li>
+        <li><a href="reviews.html" data-page-link="reviews" data-i18n="nav.reviews">Testimonials</a></li>
+        <li><a href="contact.html" data-page-link="contact" data-i18n="nav.contact">Contact Us</a></li>
       </ul>
       <div class="nav-actions">
         <div class="lang-switch"><button class="lang-btn" type="button" data-lang="en">EN</button><button class="lang-btn" type="button" data-lang="pl">PL</button></div>
@@ -35,8 +36,8 @@
   <main>
     <section class="page-hero">
       <div class="container page-hero-content">
-        <div class="crumbs"><span data-i18n="nav.home">Home</span><span>•</span><span data-i18n="nav.contact">Contact</span></div>
-        <div class="eyebrow" data-i18n="contact.eyebrow">Contact AGU Clean Services</div>
+        <div class="crumbs"><span data-i18n="nav.home">Home</span><span>•</span><span data-i18n="nav.contact">Contact Us</span></div>
+        <div class="eyebrow" data-i18n="contact.eyebrow">Contact Us</div>
         <h1 data-i18n="contact.h1">Contact AGU Clean Services</h1>
         <p data-i18n="contact.lead">Get your free quote today. We usually respond within 1 to 2 hours by WhatsApp, phone or contact form.</p>
         <img class="section-divider" src="../frontend/assets/brand/divider.svg" alt="" />
@@ -61,7 +62,7 @@
           <article class="contact-card">
             <div class="contact-row">
               <div class="icon-badge"><img src="../frontend/assets/contact/mobile.png" alt="Owner contact icon" /></div>
-              <div><div class="contact-label">Owner</div><div class="contact-value">Agnieszka Kalina vel Kalinowska</div></div>
+              <div><div class="contact-label" data-i18n="contact.ownerLabel">Owner</div><div class="contact-value">Agnieszka Kalina vel Kalinowska</div></div>
             </div>
           </article>
           <article class="contact-card">
@@ -73,7 +74,7 @@
           <article class="contact-card">
             <div class="contact-row">
               <div class="icon-badge"><img src="../frontend/assets/booking/calendar.png" alt="Working hours icon" /></div>
-              <div><div class="contact-label">Working Hours</div><div class="contact-value">Monday-Saturday 8:00-18:00, flexible by arrangement</div></div>
+              <div><div class="contact-label" data-i18n="contact.hoursLabel">Working Hours</div><div class="contact-value" data-i18n="contact.hoursValue">Monday-Saturday 8:00-18:00, flexible by arrangement</div></div>
             </div>
           </article>
           <article class="contact-card">
@@ -85,7 +86,7 @@
           <article class="contact-card">
             <div class="contact-row">
               <div class="icon-badge"><img src="../frontend/assets/contact/website.png" alt="Website icon" /></div>
-              <div><div class="contact-label">Website</div><div class="contact-value">www.agucleanservices.co.uk</div></div>
+              <div><div class="contact-label" data-i18n="contact.websiteLabel">Website</div><div class="contact-value">www.agucleanservices.co.uk</div></div>
             </div>
           </article>
         </div>
@@ -140,13 +141,13 @@
     <section class="section section-alt">
       <div class="container">
         <div class="section-header">
-          <h2>Quote and Booking Flow</h2>
-          <p>This contact page now reflects the real booking route from the business plan instead of reading like a generic template form.</p>
+          <h2 data-i18n="contact.flowH">Quote and booking process</h2>
+          <p data-i18n="contact.flowP">A clear route from enquiry to confirmed booking keeps the service professional and easy to trust.</p>
         </div>
         <div class="grid-3">
-          <article class="card"><div class="icon-badge"><img src="../frontend/assets/booking/free-quote.png" alt="Free quote icon" /></div><h3>1. Free quote</h3><p>Send the property type, location and service needed by phone, WhatsApp or the website form.</p></article>
-          <article class="card"><div class="icon-badge"><img src="../frontend/assets/booking/schedule.png" alt="Schedule icon" /></div><h3>2. Booking slot</h3><p>Jobs are arranged around weekly domestic visits, tenancy deadlines, guest turnovers and business hours.</p></article>
-          <article class="card"><div class="icon-badge"><img src="../frontend/assets/trust/reliable.png" alt="Reliable trust icon" /></div><h3>3. Confirmed service</h3><p>The enquiry flow stays calm and official, with clear next steps and a more trustworthy presentation.</p></article>
+          <article class="card"><div class="icon-badge"><img src="../frontend/assets/booking/free-quote.png" alt="Free quote icon" /></div><h3 data-i18n="contact.flow1H">1. Free quote</h3><p data-i18n="contact.flow1P">Send the property type, location and service needed by phone, WhatsApp or the website form.</p></article>
+          <article class="card"><div class="icon-badge"><img src="../frontend/assets/booking/schedule.png" alt="Schedule icon" /></div><h3 data-i18n="contact.flow2H">2. Booking slot</h3><p data-i18n="contact.flow2P">Jobs are arranged around weekly visits, tenancy deadlines, guest turnovers and business hours.</p></article>
+          <article class="card"><div class="icon-badge"><img src="../frontend/assets/trust/reliable.png" alt="Reliable trust icon" /></div><h3 data-i18n="contact.flow3H">3. Confirmed service</h3><p data-i18n="contact.flow3P">You receive a clear next step, agreed timing and a professional service plan.</p></article>
         </div>
       </div>
     </section>
@@ -172,11 +173,12 @@
   <footer class="footer">
     <div class="container">
       <div class="footer-grid">
-        <div><img class="brand-mark" src="../frontend/assets/brand/logo.png" alt="AGU CLEANING SERVICES logo" /><p>Fast quote routes and a more official contact presentation.</p></div>
-        <div><h4>Pages</h4><ul><li><a href="index.html">Home</a></li><li><a href="about.html">About</a></li><li><a href="about-me.html">About Me</a></li><li><a href="services.html">Services</a></li><li><a href="prices.html">Prices</a></li><li><a href="reviews.html">Reviews</a></li></ul></div>
-        <div><h4>Contact</h4><ul><li><a href="tel:07448738971">Call / WhatsApp: 07448738971</a></li><li><a href="mailto:agucleanservices@gmail.com">agucleanservices@gmail.com</a></li><li>Agnieszka Kalina vel Kalinowska</li><li>Newcastle • Gateshead • Chester-le-Street • Durham</li></ul></div>
+        <div><img class="brand-mark" src="../frontend/assets/brand/logo.png" alt="AGU CLEANING SERVICES logo" /><p data-i18n="footer.desc">Reliable, professional and affordable cleaning services for homes and businesses across Gateshead and surrounding areas.</p></div>
+        <div><h4 data-i18n="footer.pages">Main Menu</h4><ul><li><a href="index.html" data-i18n="nav.home">Home</a></li><li><a href="about.html" data-i18n="nav.about">About Us</a></li><li><a href="services.html" data-i18n="nav.services">Services</a></li><li><a href="prices.html" data-i18n="nav.prices">Pricing</a></li><li><a href="areas.html" data-i18n="nav.areas">Areas We Cover</a></li><li><a href="reviews.html" data-i18n="nav.reviews">Testimonials</a></li><li><a href="contact.html" data-i18n="nav.contact">Contact Us</a></li></ul></div>
+        <div><h4 data-i18n="footer.legal">Legal</h4><ul><li><a href="privacy.html" data-i18n="nav.privacy">Privacy Policy</a></li><li><a href="terms.html" data-i18n="nav.terms">Terms & Conditions</a></li><li><a href="mailto:agucleanservices@gmail.com">agucleanservices@gmail.com</a></li><li><a href="tel:07448738971">07448738971</a></li></ul></div>
       </div>
-      <div class="footer-note">© 2026 AGU CLEANING SERVICES.</div>
+      <div class="footer-note" data-i18n="footer.note">© 2026 AGU Clean Services. All rights reserved.</div>
+      <div class="footer-note" data-i18n="footer.trade">AGU Clean Services is a trading name of Agnieszka Kalina vel Kalinowska.</div>
     </div>
   </footer>
   <a class="floating-whatsapp" href="https://wa.me/447448738971" aria-label="Chat on WhatsApp">✆</a>

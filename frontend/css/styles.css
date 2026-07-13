@@ -1057,6 +1057,16 @@ textarea {
   min-width: 120px;
 }
 
+.admin-table textarea {
+  min-height: 96px;
+}
+
+.admin-table input[type="checkbox"] {
+  min-width: auto;
+  width: 18px;
+  height: 18px;
+}
+
 .admin-notes {
   min-height: 92px;
 }

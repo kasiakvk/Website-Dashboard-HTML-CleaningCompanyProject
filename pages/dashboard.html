@@ -4,8 +4,8 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="theme-color" content="#f6f0e6" />
-  <title>Dashboard | AGU CLEANING SERVICES</title>
-  <meta name="description" content="Admin dashboard for AGU CLEANING SERVICES leads and enquiry statistics." />
+  <title>Owner Dashboard | AGU CLEANING SERVICES</title>
+  <meta name="description" content="Secure owner dashboard for AGU Clean Services leads, reviews, business settings and account management." />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
@@ -15,145 +15,684 @@
 <body data-page="dashboard">
   <header class="topbar">
     <div class="container nav">
-      <a class="brand brand--dashboard" href="index.html" aria-label="AGU CLEANING SERVICES dashboard home"><span class="brand-badge"><img class="brand-mark brand-mark--dashboard" src="../frontend/assets/brand/app-icon.svg" alt="AGU CLEANING SERVICES dashboard icon" /></span><span class="brand-dashboard-copy"><span class="brand-dashboard-title">AGA Clean Services</span><span class="brand-dashboard-subtitle">Dashboard</span></span></a>
+      <a class="brand brand--dashboard" href="index.html" aria-label="AGU CLEANING SERVICES owner dashboard">
+        <span class="brand-badge"><img class="brand-mark brand-mark--dashboard" src="../frontend/assets/brand/app-icon.svg" alt="AGU dashboard icon" /></span>
+        <span class="brand-dashboard-copy">
+          <span class="brand-dashboard-title">AGU Clean Services</span>
+          <span class="brand-dashboard-subtitle">Owner Console</span>
+        </span>
+      </a>
       <button class="nav-toggle" type="button" aria-label="Open navigation" aria-expanded="false" data-nav-toggle><span></span><span></span><span></span></button>
       <ul class="nav-links" data-nav-links>
-        <li><a href="index.html" data-page-link="home">Home</a></li>
-        <li><a href="services.html" data-page-link="services">Services</a></li>
-        <li><a href="prices.html" data-page-link="prices">Prices</a></li>
-        <li><a href="about.html" data-page-link="about">About</a></li>
-        <li><a href="reviews.html" data-page-link="reviews">Reviews</a></li>
-        <li><a href="contact.html" data-page-link="contact">Contact</a></li>
-        <li><a href="faq.html" data-page-link="faq">FAQ</a></li>
+        <li><a href="index.html">Website</a></li>
+        <li><a href="services.html">Services</a></li>
+        <li><a href="prices.html">Pricing</a></li>
+        <li><a href="areas.html">Areas</a></li>
+        <li><a href="contact.html">Contact</a></li>
       </ul>
       <div class="nav-actions">
-        <a class="button-outline" href="contact.html#quote-form">New Lead</a>
-        <a class="button-secondary" href="index.html">Website</a>
+        <button class="button-outline" type="button" id="refresh-dashboard">Refresh</button>
+        <button class="button-secondary" type="button" id="logout-button" hidden>Log Out</button>
       </div>
     </div>
   </header>
+
   <main>
     <section class="page-hero">
       <div class="container page-hero-content">
-        <div class="crumbs"><span>Admin</span><span>•</span><span>Dashboard</span></div>
-        <div class="eyebrow">Lead Overview</div>
-        <h1>Dashboard</h1>
-        <p>Quick view of enquiries, quote requests and lead statuses for AGU CLEANING SERVICES.</p>
+        <div class="crumbs"><span>Admin</span><span>•</span><span>Owner Dashboard</span></div>
+        <div class="eyebrow">Private Admin Area</div>
+        <h1>Owner Dashboard</h1>
+        <p>Manage leads, reviews, business details and the owner account from one protected panel.</p>
         <img class="section-divider" src="../frontend/assets/brand/divider.svg" alt="" />
       </div>
     </section>
 
-    <section class="section">
+    <section class="section" id="auth-shell">
+      <div class="container admin-auth-grid">
+        <article class="contact-card">
+          <h2>Owner Login</h2>
+          <p class="admin-subtle">Only the site owner account can open the admin data, update lead statuses and manage published testimonials.</p>
+          <form class="form-grid" id="login-form">
+            <div>
+              <label for="login-email">Owner email</label>
+              <input id="login-email" name="email" type="email" value="agucleanservices@gmail.com" autocomplete="username" />
+            </div>
+            <div>
+              <label for="login-password">Password</label>
+              <input id="login-password" name="password" type="password" autocomplete="current-password" />
+            </div>
+            <div>
+              <button class="button" type="submit">Open Dashboard</button>
+            </div>
+          </form>
+          <div id="login-message" class="admin-inline-message"></div>
+        </article>
+
+        <article class="split-visual">
+          <div class="eyebrow">Owner Account</div>
+          <h3>Owner access</h3>
+          <p>Owner email: <strong>agucleanservices@gmail.com</strong></p>
+          <p>This area is reserved for the website owner account.</p>
+          <p>After logging in, update the password immediately in the owner account section.</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="section" id="admin-shell" hidden>
       <div class="container">
-        <div class="grid-3" id="stats-grid">
-          <article class="price-card"><h3>Total leads</h3><div class="price-meta"><span class="price-value" id="stat-total">0</span><span class="price-note">All enquiries</span></div></article>
-          <article class="price-card featured"><h3>Contact forms</h3><div class="price-meta"><span class="price-value" id="stat-contact">0</span><span class="price-note">Standard contact leads</span></div></article>
-          <article class="price-card"><h3>Quote requests</h3><div class="price-meta"><span class="price-value" id="stat-quote">0</span><span class="price-note">Quote API submissions</span></div></article>
+        <div class="admin-toolbar">
+          <div>
+            <h2 id="owner-greeting">Welcome back</h2>
+            <p class="admin-subtle" id="owner-meta">Session active.</p>
+          </div>
+          <div class="admin-pill-group">
+            <span class="admin-pill" id="owner-role-pill">Owner</span>
+            <span class="admin-pill" id="owner-city-pill">Gateshead</span>
+          </div>
+        </div>
+
+        <div class="grid-4 admin-kpi-grid" id="stats-grid">
+          <article class="price-card"><h3>Total Leads</h3><div class="price-meta"><span class="price-value" id="stat-total">0</span><span class="price-note">All enquiries</span></div></article>
+          <article class="price-card featured"><h3>Quote Requests</h3><div class="price-meta"><span class="price-value" id="stat-quotes">0</span><span class="price-note">Ready for follow-up</span></div></article>
+          <article class="price-card"><h3>New Leads</h3><div class="price-meta"><span class="price-value" id="stat-new">0</span><span class="price-note">Awaiting action</span></div></article>
+          <article class="price-card"><h3>Published Reviews</h3><div class="price-meta"><span class="price-value" id="stat-published">0</span><span class="price-note">Visible testimonials</span></div></article>
         </div>
       </div>
     </section>
 
-    <section class="section section-alt">
+    <section class="section section-alt" id="admin-shell-panels" hidden>
       <div class="container">
-        <div class="section-header">
-          <h2>Lead Status</h2>
-          <p>Counts update from the backend API. If the backend is offline, the dashboard will show an unavailable state.</p>
-        </div>
-        <div class="grid-3" id="status-grid">
-          <article class="card"><h3>New</h3><p id="status-new">0</p></article>
-          <article class="card"><h3>In Progress</h3><p id="status-in-progress">0</p></article>
-          <article class="card"><h3>Closed</h3><p id="status-closed">0</p></article>
+        <div class="grid-3">
+          <article class="card">
+            <h3>Lead Pipeline</h3>
+            <div class="admin-metric-list">
+              <div><span>New</span><strong id="pipeline-new">0</strong></div>
+              <div><span>In Progress</span><strong id="pipeline-progress">0</strong></div>
+              <div><span>Closed</span><strong id="pipeline-closed">0</strong></div>
+            </div>
+          </article>
+          <article class="card">
+            <h3>Priority Split</h3>
+            <div class="admin-metric-list">
+              <div><span>High</span><strong id="priority-high">0</strong></div>
+              <div><span>Medium</span><strong id="priority-medium">0</strong></div>
+              <div><span>Low</span><strong id="priority-low">0</strong></div>
+            </div>
+          </article>
+          <article class="card">
+            <h3>Review Moderation</h3>
+            <div class="admin-metric-list">
+              <div><span>Pending</span><strong id="reviews-pending">0</strong></div>
+              <div><span>Reviewed</span><strong id="reviews-reviewed">0</strong></div>
+              <div><span>Published</span><strong id="reviews-live">0</strong></div>
+            </div>
+          </article>
         </div>
       </div>
     </section>
 
-    <section class="section">
-      <div class="container">
-        <div class="section-header">
-          <h2>Recent Leads</h2>
-          <p>Latest submissions from the contact and quote endpoints.</p>
-        </div>
-        <div class="card">
-          <div id="dashboard-message" style="margin-bottom:16px;color:var(--text-700);">Loading dashboard data...</div>
-          <div style="overflow:auto;">
-            <table style="width:100%;border-collapse:collapse;">
+    <section class="section" id="admin-shell-tables" hidden>
+      <div class="container admin-stack">
+        <article class="contact-card">
+          <div class="admin-section-head">
+            <div>
+              <h3>Lead Management</h3>
+              <p class="admin-subtle">Update status, priority and notes for every enquiry.</p>
+            </div>
+            <div id="lead-message" class="admin-inline-message">Loading leads...</div>
+          </div>
+          <div class="admin-table-wrap">
+            <table class="admin-table">
               <thead>
                 <tr>
-                  <th style="text-align:left;padding:12px;border-bottom:1px solid rgba(22,35,58,.12);">Created</th>
-                  <th style="text-align:left;padding:12px;border-bottom:1px solid rgba(22,35,58,.12);">Type</th>
-                  <th style="text-align:left;padding:12px;border-bottom:1px solid rgba(22,35,58,.12);">Name</th>
-                  <th style="text-align:left;padding:12px;border-bottom:1px solid rgba(22,35,58,.12);">Service</th>
-                  <th style="text-align:left;padding:12px;border-bottom:1px solid rgba(22,35,58,.12);">Status</th>
+                  <th>Created</th>
+                  <th>Name</th>
+                  <th>Type</th>
+                  <th>Service</th>
+                  <th>Status</th>
+                  <th>Priority</th>
+                  <th>Notes</th>
+                  <th>Save</th>
                 </tr>
               </thead>
               <tbody id="leads-body">
-                <tr><td colspan="5" style="padding:12px;">No leads loaded yet.</td></tr>
+                <tr><td colspan="8">No leads found.</td></tr>
               </tbody>
             </table>
           </div>
+        </article>
+
+        <article class="contact-card">
+          <div class="admin-section-head">
+            <div>
+              <h3>Quote Inbox</h3>
+              <p class="admin-subtle">Quick access to quote-ready leads with direct contact details.</p>
+            </div>
+            <div id="quote-message" class="admin-inline-message">Loading quotes...</div>
+          </div>
+          <div class="admin-table-wrap">
+            <table class="admin-table">
+              <thead>
+                <tr>
+                  <th>Created</th>
+                  <th>Name</th>
+                  <th>Service</th>
+                  <th>Phone</th>
+                  <th>Email</th>
+                  <th>Status</th>
+                </tr>
+              </thead>
+              <tbody id="quotes-body">
+                <tr><td colspan="6">No quotes found.</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </article>
+
+        <article class="contact-card">
+          <div class="admin-section-head">
+            <div>
+              <h3>Review Moderation</h3>
+              <p class="admin-subtle">Review, publish or remove customer testimonials.</p>
+            </div>
+            <div id="review-message" class="admin-inline-message">Loading reviews...</div>
+          </div>
+          <div class="admin-review-list" id="reviews-body">
+            <div class="admin-empty">No reviews found.</div>
+          </div>
+        </article>
+
+        <div class="grid-2">
+          <article class="contact-card">
+            <div class="admin-section-head">
+              <div>
+                <h3>Owner Account</h3>
+                <p class="admin-subtle">Update owner credentials and contact details.</p>
+              </div>
+              <div id="profile-message" class="admin-inline-message"></div>
+            </div>
+            <form class="form-grid" id="profile-form">
+              <div class="form-row">
+                <div>
+                  <label for="owner-full-name">Full name</label>
+                  <input id="owner-full-name" name="fullName" type="text" />
+                </div>
+                <div>
+                  <label for="owner-display-name">Display name</label>
+                  <input id="owner-display-name" name="displayName" type="text" />
+                </div>
+              </div>
+              <div class="form-row">
+                <div>
+                  <label for="owner-email">Email</label>
+                  <input id="owner-email" name="email" type="email" />
+                </div>
+                <div>
+                  <label for="owner-phone">Phone</label>
+                  <input id="owner-phone" name="phone" type="text" />
+                </div>
+              </div>
+              <div>
+                <label for="owner-website">Website</label>
+                <input id="owner-website" name="website" type="text" />
+              </div>
+              <div class="form-row">
+                <div>
+                  <label for="owner-current-password">Current password</label>
+                  <input id="owner-current-password" name="currentPassword" type="password" autocomplete="current-password" />
+                </div>
+                <div>
+                  <label for="owner-new-password">New password</label>
+                  <input id="owner-new-password" name="newPassword" type="password" autocomplete="new-password" />
+                </div>
+              </div>
+              <div>
+                <button class="button" type="submit">Save Owner Account</button>
+              </div>
+            </form>
+          </article>
+
+          <article class="contact-card">
+            <div class="admin-section-head">
+              <div>
+                <h3>Business Settings</h3>
+                <p class="admin-subtle">Manage public company details used across the website and legal sections.</p>
+              </div>
+              <div id="business-message" class="admin-inline-message"></div>
+            </div>
+            <form class="form-grid" id="business-form">
+              <div class="form-row">
+                <div>
+                  <label for="business-name">Business name</label>
+                  <input id="business-name" name="businessName" type="text" />
+                </div>
+                <div>
+                  <label for="trading-name">Trading name</label>
+                  <input id="trading-name" name="tradingName" type="text" />
+                </div>
+              </div>
+              <div class="form-row">
+                <div>
+                  <label for="primary-city">Primary city</label>
+                  <input id="primary-city" name="primaryCity" type="text" />
+                </div>
+                <div>
+                  <label for="working-hours">Working hours</label>
+                  <input id="working-hours" name="workingHours" type="text" />
+                </div>
+              </div>
+              <div>
+                <label for="service-areas">Service areas</label>
+                <input id="service-areas" name="serviceAreas" type="text" placeholder="Gateshead, Newcastle, Chester-le-Street, Durham" />
+              </div>
+              <div>
+                <label for="legal-footer">Legal footer line</label>
+                <textarea id="legal-footer" name="legalFooter"></textarea>
+              </div>
+              <div>
+                <button class="button" type="submit">Save Business Settings</button>
+              </div>
+            </form>
+          </article>
         </div>
       </div>
     </section>
   </main>
+
   <footer class="footer">
     <div class="container">
       <div class="footer-grid">
-        <div><img class="brand-mark" src="../frontend/assets/brand/logo.png" alt="AGU CLEANING SERVICES logo" /><p>Dashboard view for local leads, quote flow and booking follow-up.</p></div>
-        <div><h4>Pages</h4><ul><li><a href="index.html">Home</a></li><li><a href="services.html">Services</a></li><li><a href="prices.html">Prices</a></li><li><a href="contact.html">Contact</a></li></ul></div>
-        <div><h4>Contact</h4><ul><li><a href="tel:07448738971">Call / WhatsApp: 07448738971</a></li><li><a href="mailto:agucleanservices@gmail.com">agucleanservices@gmail.com</a></li><li>Newcastle • Gateshead • Chester-le-Street • Durham</li></ul></div>
+        <div><img class="brand-mark" src="../frontend/assets/brand/logo.png" alt="AGU CLEANING SERVICES logo" /><p>Private operations console for owner access, lead follow-up and service moderation.</p></div>
+        <div><h4>Admin</h4><ul><li><a href="#auth-shell">Login</a></li><li><a href="#admin-shell">Overview</a></li><li><a href="#admin-shell-tables">Management</a></li></ul></div>
+        <div><h4>Website</h4><ul><li><a href="index.html">Home</a></li><li><a href="services.html">Services</a></li><li><a href="contact.html">Contact</a></li></ul></div>
       </div>
-      <div class="footer-note">© 2026 AGU CLEANING SERVICES.</div>
+      <div class="footer-note">© 2026 AGU Clean Services. Owner dashboard.</div>
     </div>
   </footer>
+
   <script src="../frontend/js/app.js"></script>
   <script>
-    async function loadDashboard() {
-      const message = document.getElementById("dashboard-message");
-      const leadsBody = document.getElementById("leads-body");
+    const authShell = document.getElementById("auth-shell");
+    const adminShell = document.getElementById("admin-shell");
+    const adminShellPanels = document.getElementById("admin-shell-panels");
+    const adminShellTables = document.getElementById("admin-shell-tables");
+    const loginForm = document.getElementById("login-form");
+    const logoutButton = document.getElementById("logout-button");
+    const refreshButton = document.getElementById("refresh-dashboard");
+    const reviewLabels = { pending: "Pending", reviewed: "Reviewed", approved: "Approved" };
 
+    function message(nodeId, text, isError = false) {
+      const node = document.getElementById(nodeId);
+      if (!node) return;
+      node.textContent = text || "";
+      node.classList.toggle("is-error", Boolean(isError));
+      node.classList.toggle("is-success", Boolean(text && !isError));
+    }
+
+    function formatDate(value) {
+      return value ? new Date(value).toLocaleString() : "—";
+    }
+
+    function escapeHtml(value) {
+      return String(value || "")
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
+    }
+
+    async function api(path, options = {}) {
+      const response = await fetch(path, {
+        credentials: "same-origin",
+        headers: {
+          "Content-Type": "application/json",
+          ...(options.headers || {})
+        },
+        ...options
+      });
+
+      let data = {};
       try {
-        const [statsResponse, leadsResponse] = await Promise.all([
-          fetch("/api/admin/stats"),
-          fetch("/api/admin/leads")
-        ]);
+        data = await response.json();
+      } catch {
+        data = {};
+      }
 
-        if (!statsResponse.ok || !leadsResponse.ok) {
-          throw new Error("Dashboard API unavailable");
-        }
+      if (!response.ok) {
+        throw new Error(data.error || "Request failed");
+      }
 
-        const stats = await statsResponse.json();
-        const leads = await leadsResponse.json();
+      return data;
+    }
 
-        document.getElementById("stat-total").textContent = stats.totalLeads || 0;
-        document.getElementById("stat-contact").textContent = stats.contactLeads || 0;
-        document.getElementById("stat-quote").textContent = stats.quoteLeads || 0;
-        document.getElementById("status-new").textContent = stats.statusCounts?.new || 0;
-        document.getElementById("status-in-progress").textContent = stats.statusCounts?.["in-progress"] || 0;
-        document.getElementById("status-closed").textContent = stats.statusCounts?.closed || 0;
+    function setAdminVisible(isVisible) {
+      authShell.hidden = isVisible;
+      adminShell.hidden = !isVisible;
+      adminShellPanels.hidden = !isVisible;
+      adminShellTables.hidden = !isVisible;
+      logoutButton.hidden = !isVisible;
+    }
 
-        if (!leads.length) {
-          message.textContent = "No leads recorded yet.";
-          leadsBody.innerHTML = '<tr><td colspan="5" style="padding:12px;">No leads recorded yet.</td></tr>';
-          return;
-        }
+    function fillProfile(owner) {
+      document.getElementById("owner-greeting").textContent = `Welcome back, ${owner.displayName || owner.fullName}`;
+      document.getElementById("owner-meta").textContent = `Last login: ${owner.lastLoginAt ? formatDate(owner.lastLoginAt) : "first login"} • ${owner.email}`;
+      document.getElementById("owner-role-pill").textContent = owner.role || "owner";
+      document.getElementById("owner-city-pill").textContent = owner.primaryCity || "Gateshead";
 
-        message.textContent = "Dashboard connected successfully.";
-        leadsBody.innerHTML = leads.slice(0, 12).map((lead) => `
-          <tr>
-            <td style="padding:12px;border-bottom:1px solid rgba(22,35,58,.08);">${new Date(lead.createdAt).toLocaleString()}</td>
-            <td style="padding:12px;border-bottom:1px solid rgba(22,35,58,.08);">${lead.type || ""}</td>
-            <td style="padding:12px;border-bottom:1px solid rgba(22,35,58,.08);">${lead.name || "-"}</td>
-            <td style="padding:12px;border-bottom:1px solid rgba(22,35,58,.08);">${lead.service || "-"}</td>
-            <td style="padding:12px;border-bottom:1px solid rgba(22,35,58,.08);">${lead.status || "new"}</td>
-          </tr>
-        `).join("");
-      } catch (error) {
-        message.textContent = "Backend not connected. Start the server to load dashboard data.";
+      document.getElementById("owner-full-name").value = owner.fullName || "";
+      document.getElementById("owner-display-name").value = owner.displayName || "";
+      document.getElementById("owner-email").value = owner.email || "";
+      document.getElementById("owner-phone").value = owner.phone || "";
+      document.getElementById("owner-website").value = owner.website || "";
+    }
+
+    function fillBusiness(business) {
+      document.getElementById("business-name").value = business.businessName || "";
+      document.getElementById("trading-name").value = business.tradingName || "";
+      document.getElementById("primary-city").value = business.primaryCity || "";
+      document.getElementById("working-hours").value = business.workingHours || "";
+      document.getElementById("service-areas").value = Array.isArray(business.serviceAreas) ? business.serviceAreas.join(", ") : "";
+      document.getElementById("legal-footer").value = business.legalFooter || "";
+    }
+
+    function renderStats(stats) {
+      document.getElementById("stat-total").textContent = stats.totalLeads || 0;
+      document.getElementById("stat-quotes").textContent = stats.quoteLeads || 0;
+      document.getElementById("stat-new").textContent = (stats.statusCounts && stats.statusCounts.new) || 0;
+      document.getElementById("stat-published").textContent = stats.publishedReviews || 0;
+
+      document.getElementById("pipeline-new").textContent = (stats.statusCounts && stats.statusCounts.new) || 0;
+      document.getElementById("pipeline-progress").textContent = (stats.statusCounts && stats.statusCounts["in-progress"]) || 0;
+      document.getElementById("pipeline-closed").textContent = (stats.statusCounts && stats.statusCounts.closed) || 0;
+
+      document.getElementById("priority-high").textContent = (stats.priorityCounts && stats.priorityCounts.high) || 0;
+      document.getElementById("priority-medium").textContent = (stats.priorityCounts && stats.priorityCounts.medium) || 0;
+      document.getElementById("priority-low").textContent = (stats.priorityCounts && stats.priorityCounts.low) || 0;
+
+      document.getElementById("reviews-pending").textContent = stats.pendingReviews || 0;
+      document.getElementById("reviews-reviewed").textContent = stats.reviewedReviews || 0;
+      document.getElementById("reviews-live").textContent = stats.publishedReviews || 0;
+    }
+
+    function renderLeads(leads) {
+      const body = document.getElementById("leads-body");
+      if (!leads.length) {
+        body.innerHTML = '<tr><td colspan="8">No leads found.</td></tr>';
+        return;
+      }
+
+      body.innerHTML = leads.map((lead) => `
+        <tr>
+          <td>${formatDate(lead.createdAt)}</td>
+          <td>
+            <strong>${escapeHtml(lead.name || "-")}</strong>
+            <div class="admin-row-meta">${escapeHtml(lead.email || lead.phone || "")}</div>
+          </td>
+          <td>${escapeHtml(lead.type || "-")}</td>
+          <td>${escapeHtml(lead.service || "-")}</td>
+          <td>
+            <select data-lead-status="${lead.id}">
+              <option value="new" ${lead.status === "new" ? "selected" : ""}>new</option>
+              <option value="in-progress" ${lead.status === "in-progress" ? "selected" : ""}>in-progress</option>
+              <option value="closed" ${lead.status === "closed" ? "selected" : ""}>closed</option>
+            </select>
+          </td>
+          <td>
+            <select data-lead-priority="${lead.id}">
+              <option value="high" ${lead.priority === "high" ? "selected" : ""}>high</option>
+              <option value="medium" ${!lead.priority || lead.priority === "medium" ? "selected" : ""}>medium</option>
+              <option value="low" ${lead.priority === "low" ? "selected" : ""}>low</option>
+            </select>
+          </td>
+          <td><textarea data-lead-notes="${lead.id}" class="admin-notes">${escapeHtml(lead.notes || "")}</textarea></td>
+          <td><button class="button admin-table-button" type="button" data-save-lead="${lead.id}">Save</button></td>
+        </tr>
+      `).join("");
+
+      document.querySelectorAll("[data-save-lead]").forEach((button) => {
+        button.addEventListener("click", async () => {
+          const leadId = button.dataset.saveLead;
+          const status = document.querySelector(`[data-lead-status="${leadId}"]`).value;
+          const priority = document.querySelector(`[data-lead-priority="${leadId}"]`).value;
+          const notes = document.querySelector(`[data-lead-notes="${leadId}"]`).value;
+
+          try {
+            await api(`/api/admin/leads/${leadId}`, {
+              method: "PATCH",
+              body: JSON.stringify({ status, priority, notes })
+            });
+            message("lead-message", "Lead updated.");
+            await loadDashboard();
+          } catch (error) {
+            message("lead-message", error.message, true);
+          }
+        });
+      });
+    }
+
+    function renderQuotes(quotes) {
+      const body = document.getElementById("quotes-body");
+      if (!quotes.length) {
+        body.innerHTML = '<tr><td colspan="6">No quotes found.</td></tr>';
+        return;
+      }
+
+      body.innerHTML = quotes.map((quote) => `
+        <tr>
+          <td>${formatDate(quote.createdAt)}</td>
+          <td>${escapeHtml(quote.name || "-")}</td>
+          <td>${escapeHtml(quote.service || "-")}</td>
+          <td>${escapeHtml(quote.phone || "-")}</td>
+          <td>${escapeHtml(quote.email || "-")}</td>
+          <td>${escapeHtml(quote.status || "new")}</td>
+        </tr>
+      `).join("");
+    }
+
+    function renderReviews(reviews) {
+      const body = document.getElementById("reviews-body");
+      if (!reviews.length) {
+        body.innerHTML = '<div class="admin-empty">No reviews found.</div>';
+        return;
+      }
+
+      body.innerHTML = reviews.map((review) => `
+        <article class="admin-review-card">
+          <div class="admin-review-head">
+            <div>
+              <strong>${escapeHtml(review.name || "Customer")}</strong>
+              <div class="admin-row-meta">${formatDate(review.createdAt)} • ${"★".repeat(Math.max(1, Math.min(5, Number(review.rating || 0))))}</div>
+            </div>
+            <span class="admin-pill">${escapeHtml(reviewLabels[review.status] || review.status || "Pending")}</span>
+          </div>
+          <p>${escapeHtml(review.message || "")}</p>
+          <div class="form-grid">
+            <div>
+              <label for="review-response-${review.id}">Owner response</label>
+              <textarea id="review-response-${review.id}" data-review-response="${review.id}">${escapeHtml(review.response || "")}</textarea>
+            </div>
+            <div class="admin-action-row">
+              <button class="button-outline admin-table-button" type="button" data-review-update="${review.id}" data-review-status="reviewed">Mark Reviewed</button>
+              <button class="button admin-table-button" type="button" data-review-update="${review.id}" data-review-status="approved">Publish</button>
+              <button class="button-outline admin-table-button is-danger" type="button" data-review-delete="${review.id}">Delete</button>
+            </div>
+          </div>
+        </article>
+      `).join("");
+
+      document.querySelectorAll("[data-review-update]").forEach((button) => {
+        button.addEventListener("click", async () => {
+          const reviewId = button.dataset.reviewUpdate;
+          const status = button.dataset.reviewStatus;
+          const response = document.querySelector(`[data-review-response="${reviewId}"]`).value;
+
+          try {
+            await api(`/api/admin/reviews/${reviewId}`, {
+              method: "PATCH",
+              body: JSON.stringify({
+                status,
+                published: status === "approved",
+                response
+              })
+            });
+            message("review-message", "Review updated.");
+            await loadDashboard();
+          } catch (error) {
+            message("review-message", error.message, true);
+          }
+        });
+      });
+
+      document.querySelectorAll("[data-review-delete]").forEach((button) => {
+        button.addEventListener("click", async () => {
+          const reviewId = button.dataset.reviewDelete;
+
+          try {
+            await api(`/api/admin/reviews/${reviewId}`, { method: "DELETE" });
+            message("review-message", "Review deleted.");
+            await loadDashboard();
+          } catch (error) {
+            message("review-message", error.message, true);
+          }
+        });
+      });
+    }
+
+    async function loadDashboard() {
+      const [sessionData, profileData, businessData, statsData, leadsData, quotesData, reviewsData] = await Promise.all([
+        api("/api/admin/session"),
+        api("/api/admin/profile"),
+        api("/api/admin/business"),
+        api("/api/admin/stats"),
+        api("/api/admin/leads"),
+        api("/api/admin/quotes"),
+        api("/api/admin/reviews")
+      ]);
+
+      fillProfile(sessionData.owner || profileData.owner);
+      fillBusiness(businessData.business || {});
+      renderStats(statsData);
+      renderLeads(leadsData);
+      renderQuotes(quotesData);
+      renderReviews(reviewsData);
+
+      message("lead-message", `Loaded ${leadsData.length} leads.`);
+      message("quote-message", `Loaded ${quotesData.length} quotes.`);
+      message("review-message", `Loaded ${reviewsData.length} reviews.`);
+    }
+
+    async function bootstrap() {
+      try {
+        const session = await api("/api/admin/session");
+        setAdminVisible(true);
+        fillProfile(session.owner);
+        await loadDashboard();
+      } catch {
+        setAdminVisible(false);
       }
     }
 
-    loadDashboard();
+    loginForm.addEventListener("submit", async (event) => {
+      event.preventDefault();
+      const formData = new FormData(loginForm);
+
+      try {
+        await api("/api/admin/login", {
+          method: "POST",
+          body: JSON.stringify({
+            email: formData.get("email"),
+            password: formData.get("password")
+          })
+        });
+
+        message("login-message", "Login successful.");
+        loginForm.reset();
+        document.getElementById("login-email").value = "agucleanservices@gmail.com";
+        setAdminVisible(true);
+        await loadDashboard();
+      } catch (error) {
+        message("login-message", error.message, true);
+      }
+    });
+
+    logoutButton.addEventListener("click", async () => {
+      try {
+        await api("/api/admin/logout", { method: "POST" });
+      } finally {
+        setAdminVisible(false);
+        message("login-message", "Logged out.");
+      }
+    });
+
+    refreshButton.addEventListener("click", async () => {
+      if (adminShell.hidden) {
+        message("login-message", "Log in first to refresh admin data.", true);
+        return;
+      }
+
+      try {
+        await loadDashboard();
+      } catch (error) {
+        message("lead-message", error.message, true);
+      }
+    });
+
+    document.getElementById("profile-form").addEventListener("submit", async (event) => {
+      event.preventDefault();
+      const formData = new FormData(event.currentTarget);
+
+      try {
+        await api("/api/admin/profile", {
+          method: "PATCH",
+          body: JSON.stringify({
+            fullName: formData.get("fullName"),
+            displayName: formData.get("displayName"),
+            email: formData.get("email"),
+            phone: formData.get("phone"),
+            website: formData.get("website"),
+            currentPassword: formData.get("currentPassword"),
+            newPassword: formData.get("newPassword")
+          })
+        });
+
+        message("profile-message", "Owner account updated.");
+        event.currentTarget.reset();
+        await loadDashboard();
+      } catch (error) {
+        message("profile-message", error.message, true);
+      }
+    });
+
+    document.getElementById("business-form").addEventListener("submit", async (event) => {
+      event.preventDefault();
+      const formData = new FormData(event.currentTarget);
+
+      try {
+        await api("/api/admin/business", {
+          method: "PATCH",
+          body: JSON.stringify({
+            businessName: formData.get("businessName"),
+            tradingName: formData.get("tradingName"),
+            primaryCity: formData.get("primaryCity"),
+            workingHours: formData.get("workingHours"),
+            legalFooter: formData.get("legalFooter"),
+            serviceAreas: String(formData.get("serviceAreas") || "")
+              .split(",")
+              .map((item) => item.trim())
+              .filter(Boolean)
+          })
+        });
+
+        message("business-message", "Business settings updated.");
+        await loadDashboard();
+      } catch (error) {
+        message("business-message", error.message, true);
+      }
+    });
+
+    bootstrap();
   </script>
 </body>
 </html>
-

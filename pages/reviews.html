@@ -37,62 +37,54 @@
       <div class="container page-hero-content">
         <div class="crumbs"><span data-i18n="nav.home">Home</span><span>•</span><span data-i18n="nav.reviews">Reviews</span></div>
         <div class="eyebrow" data-i18n="reviews.eyebrow">Client Reviews</div>
-        <h1 data-i18n="reviews.h1">What Our Clients Say</h1>
-        <p data-i18n="reviews.lead">Real reviews from real clients in Newcastle and surrounding areas.</p>
+        <h1 data-i18n="reviews.h1">Leave a Review</h1>
+        <p data-i18n="reviews.lead">Share your opinion with the AGU Clean Services team.</p>
         <img class="section-divider" src="../frontend/assets/brand/divider.svg" alt="" />
       </div>
     </section>
 
     <section class="section">
       <div class="container">
-        <div class="review-grid">
-          <article class="review-card">
-            <div class="stars">★★★★★</div>
-            <blockquote>Agnieszka is absolutely brilliant! My house has never been so clean. Highly recommend!</blockquote>
-            <div class="review-author"><span class="review-avatar">S</span><div><strong>Sarah M.</strong><div>Newcastle</div></div></div>
-          </article>
-          <article class="review-card">
-            <div class="stars">★★★★★</div>
-            <blockquote>Professional, reliable and great value for money. Will definitely book again.</blockquote>
-            <div class="review-author"><span class="review-avatar">J</span><div><strong>John T.</strong><div>Gateshead</div></div></div>
-          </article>
-          <article class="review-card">
-            <div class="stars">★★★★★</div>
-            <blockquote>End of tenancy clean was perfect - got my full deposit back. Thank you!</blockquote>
-            <div class="review-author"><span class="review-avatar">A</span><div><strong>Anna K.</strong><div>Durham</div></div></div>
-          </article>
-          <article class="review-card">
-            <div class="stars">★★★★★</div>
-            <blockquote>Very pleasant to arrange and no stress at all. The service felt personal but still very professional.</blockquote>
-            <div class="review-author"><span class="review-avatar">R</span><div><strong>Rachel</strong><div>Newcastle</div></div></div>
-          </article>
-          <article class="review-card">
-            <div class="stars">★★★★★</div>
-            <blockquote>Great for office cleaning because the timing was flexible and the result looked clean and presentable.</blockquote>
-            <div class="review-author"><span class="review-avatar">M</span><div><strong>Mark</strong><div>Gateshead</div></div></div>
-          </article>
-          <article class="review-card">
-            <div class="stars">★★★★★</div>
-            <blockquote>Reliable, friendly and professional from start to finish. Exactly the kind of service you want to book again.</blockquote>
-            <div class="review-author"><span class="review-avatar">E</span><div><strong>Emily</strong><div>Durham</div></div></div>
-          </article>
+        <div class="section-header">
+          <h2>Client Reviews</h2>
+          <p>Share your opinion and help others choose the right cleaning partner.</p>
         </div>
-      </div>
-    </section>
-
-    <section class="section section-alt">
-      <div class="container split">
-        <div class="split-copy">
-          <div class="section-header">
-          <h2>Happy with our service?</h2>
-          <p>Leave us a review and help other clients feel confident choosing AGU Clean Services.</p>
-          </div>
-        </div>
-        <div class="split-visual">
-          <div class="eyebrow">Leave a Review</div>
-          <h3>Support our Google and Facebook growth</h3>
-          <p>Real review links can be added here as the business profile and social pages grow.</p>
-        </div>
+        <article class="contact-card">
+          <h3>Add your review</h3>
+          <p style="margin:0 0 18px;color:var(--text-700)">Tell us what you liked, what we can improve, and rate your service.</p>
+          <form class="form-grid" id="review-form">
+            <div class="form-row">
+              <div>
+                <label for="review-name">Your name</label>
+                <input id="review-name" name="name" type="text" placeholder="Full name" />
+              </div>
+              <div>
+                <label for="review-email">Your email</label>
+                <input id="review-email" name="email" type="email" placeholder="you@example.com" />
+              </div>
+            </div>
+            <div>
+              <label>Rating</label>
+              <div class="form-row" style="gap:10px;align-items:center;max-width:280px;">
+                <label style="cursor:pointer;display:flex;align-items:center;gap:4px;"><input type="radio" name="rating" value="5" checked /> ★★★★★</label>
+                <label style="cursor:pointer;display:flex;align-items:center;gap:4px;"><input type="radio" name="rating" value="4" /> ★★★★☆</label>
+                <label style="cursor:pointer;display:flex;align-items:center;gap:4px;"><input type="radio" name="rating" value="3" /> ★★★☆☆</label>
+                <label style="cursor:pointer;display:flex;align-items:center;gap:4px;"><input type="radio" name="rating" value="2" /> ★★☆☆☆</label>
+                <label style="cursor:pointer;display:flex;align-items:center;gap:4px;"><input type="radio" name="rating" value="1" /> ★☆☆☆☆</label>
+              </div>
+            </div>
+            <div>
+              <label for="review-message">Your opinion</label>
+              <textarea id="review-message" name="message" rows="5" placeholder="Tell us about your experience."></textarea>
+            </div>
+            <div>
+              <button class="button" type="submit">Add review</button>
+            </div>
+          </form>
+        </article>
+        <article class="contact-card" style="margin-top:18px">
+          <p style="margin:0;color:var(--text-700)">Thank you for helping local customers make better cleaning choices. All opinions are reviewed before publication.</p>
+        </article>
       </div>
     </section>
   </main>

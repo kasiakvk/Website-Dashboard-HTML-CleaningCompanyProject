@@ -657,6 +657,18 @@ if (quoteForm) {
     const submitButton = quoteForm.querySelector('button[type="submit"]');
     const formData = new FormData(quoteForm);
     const payload = Object.fromEntries(formData.entries());
+    const safeValue = (value) => (typeof value === "string" ? value.trim() : "").trim();
+    const subject = `AGU Clean Services quote request: ${safeValue(payload.name) || "New enquiry"}`;
+    const lines = [
+      `Full name: ${safeValue(payload.name) || "Not provided"}`,
+      `Phone: ${safeValue(payload.phone) || "Not provided"}`,
+      `Email: ${safeValue(payload.email) || "Not provided"}`,
+      `Service: ${safeValue(payload.service) || "Not provided"}`,
+      `Property details: ${safeValue(payload.message) || "Not provided"}`,
+      "",
+      `Submitted from: ${window.location.href}`
+    ];
+    const mailtoUrl = `mailto:agucleanservices@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(lines.join("\n"))}`;
 
     if (submitButton) {
       submitButton.disabled = true;
@@ -665,22 +677,26 @@ if (quoteForm) {
     }
 
     try {
-      const response = await fetch("/api/contact", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json"
-        },
-        body: JSON.stringify(payload)
-      });
+      try {
+        const response = await fetch("/api/contact", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify(payload)
+        });
 
-      if (!response.ok) {
-        throw new Error("Failed to send enquiry");
+        if (!response.ok) {
+          console.warn("Quote API unavailable, falling back to Gmail connector.");
+        }
+      } catch {
+        console.warn("Quote API unavailable, falling back to Gmail connector.");
       }
 
       quoteForm.reset();
-      window.alert("Thank you. Your enquiry has been sent.");
+      window.location.href = mailtoUrl;
     } catch (error) {
-      window.alert("The enquiry could not be sent. Please call or WhatsApp instead.");
+      window.location.href = mailtoUrl;
     } finally {
       if (submitButton) {
         submitButton.disabled = false;

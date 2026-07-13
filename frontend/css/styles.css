@@ -74,7 +74,7 @@ a {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 24px;
+  gap: 18px;
 }
 
 .brand {
@@ -160,7 +160,7 @@ a {
 .nav-links {
   display: flex;
   align-items: center;
-  gap: 24px;
+  gap: 16px;
   list-style: none;
   margin: 0;
   padding: 0;
@@ -168,7 +168,7 @@ a {
 
 .nav-links a {
   color: rgba(27, 35, 49, 0.88);
-  font-size: 0.95rem;
+  font-size: 0.9rem;
   font-weight: 600;
   transition: color 0.2s ease;
 }
@@ -939,6 +939,161 @@ textarea {
   font-size: 1.5rem;
 }
 
+.admin-auth-grid,
+.admin-kpi-grid,
+.admin-stack {
+  display: grid;
+  gap: 24px;
+}
+
+.admin-auth-grid {
+  grid-template-columns: 1fr 0.95fr;
+  align-items: stretch;
+}
+
+.admin-toolbar,
+.admin-section-head,
+.admin-action-row,
+.admin-pill-group,
+.admin-metric-list,
+.admin-review-head {
+  display: flex;
+  gap: 14px;
+}
+
+.admin-toolbar,
+.admin-section-head,
+.admin-review-head {
+  align-items: center;
+  justify-content: space-between;
+}
+
+.admin-pill-group,
+.admin-action-row {
+  flex-wrap: wrap;
+}
+
+.admin-pill {
+  display: inline-flex;
+  align-items: center;
+  padding: 8px 12px;
+  border-radius: 999px;
+  background: rgba(36, 48, 68, 0.08);
+  border: 1px solid rgba(36, 48, 68, 0.12);
+  color: var(--navy-900);
+  font-size: 0.82rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.admin-subtle,
+.admin-row-meta {
+  color: var(--text-700);
+}
+
+.admin-inline-message {
+  min-height: 22px;
+  font-size: 0.92rem;
+  color: var(--text-700);
+}
+
+.admin-inline-message.is-error {
+  color: #a03131;
+}
+
+.admin-inline-message.is-success {
+  color: #276749;
+}
+
+.admin-metric-list {
+  flex-direction: column;
+}
+
+.admin-metric-list div {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 0;
+  border-bottom: 1px solid rgba(36, 48, 68, 0.08);
+}
+
+.admin-metric-list div:last-child {
+  border-bottom: 0;
+}
+
+.admin-metric-list strong {
+  color: var(--navy-900);
+  font-size: 1.3rem;
+}
+
+.admin-table-wrap {
+  overflow: auto;
+}
+
+.admin-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.admin-table th,
+.admin-table td {
+  padding: 12px;
+  border-bottom: 1px solid rgba(22, 35, 58, 0.08);
+  text-align: left;
+  vertical-align: top;
+}
+
+.admin-table th {
+  color: var(--navy-900);
+  font-size: 0.82rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.admin-table select,
+.admin-table textarea,
+.admin-table input {
+  min-width: 120px;
+}
+
+.admin-notes {
+  min-height: 92px;
+}
+
+.admin-table-button {
+  padding: 10px 14px;
+  font-size: 0.82rem;
+}
+
+.admin-table-button.is-danger {
+  border-color: rgba(160, 49, 49, 0.22);
+  color: #8f2424;
+}
+
+.admin-review-list {
+  display: grid;
+  gap: 16px;
+}
+
+.admin-review-card {
+  padding: 22px;
+  border-radius: var(--radius-md);
+  border: 1px solid rgba(36, 48, 68, 0.1);
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.98), rgba(246, 240, 230, 0.82));
+}
+
+.admin-review-card p {
+  margin: 14px 0 0;
+}
+
+.admin-empty {
+  padding: 16px;
+  color: var(--text-700);
+  border-radius: var(--radius-md);
+  background: rgba(36, 48, 68, 0.04);
+}
+
 @media (max-width: 1080px) {
   .hero-grid,
   .split,
@@ -948,7 +1103,8 @@ textarea {
   .review-grid,
   .grid-3,
   .grid-4,
-  .footer-grid {
+  .footer-grid,
+  .admin-auth-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
@@ -1010,7 +1166,8 @@ textarea {
   .price-grid,
   .review-grid,
   .footer-grid,
-  .form-row {
+  .form-row,
+  .admin-auth-grid {
     grid-template-columns: 1fr;
   }
 

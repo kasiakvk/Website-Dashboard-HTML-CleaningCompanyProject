@@ -15,6 +15,7 @@ const multipageDir = path.join(rootDir, "aga_clean_services_multipage_site");
 const dataDir = path.join(__dirname, "data");
 const contentPath = path.join(__dirname, "content.json");
 const leadsPath = path.join(dataDir, "leads.ndjson");
+const reviewsPath = path.join(dataDir, "reviews.ndjson");
 const basePort = Number(process.env.PORT || 3000);
 
 const mimeTypes = {
@@ -146,15 +147,19 @@ function makeLeadId(type, payload) {
   return `${type}-${slugify(payload.name || payload.service || "entry")}-${Date.now()}`;
 }
 
-function readLeads() {
+function makeReviewId(payload) {
+  return `review-${slugify(payload.name || payload.email || "review")}-${Date.now()}`;
+}
+
+function readEntries(filePath) {
   ensureDataDir();
 
-  if (!fs.existsSync(leadsPath)) {
+  if (!fs.existsSync(filePath)) {
     return [];
   }
 
   return fs
-    .readFileSync(leadsPath, "utf8")
+    .readFileSync(filePath, "utf8")
     .split(/\r?\n/)
     .filter(Boolean)
     .map((line) => {
@@ -167,10 +172,18 @@ function readLeads() {
     .filter(Boolean);
 }
 
-function writeLeads(leads) {
+function writeEntries(filePath, entries) {
   ensureDataDir();
-  const output = leads.map((entry) => JSON.stringify(entry)).join("\n");
-  fs.writeFileSync(leadsPath, output ? `${output}\n` : "", "utf8");
+  const output = entries.map((entry) => JSON.stringify(entry)).join("\n");
+  fs.writeFileSync(filePath, output ? `${output}\n` : "", "utf8");
+}
+
+function readLeads() {
+  return readEntries(leadsPath);
+}
+
+function writeLeads(leads) {
+  writeEntries(leadsPath, leads);
 }
 
 function appendLead(type, payload) {
@@ -188,10 +201,39 @@ function appendLead(type, payload) {
   return entry;
 }
 
+function readReviews() {
+  return readEntries(reviewsPath);
+}
+
+function writeReviews(reviews) {
+  writeEntries(reviewsPath, reviews);
+}
+
+function appendReview(payload) {
+  const reviews = readReviews();
+  const normalizedRating = Math.min(Math.max(Number(payload.rating || 0), 1), 5) || 1;
+  const entry = {
+    id: makeReviewId(payload),
+    status: "pending",
+    published: false,
+    createdAt: new Date().toISOString(),
+    updatedAt: new Date().toISOString(),
+    ...payload,
+    rating: normalizedRating
+  };
+  reviews.push(entry);
+  writeReviews(reviews);
+  return entry;
+}
+
 function buildStats(leads) {
   const totalLeads = leads.length;
   const contactLeads = leads.filter((lead) => lead.type === "contact").length;
   const quoteLeads = leads.filter((lead) => lead.type === "quote").length;
+  const reviews = readReviews();
+  const totalReviews = reviews.length;
+  const pendingReviews = reviews.filter((review) => review.status !== "approved" && review.status !== "published").length;
+  const publishedReviews = reviews.filter((review) => review.published).length;
   const statusCounts = leads.reduce((acc, lead) => {
     const key = lead.status || "new";
     acc[key] = (acc[key] || 0) + 1;
@@ -207,6 +249,9 @@ function buildStats(leads) {
     totalLeads,
     contactLeads,
     quoteLeads,
+    totalReviews,
+    pendingReviews,
+    publishedReviews,
     statusCounts,
     serviceCounts,
     recentLeads: leads
@@ -277,6 +322,45 @@ async function handleApi(request, response, pathname) {
     return true;
   }
 
+  if (pathname === "/api/admin/quotes" && request.method === "GET") {
+    sendJson(response, 200, readLeads()
+      .filter((lead) => lead.type === "quote")
+      .sort((a, b) => String(b.createdAt).localeCompare(String(a.createdAt)))
+    );
+    return true;
+  }
+
+  if (pathname === "/api/admin/contacts" && request.method === "GET") {
+    sendJson(response, 200, readLeads()
+      .filter((lead) => lead.type === "contact")
+      .sort((a, b) => String(b.createdAt).localeCompare(String(a.createdAt)))
+    );
+    return true;
+  }
+
+  if (pathname === "/api/admin/reviews" && request.method === "GET") {
+    sendJson(response, 200, readReviews().sort((a, b) => String(b.createdAt).localeCompare(String(a.createdAt))));
+    return true;
+  }
+
+  if (pathname === "/api/review" && request.method === "POST") {
+    try {
+      const payload = parseJsonBody(await readRequestBody(request));
+      const review = appendReview(payload);
+      sendJson(response, 200, {
+        ok: true,
+        message: "Review request saved locally",
+        review
+      });
+    } catch {
+      sendJson(response, 400, {
+        ok: false,
+        error: "Invalid JSON payload"
+      });
+    }
+    return true;
+  }
+
   if (pathname === "/api/admin/stats" && request.method === "GET") {
     sendJson(response, 200, buildStats(readLeads()));
     return true;
@@ -303,6 +387,52 @@ async function handleApi(request, response, pathname) {
     } catch {
       sendJson(response, 400, { ok: false, error: "Invalid JSON payload" });
     }
+    return true;
+  }
+
+  if (pathname.startsWith("/api/admin/reviews/") && request.method === "PATCH") {
+    const reviewId = pathname.slice("/api/admin/reviews/".length);
+    const reviews = readReviews();
+    const review = reviews.find((item) => item.id === reviewId);
+
+    if (!review) {
+      sendJson(response, 404, { ok: false, error: "Review not found" });
+      return true;
+    }
+
+    try {
+      const payload = parseJsonBody(await readRequestBody(request));
+      if (payload.status) {
+        review.status = payload.status;
+      }
+      if (typeof payload.published === "boolean") {
+        review.published = payload.published;
+      }
+      if (payload.response) {
+        review.response = payload.response;
+      }
+      review.updatedAt = new Date().toISOString();
+      writeReviews(reviews);
+      sendJson(response, 200, { ok: true, review });
+    } catch {
+      sendJson(response, 400, { ok: false, error: "Invalid JSON payload" });
+    }
+    return true;
+  }
+
+  if (pathname.startsWith("/api/admin/reviews/") && request.method === "DELETE") {
+    const reviewId = pathname.slice("/api/admin/reviews/".length);
+    const reviews = readReviews();
+    const index = reviews.findIndex((item) => item.id === reviewId);
+
+    if (index === -1) {
+      sendJson(response, 404, { ok: false, error: "Review not found" });
+      return true;
+    }
+
+    const [removed] = reviews.splice(index, 1);
+    writeReviews(reviews);
+    sendJson(response, 200, { ok: true, review: removed });
     return true;
   }
 

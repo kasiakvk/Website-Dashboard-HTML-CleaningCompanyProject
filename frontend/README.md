@@ -1,8 +1,9 @@
-# AGU Clean Services frontend structure
+AGU Clean Services frontend structure
 
 This folder is the organized frontend source area for the public website.
 
 Structure:
+
 - `css/` direct shared stylesheet source used by the public pages
 - `js/` direct shared frontend script source
 - `components/` canonical shared HTML fragments such as header and footer
@@ -11,6 +12,7 @@ Structure:
 - `config/` project notes for routing and page mapping
 
 Current integration:
+
 - Root `index.html` redirects to `pages/index.html`
 - Files in `pages/` remain the public entry points
 - `pages/*.html` now link directly to `../frontend/css/styles.css`

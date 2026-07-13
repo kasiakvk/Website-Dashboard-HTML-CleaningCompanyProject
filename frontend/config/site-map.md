@@ -21,7 +21,12 @@ Current page set:
 - `pages/commercial-cleaning.html`
 - `pages/dashboard.html`
 
+Implemented source structure:
+1. Shared header and footer extracted into `frontend/components/`
+2. Key inline content blocks moved into `frontend/sections/`
+3. Direct source CSS and JS now live inside `frontend/`
+
 Recommended next split:
-1. Extract shared header and footer into `frontend/components/`
-2. Move inline content blocks into `frontend/sections/`
-3. Replace the temporary bridge to hidden `.css/` and `.js/` folders with direct source files inside `frontend/`
+1. Replace repeated page markup with a static include/build step
+2. Normalize footer variants to one canonical component API
+3. Retire `pages/styles.css` and `pages/app.js` after confirming nothing else references them

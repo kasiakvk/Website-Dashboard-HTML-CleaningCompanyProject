@@ -1,0 +1,56 @@
+{
+  "brand": {
+    "name": "AGA Clean Services",
+    "tagline": "Professional cleaning built on trust, calm and consistency.",
+    "areas": ["Newcastle", "Gateshead", "Chester-le-Street", "Durham"],
+    "phone": "07448738971",
+    "whatsapp": "07448738971",
+    "email": "agucleanservices@gmail.com",
+    "website": "www.agucleanservices.co.uk"
+  },
+  "services": [
+    {
+      "title": "Domestic Cleaning",
+      "description": "Regular weekly or fortnightly cleaning for busy households."
+    },
+    {
+      "title": "Deep Clean",
+      "description": "Focused top-to-bottom cleaning for first visits and intensive resets."
+    },
+    {
+      "title": "End of Tenancy",
+      "description": "Move-out cleaning for tenants, landlords and letting agents."
+    },
+    {
+      "title": "Commercial Cleaning",
+      "description": "Routine cleaning for offices, salons, shops and small commercial spaces."
+    },
+    {
+      "title": "Airbnb Cleaning",
+      "description": "Cleaning plus reset support between guest stays."
+    },
+    {
+      "title": "Pubs and Clubs",
+      "description": "After-hours cleaning for venues that need reliable late support."
+    }
+  ],
+  "pricing": [
+    { "service": "Regular cleaning", "price": "£20/hour" },
+    { "service": "Deep cleaning", "price": "£120-£300" },
+    { "service": "End of tenancy", "price": "£180-£400" },
+    { "service": "Office cleaning", "price": "£25/hour" },
+    { "service": "Airbnb cleaning", "price": "From £45" }
+  ],
+  "launchPlan": [
+    "Facebook groups in Newcastle, Gateshead and Polish communities in the UK",
+    "Gumtree and Facebook Marketplace using the same service copy",
+    "Google Business Profile with logo, description and phone",
+    "Flyers for estates, doors and Polish shops",
+    "Direct outreach to letting agents and Airbnb hosts"
+  ],
+  "links": [
+    { "label": "Single page main site", "href": "/Aga_Clean_Services.html" },
+    { "label": "Single page warm variant", "href": "/Aga_Clean_Services_v1.1.html" },
+    { "label": "Multipage site", "href": "/multipage/index.html" }
+  ]
+}

@@ -13,6 +13,7 @@ const contentPath = path.join(__dirname, "content.json");
 const leadsPath = path.join(dataDir, "leads.ndjson");
 const reviewsPath = path.join(dataDir, "reviews.ndjson");
 const ownerPath = path.join(dataDir, "owner.json");
+const pageSettingsPath = path.join(dataDir, "page-settings.json");
 const basePort = Number(process.env.PORT || 3000);
 const sessionMaxAgeMs = 1000 * 60 * 60 * 12;
 const sessionStore = new Map();
@@ -130,6 +131,128 @@ function ensureOwnerAccount() {
   }
 }
 
+function createDefaultPageSettings() {
+  return {
+    pages: [
+      {
+        id: "home",
+        label: "Home",
+        file: "index.html",
+        route: "/",
+        navLabel: "Home",
+        published: true,
+        metaTitle: "AGU CLEANING SERVICES | Home Cleaning Newcastle",
+        metaDescription: "AGU CLEANING SERVICES offers reliable domestic and commercial cleaning in Newcastle, Gateshead, Chester-le-Street and Durham.",
+        heroTitle: "Professional cleaning with a calm, polished finish.",
+        heroLead: "AGU CLEANING SERVICES helps homes, offices and rental properties stay clean, presentable and ready for everyday life across Newcastle, Gateshead, Chester-le-Street and Durham."
+      },
+      {
+        id: "about",
+        label: "About Us",
+        file: "about.html",
+        route: "/about.html",
+        navLabel: "About Us",
+        published: true,
+        metaTitle: "About | AGU CLEANING SERVICES",
+        metaDescription: "Learn more about AGU Clean Services, our values and our local cleaning offer.",
+        heroTitle: "About AGU Clean Services",
+        heroLead: "Local, trusted and professional cleaning in Newcastle and beyond."
+      },
+      {
+        id: "services",
+        label: "Services",
+        file: "services.html",
+        route: "/services.html",
+        navLabel: "Services",
+        published: true,
+        metaTitle: "Services | AGU CLEANING SERVICES",
+        metaDescription: "View domestic, deep, tenancy, Airbnb and commercial cleaning services from AGU Clean Services.",
+        heroTitle: "Clear services for homes, rentals and small businesses.",
+        heroLead: "The offer is structured to be easy to understand at a glance and strong enough for both private clients and property-related work."
+      },
+      {
+        id: "pricing",
+        label: "Pricing",
+        file: "prices.html",
+        route: "/prices.html",
+        navLabel: "Pricing",
+        published: true,
+        metaTitle: "Pricing | AGU CLEANING SERVICES",
+        metaDescription: "Starting prices and quote information for AGU Clean Services.",
+        heroTitle: "Simple starting prices with flexible quoting.",
+        heroLead: "Public rates build trust quickly. Final quotes still depend on property size, condition, frequency and scope of work."
+      },
+      {
+        id: "areas",
+        label: "Areas We Cover",
+        file: "areas.html",
+        route: "/areas.html",
+        navLabel: "Areas We Cover",
+        published: true,
+        metaTitle: "Areas We Cover | AGU CLEANING SERVICES",
+        metaDescription: "Areas covered by AGU Clean Services for domestic, deep, tenancy and office cleaning.",
+        heroTitle: "Cleaning services across Gateshead and nearby areas",
+        heroLead: "AGU Clean Services supports homes, rental properties and small business spaces with dependable cleaning and flexible booking."
+      },
+      {
+        id: "testimonials",
+        label: "Testimonials",
+        file: "reviews.html",
+        route: "/reviews.html",
+        navLabel: "Testimonials",
+        published: true,
+        metaTitle: "Testimonials | AGU CLEANING SERVICES",
+        metaDescription: "Client feedback and testimonials for AGU Clean Services.",
+        heroTitle: "What clients say about AGU Clean Services",
+        heroLead: "Friendly, reliable service and strong results are the standards we want every booking to reflect."
+      },
+      {
+        id: "contact",
+        label: "Contact Us",
+        file: "contact.html",
+        route: "/contact.html",
+        navLabel: "Contact Us",
+        published: true,
+        metaTitle: "Contact | AGU CLEANING SERVICES",
+        metaDescription: "Contact AGU CLEANING SERVICES for a free quote by call, WhatsApp or contact form.",
+        heroTitle: "Contact AGU Clean Services",
+        heroLead: "Get a free quote by phone, WhatsApp or contact form. We aim to respond quickly and clearly."
+      },
+      {
+        id: "privacy",
+        label: "Privacy Policy",
+        file: "privacy.html",
+        route: "/privacy.html",
+        navLabel: "Privacy Policy",
+        published: true,
+        metaTitle: "Privacy Policy | AGU CLEANING SERVICES",
+        metaDescription: "Privacy policy for AGU Clean Services covering website enquiries and client data.",
+        heroTitle: "Privacy Policy",
+        heroLead: "This page explains how AGU Clean Services handles website enquiries and basic client data."
+      },
+      {
+        id: "terms",
+        label: "Terms & Conditions",
+        file: "terms.html",
+        route: "/terms.html",
+        navLabel: "Terms & Conditions",
+        published: true,
+        metaTitle: "Terms & Conditions | AGU CLEANING SERVICES",
+        metaDescription: "Terms and conditions for AGU Clean Services bookings and cleaning work.",
+        heroTitle: "Terms and Conditions",
+        heroLead: "These terms outline the basic booking and service conditions for AGU Clean Services."
+      }
+    ]
+  };
+}
+
+function ensurePageSettingsFile() {
+  ensureDataDir();
+  if (!fs.existsSync(pageSettingsPath)) {
+    fs.writeFileSync(pageSettingsPath, JSON.stringify(createDefaultPageSettings(), null, 2), "utf8");
+  }
+}
+
 function readOwner() {
   ensureOwnerAccount();
   return JSON.parse(fs.readFileSync(ownerPath, "utf8"));
@@ -138,6 +261,16 @@ function readOwner() {
 function writeOwner(owner) {
   ensureDataDir();
   fs.writeFileSync(ownerPath, JSON.stringify(owner, null, 2), "utf8");
+}
+
+function readPageSettings() {
+  ensurePageSettingsFile();
+  return JSON.parse(fs.readFileSync(pageSettingsPath, "utf8"));
+}
+
+function writePageSettings(settings) {
+  ensureDataDir();
+  fs.writeFileSync(pageSettingsPath, JSON.stringify(settings, null, 2), "utf8");
 }
 
 function getPublicOwnerProfile(owner = readOwner()) {
@@ -225,6 +358,10 @@ function requireAdmin(request, response) {
 
 function readContent() {
   return JSON.parse(fs.readFileSync(contentPath, "utf8"));
+}
+
+function writeContent(content) {
+  fs.writeFileSync(contentPath, JSON.stringify(content, null, 2), "utf8");
 }
 
 function readRequestBody(request) {
@@ -381,6 +518,57 @@ function buildStats(leads, reviews) {
     serviceCounts,
     recentLeads: sortByNewest(leads).slice(0, 10),
     recentReviews: sortByNewest(reviews).slice(0, 10)
+  };
+}
+
+function normalizeServiceEntries(items) {
+  return Array.isArray(items)
+    ? items
+        .map((item) => ({
+          title: String(item && item.title ? item.title : "").trim(),
+          description: String(item && item.description ? item.description : "").trim()
+        }))
+        .filter((item) => item.title || item.description)
+    : [];
+}
+
+function normalizePricingEntries(items) {
+  return Array.isArray(items)
+    ? items
+        .map((item) => ({
+          service: String(item && item.service ? item.service : "").trim(),
+          price: String(item && item.price ? item.price : "").trim()
+        }))
+        .filter((item) => item.service || item.price)
+    : [];
+}
+
+function normalizeLinks(items) {
+  return Array.isArray(items)
+    ? items
+        .map((item) => ({
+          label: String(item && item.label ? item.label : "").trim(),
+          href: String(item && item.href ? item.href : "").trim()
+        }))
+        .filter((item) => item.label || item.href)
+    : [];
+}
+
+function normalizePageSettingsPayload(payload) {
+  const pages = Array.isArray(payload && payload.pages) ? payload.pages : [];
+  return {
+    pages: pages.map((page) => ({
+      id: String(page.id || "").trim(),
+      label: String(page.label || "").trim(),
+      file: String(page.file || "").trim(),
+      route: String(page.route || "").trim(),
+      navLabel: String(page.navLabel || "").trim(),
+      published: Boolean(page.published),
+      metaTitle: String(page.metaTitle || "").trim(),
+      metaDescription: String(page.metaDescription || "").trim(),
+      heroTitle: String(page.heroTitle || "").trim(),
+      heroLead: String(page.heroLead || "").trim()
+    })).filter((page) => page.id && page.file)
   };
 }
 
@@ -691,6 +879,96 @@ async function handleApi(request, response, pathname) {
     return true;
   }
 
+  if (pathname === "/api/admin/content" && request.method === "GET") {
+    if (!requireAdmin(request, response)) {
+      return true;
+    }
+
+    sendJson(response, 200, {
+      ok: true,
+      content: readContent()
+    });
+    return true;
+  }
+
+  if (pathname === "/api/admin/content" && request.method === "PATCH") {
+    if (!requireAdmin(request, response)) {
+      return true;
+    }
+
+    try {
+      const payload = parseJsonBody(await readRequestBody(request));
+      const content = readContent();
+
+      if (payload.brand) {
+        content.brand = {
+          ...content.brand,
+          name: String(payload.brand.name || content.brand.name || "").trim(),
+          tagline: String(payload.brand.tagline || content.brand.tagline || "").trim(),
+          phone: String(payload.brand.phone || content.brand.phone || "").trim(),
+          whatsapp: String(payload.brand.whatsapp || content.brand.whatsapp || "").trim(),
+          email: String(payload.brand.email || content.brand.email || "").trim(),
+          website: String(payload.brand.website || content.brand.website || "").trim(),
+          areas: Array.isArray(payload.brand.areas)
+            ? payload.brand.areas.map((item) => String(item || "").trim()).filter(Boolean)
+            : content.brand.areas
+        };
+      }
+
+      if (payload.services) {
+        content.services = normalizeServiceEntries(payload.services);
+      }
+
+      if (payload.pricing) {
+        content.pricing = normalizePricingEntries(payload.pricing);
+      }
+
+      if (payload.launchPlan) {
+        content.launchPlan = Array.isArray(payload.launchPlan)
+          ? payload.launchPlan.map((item) => String(item || "").trim()).filter(Boolean)
+          : content.launchPlan;
+      }
+
+      if (payload.links) {
+        content.links = normalizeLinks(payload.links);
+      }
+
+      writeContent(content);
+      sendJson(response, 200, { ok: true, content });
+    } catch {
+      sendJson(response, 400, { ok: false, error: "Invalid JSON payload" });
+    }
+    return true;
+  }
+
+  if (pathname === "/api/admin/page-settings" && request.method === "GET") {
+    if (!requireAdmin(request, response)) {
+      return true;
+    }
+
+    sendJson(response, 200, {
+      ok: true,
+      pageSettings: readPageSettings()
+    });
+    return true;
+  }
+
+  if (pathname === "/api/admin/page-settings" && request.method === "PUT") {
+    if (!requireAdmin(request, response)) {
+      return true;
+    }
+
+    try {
+      const payload = parseJsonBody(await readRequestBody(request));
+      const settings = normalizePageSettingsPayload(payload);
+      writePageSettings(settings);
+      sendJson(response, 200, { ok: true, pageSettings: settings });
+    } catch {
+      sendJson(response, 400, { ok: false, error: "Invalid JSON payload" });
+    }
+    return true;
+  }
+
   if (pathname === "/api/admin/stats" && request.method === "GET") {
     if (!requireAdmin(request, response)) {
       return true;
@@ -863,6 +1141,7 @@ const server = http.createServer(async (request, response) => {
 function startServer(port) {
   ensureDataDir();
   ensureOwnerAccount();
+  ensurePageSettingsFile();
   server.listen(port, () => {
     console.log(`AGU Clean Services app running on http://localhost:${port}`);
   });

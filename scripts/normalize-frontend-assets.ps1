@@ -6,7 +6,7 @@ $files += Get-ChildItem "frontend/components" -Filter *.html
 $files += Get-ChildItem "frontend/sections" -Filter *.html
 
 $map = [ordered]@{
-  "../ASSETS/Icon System/Brand Icons/AGU Clean Services logo design.png" = "../frontend/assets/brand/logo.png"
+  "../ASSETS/Logo/AGU Clean Services logo design v1.1.png" = "../frontend/assets/brand/logo.png"
   "../ASSETS/Icon System/Brand Icons/svg-regenerated/agu-favicon-icon.svg" = "../frontend/assets/brand/favicon.svg"
   "../ASSETS/Icon System/Brand Icons/svg-regenerated/agu-app-icon.svg" = "../frontend/assets/brand/app-icon.svg"
   "../ASSETS/Icon System/Brand Icons/svg-regenerated/gold-divider.svg" = "../frontend/assets/brand/divider.svg"

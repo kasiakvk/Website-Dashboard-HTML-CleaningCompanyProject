@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://agucleanservices.co.uk/sitemap.xml

@@ -43,19 +43,84 @@ Use the converter in the project root:
 .\extract_docx_text.ps1 -InputDocx ".\BRAND STRUCTURE ⭐ AGA Clean Services.docx" -OutputMd ".\brand-output.md"
 ```
 
-## Frontend and backend
+## Run locally
 
-Run the local app:
+Start the local server:
 
 ```powershell
+npm install
 npm run dev
 ```
 
-Default routes:
+Open:
 
-- `/` -> frontend dashboard
-- `/Aga_Clean_Services.html` -> main single-page site
-- `/Aga_Clean_Services_v1.1.html` -> warm single-page variant
-- `/multipage/index.html` -> multipage site
+- `http://localhost:3000/`
+- `http://localhost:3000/ADMIN/dashboard.html`
+- `http://localhost:3000/ADMIN/quotes.html`
+
+## Run with Docker Desktop
+
+Build and start the website container:
+
+```powershell
+docker compose up --build
+```
+
+Open:
+
+- `http://localhost:3000/`
+- `http://localhost:3000/ADMIN/dashboard.html`
+- `http://localhost:3000/ADMIN/quotes.html`
+
+Stop the container:
+
+```powershell
+docker compose down
+```
+
+## Gmail API setup
+
+1. In Google Cloud, enable the Gmail API.
+2. Configure the OAuth consent screen.
+3. Create an OAuth client for a web application.
+4. Add this redirect URI exactly:
+
+```text
+http://localhost:3000/api/admin/gmail/callback
+```
+
+5. Copy:
+
+`ASSETS/backend/data/gmail-oauth-client.example.json`
+
+to:
+
+`ASSETS/backend/data/gmail-oauth-client.json`
+
+6. Replace the placeholder values with your real Google OAuth `clientId` and `clientSecret`.
+7. Start the app and open:
+
+```text
+http://localhost:3000/ADMIN/quotes.html
+```
+
+8. Click `Connect Gmail Account` and sign in with the Gmail account you want to use.
+
+Notes:
+
+- Real inbox and sent mailbox access uses Gmail API OAuth scopes for readonly mail access and sending mail.
+- Without `gmail-oauth-client.json`, the Gmail page will stay in `Not Configured` state.
+
+## Main routes
+
+- `/` -> public website home
+- `/about.html` -> about page
+- `/services.html` -> services page
+- `/contact.html` -> contact page
+- `/ADMIN/dashboard.html` -> admin login and dashboard
+- `/ADMIN/quotes.html` -> quote requests inbox and Gmail outbox
 - `/api/content` -> shared JSON content
 - `/api/contact` -> local enquiry capture
+- `/api/quote` -> local quote request capture
+- `/api/admin/login` -> admin login
+- `/api/admin/quote-mailbox` -> admin quote mailbox data

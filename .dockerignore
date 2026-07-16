@@ -1,0 +1,7 @@
+node_modules
+npm-debug.log
+debug.log
+.git
+.vscode
+ASSETS/backend/dev.log
+ASSETS/backend/dev.err.log

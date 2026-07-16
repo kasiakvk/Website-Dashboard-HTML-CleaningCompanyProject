@@ -1,0 +1,3 @@
+node_modules/
+ASSETS/backend/data/gmail-oauth-client.json
+ASSETS/backend/data/gmail-oauth-token.json

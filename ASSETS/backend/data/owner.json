@@ -20,6 +20,6 @@
   "passwordHash": "91e90683093978b257e2326ecfef260fd6ed7a737a28d770ce25b2062908989bffb8b9dd3b450744a40a4b985ff47f4162c8793608362078f7bde7d908864393",
   "passwordSalt": "6cc29d19b2fe0a76b465046fca9216a1",
   "createdAt": "2026-07-13T22:54:43.608Z",
-  "updatedAt": "2026-07-13T22:54:43.608Z",
-  "lastLoginAt": null
+  "updatedAt": "2026-07-14T01:02:43.443Z",
+  "lastLoginAt": "2026-07-14T01:02:43.443Z"
 }

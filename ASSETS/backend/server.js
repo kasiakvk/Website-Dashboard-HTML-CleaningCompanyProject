@@ -215,6 +215,18 @@ function createDefaultPageSettings() {
         heroLead: "Friendly, reliable service and strong results are the standards we want every booking to reflect."
       },
       {
+        id: "customer-reviews",
+        label: "Customer Reviews",
+        file: "customer-reviews.html",
+        route: "/customer-reviews.html",
+        navLabel: "Customer Reviews",
+        published: true,
+        metaTitle: "Customer Reviews | AGU Clean Services",
+        metaDescription: "Published customer reviews for AGU Clean Services.",
+        heroTitle: "Reviews shared by AGU Clean Services customers",
+        heroLead: "Published feedback from customers who have used our local cleaning services."
+      },
+      {
         id: "contact",
         label: "Contact Us",
         file: "contact.html",

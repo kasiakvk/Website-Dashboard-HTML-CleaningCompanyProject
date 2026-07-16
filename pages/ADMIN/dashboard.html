@@ -1,0 +1,937 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#101826" />
+  <title>Admin Login | AGU Clean Services</title>
+  <meta name="description" content="Private admin login and management panel for AGU Clean Services website." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="icon" type="image/svg+xml" href="/frontend/assets/brand/app-icon.svg" />
+  <style>
+    :root {
+      --bg: #0f1724;
+      --panel: #162234;
+      --panel-2: #1c2b42;
+      --line: rgba(255, 255, 255, 0.08);
+      --line-strong: rgba(255, 255, 255, 0.14);
+      --text: #eef4ff;
+      --muted: #9db0ca;
+      --gold: #d5b06d;
+      --gold-2: #b78a43;
+      --red: #d86464;
+      --shadow: 0 22px 60px rgba(0, 0, 0, 0.35);
+      --radius-xl: 28px;
+      --radius-lg: 20px;
+      --radius-md: 14px;
+      --container: 1440px;
+    }
+
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: "Manrope", sans-serif;
+      color: var(--text);
+      background:
+        radial-gradient(circle at top left, rgba(213, 176, 109, 0.15), transparent 26%),
+        radial-gradient(circle at top right, rgba(60, 131, 246, 0.10), transparent 24%),
+        linear-gradient(180deg, #0b1320 0%, #101826 100%);
+    }
+    a { color: inherit; text-decoration: none; }
+    button, input, textarea, select { font: inherit; }
+    button { cursor: pointer; }
+    [hidden] { display: none !important; }
+    .container { width: min(calc(100% - 40px), var(--container)); margin: 0 auto; }
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 20;
+      background: rgba(11, 19, 32, 0.88);
+      border-bottom: 1px solid var(--line);
+      backdrop-filter: blur(18px);
+    }
+    .topbar-inner {
+      min-height: 80px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+    }
+    .brand { display: inline-flex; align-items: center; gap: 14px; }
+    .brand-icon {
+      width: 52px;
+      height: 52px;
+      border-radius: 16px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      background: linear-gradient(145deg, rgba(255,255,255,0.08), rgba(213,176,109,0.16));
+      border: 1px solid var(--line-strong);
+      box-shadow: var(--shadow);
+    }
+    .brand-icon img { width: 28px; height: 28px; }
+    .brand-copy strong, .brand-copy span { display: block; }
+    .brand-copy strong { font-size: 0.98rem; letter-spacing: 0.04em; text-transform: uppercase; }
+    .brand-copy span { color: var(--muted); font-size: 0.78rem; letter-spacing: 0.12em; text-transform: uppercase; }
+    .top-links, .top-actions, .section-tabs, .stats-grid, .kpi-grid, .login-layout, .admin-grid, .form-row {
+      display: grid;
+      gap: 18px;
+    }
+    .top-links { grid-auto-flow: column; align-items: center; gap: 16px; }
+    .top-links a { color: var(--muted); font-size: 0.92rem; font-weight: 700; }
+    .top-actions { grid-auto-flow: column; align-items: center; gap: 12px; }
+    .btn, .btn-outline, .btn-danger {
+      border: 0;
+      border-radius: 999px;
+      padding: 12px 18px;
+      font-weight: 800;
+      transition: transform 0.2s ease;
+    }
+    .btn:hover, .btn-outline:hover, .btn-danger:hover { transform: translateY(-1px); }
+    .btn { color: #1d1405; background: linear-gradient(135deg, var(--gold), var(--gold-2)); }
+    .btn-outline { color: var(--text); background: transparent; border: 1px solid var(--line-strong); }
+    .btn-danger { color: #fff; background: linear-gradient(135deg, #b94747, #8f2f2f); }
+    .hero { padding: 48px 0 24px; }
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 14px;
+      border-radius: 999px;
+      color: #f6ddb0;
+      background: rgba(213, 176, 109, 0.12);
+      border: 1px solid rgba(213, 176, 109, 0.22);
+      font-size: 0.78rem;
+      font-weight: 800;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+    .hero h1 { margin: 18px 0 12px; font-size: clamp(2.2rem, 5vw, 4rem); line-height: 1.02; }
+    .hero p { margin: 0; max-width: 760px; color: var(--muted); font-size: 1.05rem; }
+    .login-layout { grid-template-columns: 1fr 0.95fr; align-items: stretch; padding: 30px 0 60px; }
+    .panel, .stat-card, .kpi-card, .review-card, .empty-card {
+      background: linear-gradient(180deg, rgba(26, 37, 58, 0.96), rgba(18, 27, 43, 0.98));
+      border: 1px solid var(--line);
+      border-radius: var(--radius-xl);
+      box-shadow: var(--shadow);
+    }
+    .panel { padding: 28px; }
+    .panel h2, .panel h3, .panel h4 { margin: 0 0 10px; }
+    .subtle { color: var(--muted); }
+    .login-showcase { padding: 32px; }
+    .bullet-list { list-style: none; margin: 24px 0 0; padding: 0; display: grid; gap: 14px; }
+    .bullet-list li {
+      padding: 14px 16px;
+      border-radius: var(--radius-md);
+      border: 1px solid var(--line);
+      background: rgba(255, 255, 255, 0.03);
+      color: var(--muted);
+    }
+    .field { display: grid; gap: 8px; }
+    .field label { font-size: 0.9rem; font-weight: 700; }
+    .field input, .field textarea, .field select {
+      width: 100%;
+      border: 1px solid var(--line-strong);
+      border-radius: var(--radius-md);
+      padding: 14px 16px;
+      color: var(--text);
+      background: rgba(255,255,255,0.05);
+      outline: none;
+    }
+    .field textarea { min-height: 120px; resize: vertical; }
+    .form-row { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .message { min-height: 24px; margin-top: 8px; font-size: 0.92rem; color: var(--muted); }
+    .message.is-error { color: #ffb0b0; }
+    .message.is-success { color: #9de1b8; }
+    .admin-shell { padding: 8px 0 56px; }
+    .section-tabs { grid-auto-flow: column; justify-content: start; margin-bottom: 24px; overflow-x: auto; }
+    .tab-button {
+      border: 1px solid var(--line-strong);
+      background: rgba(255,255,255,0.04);
+      color: var(--muted);
+      border-radius: 999px;
+      padding: 12px 16px;
+      font-weight: 800;
+      white-space: nowrap;
+    }
+    .tab-button.is-active { color: #1d1405; background: linear-gradient(135deg, var(--gold), var(--gold-2)); border-color: transparent; }
+    .stats-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); margin-bottom: 24px; }
+    .stat-card, .kpi-card { padding: 22px; }
+    .stat-card h3 { margin: 0 0 8px; font-size: 0.95rem; color: var(--muted); text-transform: uppercase; letter-spacing: 0.06em; }
+    .stat-value { font-size: 2.3rem; font-weight: 800; }
+    .stat-note { color: var(--muted); font-size: 0.92rem; margin-top: 6px; }
+    .admin-grid { grid-template-columns: 1.1fr 0.9fr; align-items: start; }
+    .stack { display: grid; gap: 24px; }
+    .kpi-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+    .mini-list { display: grid; gap: 10px; }
+    .mini-row, .toolbar, .review-head, .action-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+    .mini-row { padding-bottom: 10px; border-bottom: 1px solid var(--line); }
+    .mini-row:last-child { border-bottom: 0; padding-bottom: 0; }
+    .pill {
+      display: inline-flex;
+      align-items: center;
+      padding: 7px 11px;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.05);
+      border: 1px solid var(--line);
+      color: var(--text);
+      font-size: 0.78rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+    .table-wrap { overflow: auto; border: 1px solid var(--line); border-radius: var(--radius-lg); }
+    table { width: 100%; border-collapse: collapse; min-width: 880px; }
+    th, td { text-align: left; padding: 14px; border-bottom: 1px solid var(--line); vertical-align: top; }
+    th { color: var(--muted); font-size: 0.82rem; text-transform: uppercase; letter-spacing: 0.06em; background: rgba(255,255,255,0.02); }
+    td textarea, td input, td select { min-width: 100%; }
+    .review-list { display: grid; gap: 16px; }
+    .review-card { padding: 20px; }
+    .review-card p { color: var(--muted); }
+    .empty-card { padding: 20px; color: var(--muted); }
+    @media (max-width: 1180px) {
+      .stats-grid, .kpi-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .admin-grid, .login-layout { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 760px) {
+      .container { width: min(calc(100% - 24px), var(--container)); }
+      .topbar-inner { min-height: auto; padding: 18px 0; flex-wrap: wrap; }
+      .top-links, .top-actions { grid-auto-flow: row; }
+      .stats-grid, .kpi-grid, .form-row { grid-template-columns: 1fr; }
+      .panel, .login-showcase, .stat-card, .kpi-card, .review-card, .empty-card { padding: 20px; }
+    }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <div class="container topbar-inner">
+      <a class="brand" href="/index.html" aria-label="Back to AGU Clean Services website">
+        <span class="brand-icon">
+          <img src="/frontend/assets/brand/app-icon.svg" alt="AGU Clean Services icon" />
+        </span>
+        <span class="brand-copy">
+          <strong>AGU Clean Services</strong>
+          <span>Admin Access</span>
+        </span>
+      </a>
+      <nav class="top-links">
+        <a href="/index.html">Website</a>
+        <a href="/services.html">Services</a>
+        <a href="/contact.html">Contact</a>
+      </nav>
+      <div class="top-actions">
+        <button class="btn-outline" type="button" id="refresh-app">Refresh</button>
+        <button class="btn" type="button" id="logout-app" hidden>Log Out</button>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div class="container">
+        <div class="eyebrow">Private Login</div>
+        <h1>AGU Clean Services Admin Dashboard</h1>
+        <p>This page works first as the login screen. After successful login it switches into the full admin panel for AGU Clean Services multi-page website settings, content and management.</p>
+        <p>Open this page through the local server at <strong>http://localhost:3000/ADMIN/dashboard.html</strong>. Opening the HTML file directly from disk will block admin API requests.</p>
+      </div>
+    </section>
+
+    <section class="container">
+      <div id="login-shell" class="login-layout">
+        <article class="panel">
+          <h2>Login to Dashboard</h2>
+          <p class="subtle">Use the owner account to open website settings, lead management, review moderation and multi-page controls.</p>
+          <form id="login-form" class="stack" style="margin-top:22px;">
+            <div class="field">
+              <label for="login-email">Owner email</label>
+              <input id="login-email" name="email" type="email" autocomplete="username" placeholder="agucleanservices@gmail.com" />
+            </div>
+            <div class="field">
+              <label for="login-password">Password</label>
+              <input id="login-password" name="password" type="password" autocomplete="current-password" placeholder="Enter dashboard password" />
+            </div>
+            <div class="action-row">
+              <button class="btn" type="submit">Open Admin Panel</button>
+            </div>
+          </form>
+          <div id="login-message" class="message"></div>
+        </article>
+
+        <aside class="login-showcase panel">
+          <div class="eyebrow">Admin Scope</div>
+          <h3>What this panel controls</h3>
+          <ul class="bullet-list">
+            <li>Lead inbox, quote requests and follow-up workflow.</li>
+            <li>Dedicated quote mailbox page connected to Gmail compose.</li>
+            <li>Review moderation, publication and removal.</li>
+            <li>Owner account and business profile settings.</li>
+            <li>Shared content library for services, prices, links and brand data.</li>
+            <li>Page-by-page settings for the AGU Clean Services multi-page website.</li>
+          </ul>
+        </aside>
+      </div>
+
+      <div id="admin-app" class="admin-shell" hidden>
+        <div class="section-tabs">
+          <button class="tab-button is-active" type="button" data-tab="overview">Overview</button>
+          <button class="tab-button" type="button" data-tab="leads">Leads</button>
+          <button class="tab-button" type="button" data-tab="reviews">Reviews</button>
+          <button class="tab-button" type="button" data-tab="content">Content</button>
+          <button class="tab-button" type="button" data-tab="pages">Pages</button>
+          <button class="tab-button" type="button" data-tab="account">Owner</button>
+          <button class="tab-button" type="button" data-tab="business">Business</button>
+        </div>
+
+        <section id="tab-overview">
+          <div class="stats-grid">
+            <article class="stat-card"><h3>Total Leads</h3><div class="stat-value" id="stat-total-leads">0</div><div class="stat-note">All enquiries in dashboard.</div></article>
+            <article class="stat-card"><h3>Quote Requests</h3><div class="stat-value" id="stat-quote-leads">0</div><div class="stat-note">Quote forms requiring follow-up.</div></article>
+            <article class="stat-card"><h3>Pending Reviews</h3><div class="stat-value" id="stat-pending-reviews">0</div><div class="stat-note">Waiting for moderation.</div></article>
+            <article class="stat-card"><h3>Published Reviews</h3><div class="stat-value" id="stat-published-reviews">0</div><div class="stat-note">Visible testimonials.</div></article>
+          </div>
+
+          <div class="admin-grid">
+            <div class="stack">
+              <article class="panel">
+                <div class="toolbar">
+                  <div><h3>Lead Pipeline</h3><div class="subtle">Current admin workload by status.</div></div>
+                  <span class="pill" id="owner-role">Owner</span>
+                </div>
+                <div class="kpi-grid">
+                  <article class="kpi-card"><h4>Lead Status</h4><div class="mini-list"><div class="mini-row"><span>New</span><strong id="status-new">0</strong></div><div class="mini-row"><span>In Progress</span><strong id="status-progress">0</strong></div><div class="mini-row"><span>Closed</span><strong id="status-closed">0</strong></div></div></article>
+                  <article class="kpi-card"><h4>Priority</h4><div class="mini-list"><div class="mini-row"><span>High</span><strong id="priority-high">0</strong></div><div class="mini-row"><span>Medium</span><strong id="priority-medium">0</strong></div><div class="mini-row"><span>Low</span><strong id="priority-low">0</strong></div></div></article>
+                  <article class="kpi-card"><h4>Reviews</h4><div class="mini-list"><div class="mini-row"><span>Pending</span><strong id="review-pending">0</strong></div><div class="mini-row"><span>Reviewed</span><strong id="review-reviewed">0</strong></div><div class="mini-row"><span>Approved</span><strong id="review-approved">0</strong></div></div></article>
+                </div>
+              </article>
+
+              <article class="panel">
+                <div class="toolbar">
+                  <div><h3>Recent Leads</h3><div class="subtle">Latest website enquiries.</div></div>
+                  <div id="overview-message" class="message"></div>
+                </div>
+                <div class="table-wrap">
+                  <table>
+                    <thead><tr><th>Created</th><th>Name</th><th>Type</th><th>Service</th><th>Status</th></tr></thead>
+                    <tbody id="overview-leads-body"><tr><td colspan="5">No leads loaded.</td></tr></tbody>
+                  </table>
+                </div>
+              </article>
+            </div>
+
+            <aside class="stack">
+              <article class="panel">
+                <h3>Owner Session</h3>
+                <div class="mini-list">
+                  <div class="mini-row"><span>Name</span><strong id="owner-name">-</strong></div>
+                  <div class="mini-row"><span>Email</span><strong id="owner-email-badge">-</strong></div>
+                  <div class="mini-row"><span>Primary City</span><strong id="owner-city">-</strong></div>
+                  <div class="mini-row"><span>Last Login</span><strong id="owner-last-login">-</strong></div>
+                </div>
+              </article>
+              <article class="panel">
+                <h3>Business Snapshot</h3>
+                <div class="mini-list">
+                  <div class="mini-row"><span>Business</span><strong id="biz-name-snapshot">-</strong></div>
+                  <div class="mini-row"><span>Trading Name</span><strong id="biz-trading-snapshot">-</strong></div>
+                  <div class="mini-row"><span>Areas</span><strong id="biz-areas-snapshot">-</strong></div>
+                </div>
+              </article>
+              <article class="panel">
+                <div class="toolbar">
+                  <div><h3>Quote Mailbox</h3><div class="subtle">Open the dedicated inbox and outbox for quote replies.</div></div>
+                </div>
+                <div class="action-row">
+                  <a class="btn" href="/ADMIN/quotes.html">Open Mailbox</a>
+                  <span class="pill">Gmail API</span>
+                </div>
+              </article>
+            </aside>
+          </div>
+        </section>
+
+        <section id="tab-leads" hidden>
+          <article class="panel">
+            <div class="toolbar">
+              <div><h3>Lead Management</h3><div class="subtle">Update status, priority and notes for every AGU Clean Services lead.</div></div>
+              <div id="leads-message" class="message"></div>
+            </div>
+            <div class="table-wrap">
+              <table>
+                <thead><tr><th>Created</th><th>Name</th><th>Type</th><th>Service</th><th>Status</th><th>Priority</th><th>Notes</th><th>Action</th></tr></thead>
+                <tbody id="leads-body"><tr><td colspan="8">No leads loaded.</td></tr></tbody>
+              </table>
+            </div>
+          </article>
+
+          <article class="panel" style="margin-top:24px;">
+            <div class="toolbar">
+              <div><h3>Quote Inbox</h3><div class="subtle">Fast access to quote leads with contact details.</div></div>
+              <div class="action-row">
+                <a class="btn-outline" href="/ADMIN/quotes.html">Open Mailbox</a>
+                <div id="quotes-message" class="message"></div>
+              </div>
+            </div>
+            <div class="table-wrap">
+              <table>
+                <thead><tr><th>Created</th><th>Name</th><th>Service</th><th>Phone</th><th>Email</th><th>Status</th></tr></thead>
+                <tbody id="quotes-body"><tr><td colspan="6">No quotes loaded.</td></tr></tbody>
+              </table>
+            </div>
+          </article>
+        </section>
+
+        <section id="tab-reviews" hidden>
+          <article class="panel">
+            <div class="toolbar">
+              <div><h3>Review Moderation</h3><div class="subtle">Review, publish and remove testimonials.</div></div>
+              <div id="reviews-message" class="message"></div>
+            </div>
+            <div id="reviews-list" class="review-list"><div class="empty-card">No reviews loaded.</div></div>
+          </article>
+        </section>
+
+        <section id="tab-content" hidden>
+          <article class="panel">
+            <div class="toolbar">
+              <div><h3>Content Library</h3><div class="subtle">Shared content for multi-page website sections.</div></div>
+              <div id="content-message" class="message"></div>
+            </div>
+            <form id="content-form" class="stack">
+              <div class="form-row">
+                <div class="field"><label for="brand-name">Brand name</label><input id="brand-name" name="brandName" type="text" /></div>
+                <div class="field"><label for="brand-tagline">Tagline</label><input id="brand-tagline" name="tagline" type="text" /></div>
+              </div>
+              <div class="form-row">
+                <div class="field"><label for="brand-phone">Phone</label><input id="brand-phone" name="phone" type="text" /></div>
+                <div class="field"><label for="brand-whatsapp">WhatsApp</label><input id="brand-whatsapp" name="whatsapp" type="text" /></div>
+              </div>
+              <div class="form-row">
+                <div class="field"><label for="brand-email">Email</label><input id="brand-email" name="email" type="email" /></div>
+                <div class="field"><label for="brand-website">Website</label><input id="brand-website" name="website" type="text" /></div>
+              </div>
+              <div class="field"><label for="brand-areas">Service areas</label><input id="brand-areas" name="areas" type="text" /></div>
+              <div class="field"><label for="content-services">Services JSON</label><textarea id="content-services" name="services"></textarea></div>
+              <div class="field"><label for="content-pricing">Pricing JSON</label><textarea id="content-pricing" name="pricing"></textarea></div>
+              <div class="field"><label for="content-launch">Launch plan</label><textarea id="content-launch" name="launchPlan"></textarea></div>
+              <div class="field"><label for="content-links">Links JSON</label><textarea id="content-links" name="links"></textarea></div>
+              <div class="action-row"><button class="btn" type="submit">Save Content</button></div>
+            </form>
+          </article>
+        </section>
+
+        <section id="tab-pages" hidden>
+          <article class="panel">
+            <div class="toolbar">
+              <div><h3>Page Settings</h3><div class="subtle">Update navigation labels, meta content and hero copy.</div></div>
+              <div id="pages-message" class="message"></div>
+            </div>
+            <div class="table-wrap">
+              <table>
+                <thead><tr><th>Page</th><th>File</th><th>Nav Label</th><th>Meta Title</th><th>Meta Description</th><th>Hero Title</th><th>Hero Lead</th><th>Published</th></tr></thead>
+                <tbody id="pages-body"><tr><td colspan="8">No page settings loaded.</td></tr></tbody>
+              </table>
+            </div>
+            <div class="action-row" style="margin-top:20px;"><button class="btn" id="save-pages" type="button">Save Page Settings</button></div>
+          </article>
+        </section>
+
+        <section id="tab-account" hidden>
+          <article class="panel">
+            <div class="toolbar">
+              <div><h3>Owner Account</h3><div class="subtle">Update owner details and password.</div></div>
+              <div id="profile-message" class="message"></div>
+            </div>
+            <form id="profile-form" class="stack">
+              <div class="form-row">
+                <div class="field"><label for="owner-full-name">Full name</label><input id="owner-full-name" name="fullName" type="text" /></div>
+                <div class="field"><label for="owner-display-name">Display name</label><input id="owner-display-name" name="displayName" type="text" /></div>
+              </div>
+              <div class="form-row">
+                <div class="field"><label for="owner-email-field">Email</label><input id="owner-email-field" name="email" type="email" /></div>
+                <div class="field"><label for="owner-phone-field">Phone</label><input id="owner-phone-field" name="phone" type="text" /></div>
+              </div>
+              <div class="field"><label for="owner-website-field">Website</label><input id="owner-website-field" name="website" type="text" /></div>
+              <div class="form-row">
+                <div class="field"><label for="owner-current-password">Current password</label><input id="owner-current-password" name="currentPassword" type="password" /></div>
+                <div class="field"><label for="owner-new-password">New password</label><input id="owner-new-password" name="newPassword" type="password" /></div>
+              </div>
+              <div class="action-row"><button class="btn" type="submit">Save Owner Account</button></div>
+            </form>
+          </article>
+        </section>
+
+        <section id="tab-business" hidden>
+          <article class="panel">
+            <div class="toolbar">
+              <div><h3>Business Settings</h3><div class="subtle">Core company details used across the website.</div></div>
+              <div id="business-message" class="message"></div>
+            </div>
+            <form id="business-form" class="stack">
+              <div class="form-row">
+                <div class="field"><label for="business-name">Business name</label><input id="business-name" name="businessName" type="text" /></div>
+                <div class="field"><label for="trading-name">Trading name</label><input id="trading-name" name="tradingName" type="text" /></div>
+              </div>
+              <div class="form-row">
+                <div class="field"><label for="primary-city">Primary city</label><input id="primary-city" name="primaryCity" type="text" /></div>
+                <div class="field"><label for="working-hours">Working hours</label><input id="working-hours" name="workingHours" type="text" /></div>
+              </div>
+              <div class="field"><label for="service-areas">Service areas</label><input id="service-areas" name="serviceAreas" type="text" /></div>
+              <div class="field"><label for="legal-footer">Legal footer</label><textarea id="legal-footer" name="legalFooter"></textarea></div>
+              <div class="action-row"><button class="btn" type="submit">Save Business Settings</button></div>
+            </form>
+          </article>
+        </section>
+      </div>
+    </section>
+  </main>
+
+  <script>
+    const loginShell = document.getElementById("login-shell");
+    const adminApp = document.getElementById("admin-app");
+    const loginForm = document.getElementById("login-form");
+    const loginMessage = document.getElementById("login-message");
+    const logoutButton = document.getElementById("logout-app");
+    const refreshButton = document.getElementById("refresh-app");
+    const reviewStatusLabels = { pending: "Pending", reviewed: "Reviewed", approved: "Approved" };
+    let currentPages = [];
+
+    function setMessage(node, text, type = "") {
+      if (!node) return;
+      node.textContent = text || "";
+      node.classList.remove("is-error", "is-success");
+      if (type) node.classList.add(type);
+    }
+
+    function getDashboardUrl() {
+      return "http://localhost:3000/ADMIN/dashboard.html";
+    }
+
+    function formatDate(value) {
+      return value ? new Date(value).toLocaleString() : "—";
+    }
+
+    function escapeHtml(value) {
+      return String(value || "")
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
+    }
+
+    function prettyJson(value) {
+      return JSON.stringify(value || [], null, 2);
+    }
+
+    async function api(path, options = {}) {
+      if (window.location.protocol === "file:") {
+        throw new Error(`Open the dashboard from ${getDashboardUrl()} instead of file://.`);
+      }
+
+      let response;
+      try {
+        response = await fetch(path, {
+          credentials: "same-origin",
+          headers: { "Content-Type": "application/json", ...(options.headers || {}) },
+          ...options
+        });
+      } catch {
+        throw new Error(`Cannot reach the admin server. Start it first and open ${getDashboardUrl()}.`);
+      }
+
+      let data = {};
+      try { data = await response.json(); } catch { data = {}; }
+      if (!response.ok) throw new Error(data.error || "Request failed");
+      return data;
+    }
+
+    function setAuthenticated(isAuthenticated) {
+      loginShell.hidden = isAuthenticated;
+      adminApp.hidden = !isAuthenticated;
+      logoutButton.hidden = !isAuthenticated;
+      document.title = isAuthenticated ? "Admin Panel | AGU Clean Services" : "Admin Login | AGU Clean Services";
+    }
+
+    function activateTab(tabId) {
+      document.querySelectorAll(".tab-button").forEach((button) => {
+        button.classList.toggle("is-active", button.dataset.tab === tabId);
+      });
+      ["overview", "leads", "reviews", "content", "pages", "account", "business"].forEach((id) => {
+        document.getElementById(`tab-${id}`).hidden = id !== tabId;
+      });
+    }
+
+    function fillOwnerSummary(owner) {
+      document.getElementById("owner-role").textContent = owner.role || "Owner";
+      document.getElementById("owner-name").textContent = owner.fullName || "-";
+      document.getElementById("owner-email-badge").textContent = owner.email || "-";
+      document.getElementById("owner-city").textContent = owner.primaryCity || "-";
+      document.getElementById("owner-last-login").textContent = owner.lastLoginAt ? formatDate(owner.lastLoginAt) : "First login";
+      document.getElementById("owner-full-name").value = owner.fullName || "";
+      document.getElementById("owner-display-name").value = owner.displayName || "";
+      document.getElementById("owner-email-field").value = owner.email || "";
+      document.getElementById("owner-phone-field").value = owner.phone || "";
+      document.getElementById("owner-website-field").value = owner.website || "";
+    }
+
+    function fillBusinessForm(business) {
+      document.getElementById("biz-name-snapshot").textContent = business.businessName || "-";
+      document.getElementById("biz-trading-snapshot").textContent = business.tradingName || "-";
+      document.getElementById("biz-areas-snapshot").textContent = Array.isArray(business.serviceAreas) ? business.serviceAreas.join(", ") : "-";
+      document.getElementById("business-name").value = business.businessName || "";
+      document.getElementById("trading-name").value = business.tradingName || "";
+      document.getElementById("primary-city").value = business.primaryCity || "";
+      document.getElementById("working-hours").value = business.workingHours || "";
+      document.getElementById("service-areas").value = Array.isArray(business.serviceAreas) ? business.serviceAreas.join(", ") : "";
+      document.getElementById("legal-footer").value = business.legalFooter || "";
+    }
+
+    function fillContentForm(content) {
+      const brand = content.brand || {};
+      document.getElementById("brand-name").value = brand.name || "";
+      document.getElementById("brand-tagline").value = brand.tagline || "";
+      document.getElementById("brand-phone").value = brand.phone || "";
+      document.getElementById("brand-whatsapp").value = brand.whatsapp || "";
+      document.getElementById("brand-email").value = brand.email || "";
+      document.getElementById("brand-website").value = brand.website || "";
+      document.getElementById("brand-areas").value = Array.isArray(brand.areas) ? brand.areas.join(", ") : "";
+      document.getElementById("content-services").value = prettyJson(content.services);
+      document.getElementById("content-pricing").value = prettyJson(content.pricing);
+      document.getElementById("content-launch").value = Array.isArray(content.launchPlan) ? content.launchPlan.join("\n") : "";
+      document.getElementById("content-links").value = prettyJson(content.links);
+    }
+
+    function renderStats(stats) {
+      document.getElementById("stat-total-leads").textContent = stats.totalLeads || 0;
+      document.getElementById("stat-quote-leads").textContent = stats.quoteLeads || 0;
+      document.getElementById("stat-pending-reviews").textContent = stats.pendingReviews || 0;
+      document.getElementById("stat-published-reviews").textContent = stats.publishedReviews || 0;
+      document.getElementById("status-new").textContent = stats.statusCounts?.new || 0;
+      document.getElementById("status-progress").textContent = stats.statusCounts?.["in-progress"] || 0;
+      document.getElementById("status-closed").textContent = stats.statusCounts?.closed || 0;
+      document.getElementById("priority-high").textContent = stats.priorityCounts?.high || 0;
+      document.getElementById("priority-medium").textContent = stats.priorityCounts?.medium || 0;
+      document.getElementById("priority-low").textContent = stats.priorityCounts?.low || 0;
+      document.getElementById("review-pending").textContent = stats.pendingReviews || 0;
+      document.getElementById("review-reviewed").textContent = stats.reviewedReviews || 0;
+      document.getElementById("review-approved").textContent = stats.publishedReviews || 0;
+    }
+
+    function renderOverviewLeads(leads) {
+      const body = document.getElementById("overview-leads-body");
+      body.innerHTML = leads.length
+        ? leads.slice(0, 8).map((lead) => `<tr><td>${formatDate(lead.createdAt)}</td><td>${escapeHtml(lead.name || "-")}</td><td>${escapeHtml(lead.type || "-")}</td><td>${escapeHtml(lead.service || "-")}</td><td>${escapeHtml(lead.status || "new")}</td></tr>`).join("")
+        : '<tr><td colspan="5">No leads loaded.</td></tr>';
+    }
+
+    function renderLeads(leads) {
+      const body = document.getElementById("leads-body");
+      if (!leads.length) {
+        body.innerHTML = '<tr><td colspan="8">No leads loaded.</td></tr>';
+        return;
+      }
+      body.innerHTML = leads.map((lead) => `
+        <tr>
+          <td>${formatDate(lead.createdAt)}</td>
+          <td><strong>${escapeHtml(lead.name || "-")}</strong><div class="subtle">${escapeHtml(lead.email || lead.phone || "")}</div></td>
+          <td>${escapeHtml(lead.type || "-")}</td>
+          <td>${escapeHtml(lead.service || "-")}</td>
+          <td><select data-lead-status="${lead.id}"><option value="new" ${lead.status === "new" ? "selected" : ""}>new</option><option value="in-progress" ${lead.status === "in-progress" ? "selected" : ""}>in-progress</option><option value="closed" ${lead.status === "closed" ? "selected" : ""}>closed</option></select></td>
+          <td><select data-lead-priority="${lead.id}"><option value="high" ${lead.priority === "high" ? "selected" : ""}>high</option><option value="medium" ${!lead.priority || lead.priority === "medium" ? "selected" : ""}>medium</option><option value="low" ${lead.priority === "low" ? "selected" : ""}>low</option></select></td>
+          <td><textarea data-lead-notes="${lead.id}">${escapeHtml(lead.notes || "")}</textarea></td>
+          <td><button class="btn" type="button" data-save-lead="${lead.id}">Save</button></td>
+        </tr>
+      `).join("");
+      document.querySelectorAll("[data-save-lead]").forEach((button) => {
+        button.addEventListener("click", async () => {
+          const leadId = button.dataset.saveLead;
+          const status = document.querySelector(`[data-lead-status="${leadId}"]`).value;
+          const priority = document.querySelector(`[data-lead-priority="${leadId}"]`).value;
+          const notes = document.querySelector(`[data-lead-notes="${leadId}"]`).value;
+          try {
+            await api(`/api/admin/leads/${leadId}`, { method: "PATCH", body: JSON.stringify({ status, priority, notes }) });
+            setMessage(document.getElementById("leads-message"), "Lead updated.", "is-success");
+            await loadAdminData();
+          } catch (error) {
+            setMessage(document.getElementById("leads-message"), error.message, "is-error");
+          }
+        });
+      });
+    }
+
+    function renderQuotes(quotes) {
+      const body = document.getElementById("quotes-body");
+      body.innerHTML = quotes.length
+        ? quotes.map((quote) => `<tr><td>${formatDate(quote.createdAt)}</td><td>${escapeHtml(quote.name || "-")}</td><td>${escapeHtml(quote.service || "-")}</td><td>${escapeHtml(quote.phone || "-")}</td><td>${escapeHtml(quote.email || "-")}</td><td>${escapeHtml(quote.status || "new")}</td></tr>`).join("")
+        : '<tr><td colspan="6">No quotes loaded.</td></tr>';
+    }
+
+    function renderReviews(reviews) {
+      const list = document.getElementById("reviews-list");
+      if (!reviews.length) {
+        list.innerHTML = '<div class="empty-card">No reviews loaded.</div>';
+        return;
+      }
+      list.innerHTML = reviews.map((review) => `
+        <article class="review-card">
+          <div class="review-head">
+            <div><strong>${escapeHtml(review.name || "Customer")}</strong><div class="subtle">${formatDate(review.createdAt)} • ${"★".repeat(Math.max(1, Math.min(5, Number(review.rating || 0))))}</div></div>
+            <span class="pill">${escapeHtml(reviewStatusLabels[review.status] || review.status || "Pending")}</span>
+          </div>
+          <p>${escapeHtml(review.message || "")}</p>
+          <div class="field"><label for="review-response-${review.id}">Owner response</label><textarea id="review-response-${review.id}" data-review-response="${review.id}">${escapeHtml(review.response || "")}</textarea></div>
+          <div class="action-row">
+            <button class="btn-outline" type="button" data-review-update="${review.id}" data-review-status="reviewed">Mark Reviewed</button>
+            <button class="btn" type="button" data-review-update="${review.id}" data-review-status="approved">Publish</button>
+            <button class="btn-danger" type="button" data-review-delete="${review.id}">Delete</button>
+          </div>
+        </article>
+      `).join("");
+      document.querySelectorAll("[data-review-update]").forEach((button) => {
+        button.addEventListener("click", async () => {
+          const reviewId = button.dataset.reviewUpdate;
+          const status = button.dataset.reviewStatus;
+          const response = document.querySelector(`[data-review-response="${reviewId}"]`).value;
+          try {
+            await api(`/api/admin/reviews/${reviewId}`, { method: "PATCH", body: JSON.stringify({ status, published: status === "approved", response }) });
+            setMessage(document.getElementById("reviews-message"), "Review updated.", "is-success");
+            await loadAdminData();
+          } catch (error) {
+            setMessage(document.getElementById("reviews-message"), error.message, "is-error");
+          }
+        });
+      });
+      document.querySelectorAll("[data-review-delete]").forEach((button) => {
+        button.addEventListener("click", async () => {
+          try {
+            await api(`/api/admin/reviews/${button.dataset.reviewDelete}`, { method: "DELETE" });
+            setMessage(document.getElementById("reviews-message"), "Review deleted.", "is-success");
+            await loadAdminData();
+          } catch (error) {
+            setMessage(document.getElementById("reviews-message"), error.message, "is-error");
+          }
+        });
+      });
+    }
+
+    function renderPages(pageSettings) {
+      currentPages = Array.isArray(pageSettings.pages) ? pageSettings.pages : [];
+      const body = document.getElementById("pages-body");
+      if (!currentPages.length) {
+        body.innerHTML = '<tr><td colspan="8">No page settings loaded.</td></tr>';
+        return;
+      }
+      body.innerHTML = currentPages.map((page) => `
+        <tr>
+          <td><strong>${escapeHtml(page.label || page.id)}</strong><div class="subtle">${escapeHtml(page.route || "-")}</div></td>
+          <td>${escapeHtml(page.file || "-")}</td>
+          <td><input type="text" data-page-id="${page.id}" data-page-key="navLabel" value="${escapeHtml(page.navLabel || "")}" /></td>
+          <td><textarea data-page-id="${page.id}" data-page-key="metaTitle">${escapeHtml(page.metaTitle || "")}</textarea></td>
+          <td><textarea data-page-id="${page.id}" data-page-key="metaDescription">${escapeHtml(page.metaDescription || "")}</textarea></td>
+          <td><textarea data-page-id="${page.id}" data-page-key="heroTitle">${escapeHtml(page.heroTitle || "")}</textarea></td>
+          <td><textarea data-page-id="${page.id}" data-page-key="heroLead">${escapeHtml(page.heroLead || "")}</textarea></td>
+          <td><input type="checkbox" data-page-id="${page.id}" data-page-key="published" ${page.published ? "checked" : ""} /></td>
+        </tr>
+      `).join("");
+    }
+
+    function collectPageSettings() {
+      return {
+        pages: currentPages.map((page) => {
+          const pick = (key) => document.querySelector(`[data-page-id="${page.id}"][data-page-key="${key}"]`);
+          return {
+            ...page,
+            navLabel: pick("navLabel").value.trim(),
+            metaTitle: pick("metaTitle").value.trim(),
+            metaDescription: pick("metaDescription").value.trim(),
+            heroTitle: pick("heroTitle").value.trim(),
+            heroLead: pick("heroLead").value.trim(),
+            published: pick("published").checked
+          };
+        })
+      };
+    }
+
+    async function loadAdminData() {
+      const [sessionData, profileData, businessData, contentData, pageSettingsData, statsData, leadsData, quotesData, reviewsData] = await Promise.all([
+        api("/api/admin/session"),
+        api("/api/admin/profile"),
+        api("/api/admin/business"),
+        api("/api/admin/content"),
+        api("/api/admin/page-settings"),
+        api("/api/admin/stats"),
+        api("/api/admin/leads"),
+        api("/api/admin/quotes"),
+        api("/api/admin/reviews")
+      ]);
+      fillOwnerSummary(sessionData.owner || profileData.owner || {});
+      fillBusinessForm(businessData.business || {});
+      fillContentForm(contentData.content || {});
+      renderPages(pageSettingsData.pageSettings || { pages: [] });
+      renderStats(statsData);
+      renderOverviewLeads(leadsData);
+      renderLeads(leadsData);
+      renderQuotes(quotesData);
+      renderReviews(reviewsData);
+      setMessage(document.getElementById("overview-message"), `Loaded ${leadsData.length} leads.`, "is-success");
+      setMessage(document.getElementById("quotes-message"), `Loaded ${quotesData.length} quotes.`, "is-success");
+      setMessage(document.getElementById("pages-message"), `Loaded ${currentPages.length} pages.`, "is-success");
+    }
+
+    async function bootstrap() {
+      if (window.location.protocol === "file:") {
+        setAuthenticated(false);
+        setMessage(loginMessage, `Open ${getDashboardUrl()} in the browser. Direct file access cannot log in.`, "is-error");
+        return;
+      }
+
+      try {
+        await api("/api/admin/session");
+        setAuthenticated(true);
+        await loadAdminData();
+      } catch (error) {
+        setAuthenticated(false);
+        if (error && error.message) {
+          setMessage(loginMessage, error.message, "is-error");
+        }
+      }
+    }
+
+    loginForm.addEventListener("submit", async (event) => {
+      event.preventDefault();
+      const formData = new FormData(loginForm);
+      try {
+        await api("/api/admin/login", { method: "POST", body: JSON.stringify({ email: formData.get("email"), password: formData.get("password") }) });
+        setMessage(loginMessage, "Login successful. Opening admin panel...", "is-success");
+        setAuthenticated(true);
+        await loadAdminData();
+        activateTab("overview");
+      } catch (error) {
+        setMessage(loginMessage, error.message, "is-error");
+      }
+    });
+
+    logoutButton.addEventListener("click", async () => {
+      try {
+        await api("/api/admin/logout", { method: "POST" });
+      } finally {
+        setAuthenticated(false);
+        loginForm.reset();
+        setMessage(loginMessage, "Logged out.");
+      }
+    });
+
+    refreshButton.addEventListener("click", async () => {
+      if (adminApp.hidden) {
+        setMessage(loginMessage, "Log in first to refresh dashboard.", "is-error");
+        return;
+      }
+      try {
+        await loadAdminData();
+      } catch (error) {
+        setMessage(document.getElementById("overview-message"), error.message, "is-error");
+      }
+    });
+
+    document.querySelectorAll(".tab-button").forEach((button) => {
+      button.addEventListener("click", () => activateTab(button.dataset.tab));
+    });
+
+    document.getElementById("profile-form").addEventListener("submit", async (event) => {
+      event.preventDefault();
+      const formData = new FormData(event.currentTarget);
+      try {
+        await api("/api/admin/profile", {
+          method: "PATCH",
+          body: JSON.stringify({
+            fullName: formData.get("fullName"),
+            displayName: formData.get("displayName"),
+            email: formData.get("email"),
+            phone: formData.get("phone"),
+            website: formData.get("website"),
+            currentPassword: formData.get("currentPassword"),
+            newPassword: formData.get("newPassword")
+          })
+        });
+        setMessage(document.getElementById("profile-message"), "Owner account updated.", "is-success");
+        document.getElementById("owner-current-password").value = "";
+        document.getElementById("owner-new-password").value = "";
+        await loadAdminData();
+      } catch (error) {
+        setMessage(document.getElementById("profile-message"), error.message, "is-error");
+      }
+    });
+
+    document.getElementById("business-form").addEventListener("submit", async (event) => {
+      event.preventDefault();
+      const formData = new FormData(event.currentTarget);
+      try {
+        await api("/api/admin/business", {
+          method: "PATCH",
+          body: JSON.stringify({
+            businessName: formData.get("businessName"),
+            tradingName: formData.get("tradingName"),
+            primaryCity: formData.get("primaryCity"),
+            workingHours: formData.get("workingHours"),
+            legalFooter: formData.get("legalFooter"),
+            serviceAreas: String(formData.get("serviceAreas") || "").split(",").map((item) => item.trim()).filter(Boolean)
+          })
+        });
+        setMessage(document.getElementById("business-message"), "Business settings updated.", "is-success");
+        await loadAdminData();
+      } catch (error) {
+        setMessage(document.getElementById("business-message"), error.message, "is-error");
+      }
+    });
+
+    document.getElementById("content-form").addEventListener("submit", async (event) => {
+      event.preventDefault();
+      const formData = new FormData(event.currentTarget);
+      try {
+        await api("/api/admin/content", {
+          method: "PATCH",
+          body: JSON.stringify({
+            brand: {
+              name: formData.get("brandName"),
+              tagline: formData.get("tagline"),
+              phone: formData.get("phone"),
+              whatsapp: formData.get("whatsapp"),
+              email: formData.get("email"),
+              website: formData.get("website"),
+              areas: String(formData.get("areas") || "").split(",").map((item) => item.trim()).filter(Boolean)
+            },
+            services: JSON.parse(String(formData.get("services") || "[]")),
+            pricing: JSON.parse(String(formData.get("pricing") || "[]")),
+            launchPlan: String(formData.get("launchPlan") || "").split(/\r?\n/).map((item) => item.trim()).filter(Boolean),
+            links: JSON.parse(String(formData.get("links") || "[]"))
+          })
+        });
+        setMessage(document.getElementById("content-message"), "Content library updated.", "is-success");
+        await loadAdminData();
+      } catch (error) {
+        setMessage(document.getElementById("content-message"), error.message, "is-error");
+      }
+    });
+
+    document.getElementById("save-pages").addEventListener("click", async () => {
+      try {
+        await api("/api/admin/page-settings", { method: "PUT", body: JSON.stringify(collectPageSettings()) });
+        setMessage(document.getElementById("pages-message"), "Page settings updated.", "is-success");
+        await loadAdminData();
+      } catch (error) {
+        setMessage(document.getElementById("pages-message"), error.message, "is-error");
+      }
+    });
+
+    bootstrap();
+  </script>
+</body>
+</html>

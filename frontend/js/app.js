@@ -32,7 +32,7 @@ const translations = {
     "nav.aboutMe": "About Me",
     "nav.services": "Services",
     "nav.prices": "Pricing",
-    "nav.reviews": "Testimonials",
+    "nav.reviews": "Reviews",
     "nav.faq": "FAQ",
     "nav.contact": "Contact Us",
     "nav.privacy": "Privacy Policy",
@@ -293,17 +293,17 @@ const translations = {
     "prices.ctaH": "Need an exact quote?",
     "prices.ctaP": "Tell us the property type, location and service needed, and we can provide a tailored price.",
     "prices.back": "Back to Services",
-    "reviews.eyebrow": "Testimonials",
+    "reviews.eyebrow": "Reviews",
     "reviews.h1": "What clients say about AGU Clean Services",
     "reviews.lead": "Friendly, reliable service and strong results are the standards we want every booking to reflect.",
-    "reviews.formH": "Share your testimonial",
+    "reviews.formH": "Share your review",
     "reviews.formP": "Tell us what worked well and how the service helped you.",
     "reviews.name": "Your name",
     "reviews.email": "Your email",
     "reviews.rating": "Rating",
-    "reviews.message": "Your testimonial",
+    "reviews.message": "Your review",
     "reviews.messagePh": "Tell us about your experience.",
-    "reviews.submit": "Send testimonial",
+    "reviews.submit": "Send review",
     "reviews.thanks": "Thank you for helping local customers make informed cleaning choices. All testimonials are reviewed before publication.",
     "reviews.secH": "Why the reviews page matters",
     "reviews.secP": "It reinforces the most important sales message from the business plan: clients buy trust, peace of mind and someone dependable.",
@@ -1012,53 +1012,119 @@ if (reviewForm) {
     const payload = Object.fromEntries(formData.entries());
     const safeValue = (value) => (typeof value === "string" ? value.trim() : "").trim();
     const selectedRating = Math.min(Math.max(Number(payload.rating || 0), 1), 5) || 0;
-    const stars = selectedRating ? `${"★".repeat(selectedRating)}${"☆".repeat(5 - selectedRating)}` : "No rating";
-    const subject = `AGU Clean Services review: ${safeValue(payload.name) || "New review"}`;
-    const lines = [
-      `Customer: ${safeValue(payload.name) || "Not provided"}`,
-      `Email: ${safeValue(payload.email) || "Not provided"}`,
-      `Rating: ${stars} (${selectedRating || "Not provided"}/5)`,
-      `Opinion: ${safeValue(payload.message) || "Not provided"}`,
-      "",
-      `Submitted from: ${window.location.href}`
-    ];
-    const mailtoUrl = `mailto:agucleanservices@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(lines.join("\n"))}`;
+    const pendingReview = {
+      name: safeValue(payload.name) || "Customer",
+      rating: selectedRating || 5,
+      message: safeValue(payload.message),
+      createdAt: new Date().toISOString(),
+      pending: true
+    };
 
     if (submitButton) {
       submitButton.disabled = true;
-      submitButton.dataset.originalLabel = submitButton.textContent || "Add review";
+      submitButton.dataset.originalLabel = submitButton.textContent || "Send review";
       submitButton.textContent = "Sending...";
     }
 
     try {
-      try {
-        const response = await fetch("/api/review", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json"
-          },
-          body: JSON.stringify({
-            ...payload,
-            kind: "review"
-          })
-        });
+      const response = await fetch("/api/review", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+          ...payload,
+          kind: "review"
+        })
+      });
 
-        if (!response.ok) {
-          console.warn("Review API unavailable, falling back to Gmail connector.");
-        }
-      } catch {
-        console.warn("Review API unavailable, falling back to Gmail connector.");
+      if (!response.ok) {
+        throw new Error("Review could not be saved.");
       }
 
+      sessionStorage.setItem("aguPendingReview", JSON.stringify(pendingReview));
       reviewForm.reset();
-      window.location.href = mailtoUrl;
-    } catch {
-      window.location.href = mailtoUrl;
+      window.location.href = "customer-reviews.html?submitted=1";
+    } catch (error) {
+      window.alert("We could not save your review. Please try again.");
     } finally {
       if (submitButton) {
         submitButton.disabled = false;
-        submitButton.textContent = submitButton.dataset.originalLabel || "Add review";
+        submitButton.textContent = submitButton.dataset.originalLabel || "Send review";
       }
     }
   });
+}
+
+const customerReviewsList = document.querySelector("#customer-reviews-list");
+if (customerReviewsList) {
+  const createReviewCard = (review, isPending = false) => {
+    const rating = Math.min(Math.max(Number(review.rating || 0), 1), 5) || 5;
+    const article = document.createElement("article");
+    article.className = "review-card";
+
+    const stars = document.createElement("div");
+    stars.className = "stars";
+    stars.textContent = `${"★".repeat(rating)}${"☆".repeat(5 - rating)}`;
+
+    const quote = document.createElement("blockquote");
+    quote.textContent = String(review.message || "");
+
+    const author = document.createElement("div");
+    author.className = "review-author";
+
+    const avatar = document.createElement("span");
+    avatar.className = "review-avatar";
+    const customerName = String(review.name || "Customer").trim() || "Customer";
+    avatar.textContent = customerName.charAt(0).toUpperCase();
+
+    const details = document.createElement("div");
+    const strong = document.createElement("strong");
+    strong.textContent = customerName;
+    details.appendChild(strong);
+
+    if (isPending) {
+      const status = document.createElement("div");
+      status.className = "review-pending";
+      status.textContent = "Awaiting publication";
+      details.appendChild(status);
+    }
+
+    author.append(avatar, details);
+    article.append(stars, quote, author);
+    return article;
+  };
+
+  const loadCustomerReviews = async () => {
+    const pendingRaw = sessionStorage.getItem("aguPendingReview");
+    if (pendingRaw) {
+      try {
+        customerReviewsList.appendChild(createReviewCard(JSON.parse(pendingRaw), true));
+      } catch {
+        sessionStorage.removeItem("aguPendingReview");
+      }
+    }
+
+    try {
+      const response = await fetch("/api/reviews", {
+        headers: { Accept: "application/json" }
+      });
+      if (!response.ok) {
+        throw new Error("Published reviews are unavailable.");
+      }
+
+      const reviews = await response.json();
+      if (Array.isArray(reviews) && reviews.length) {
+        reviews.forEach((review) => customerReviewsList.appendChild(createReviewCard(review)));
+      } else if (!pendingRaw) {
+        customerReviewsList.innerHTML = '<article class="contact-card"><p>No customer reviews have been published yet.</p></article>';
+      }
+    } catch {
+      if (!pendingRaw) {
+        customerReviewsList.innerHTML = '<article class="contact-card"><p>Customer reviews are temporarily unavailable.</p></article>';
+      }
+    }
+  };
+
+  loadCustomerReviews();
 }

@@ -14,9 +14,17 @@ const leadsPath = path.join(dataDir, "leads.ndjson");
 const reviewsPath = path.join(dataDir, "reviews.ndjson");
 const ownerPath = path.join(dataDir, "owner.json");
 const pageSettingsPath = path.join(dataDir, "page-settings.json");
+const quoteMailboxPath = path.join(dataDir, "quote-mailbox.json");
+const gmailOAuthConfigPath = path.join(dataDir, "gmail-oauth-client.json");
+const gmailOAuthTokenPath = path.join(dataDir, "gmail-oauth-token.json");
 const basePort = Number(process.env.PORT || 3000);
 const sessionMaxAgeMs = 1000 * 60 * 60 * 12;
 const sessionStore = new Map();
+const gmailAuthStateStore = new Map();
+const gmailScopes = [
+  "https://www.googleapis.com/auth/gmail.readonly",
+  "https://www.googleapis.com/auth/gmail.send"
+];
 
 const mimeTypes = {
   ".html": "text/html; charset=utf-8",
@@ -253,6 +261,35 @@ function ensurePageSettingsFile() {
   }
 }
 
+function readJsonFileIfExists(filePath, fallback = null) {
+  if (!fs.existsSync(filePath)) {
+    return fallback;
+  }
+
+  try {
+    return JSON.parse(fs.readFileSync(filePath, "utf8"));
+  } catch {
+    return fallback;
+  }
+}
+
+function createDefaultQuoteMailbox() {
+  const owner = readOwner();
+  return {
+    gmailAccount: owner.email || "agucleanservices@gmail.com",
+    provider: "gmail-compose",
+    updatedAt: nowIso(),
+    outbox: []
+  };
+}
+
+function ensureQuoteMailboxFile() {
+  ensureDataDir();
+  if (!fs.existsSync(quoteMailboxPath)) {
+    fs.writeFileSync(quoteMailboxPath, JSON.stringify(createDefaultQuoteMailbox(), null, 2), "utf8");
+  }
+}
+
 function readOwner() {
   ensureOwnerAccount();
   return JSON.parse(fs.readFileSync(ownerPath, "utf8"));
@@ -271,6 +308,49 @@ function readPageSettings() {
 function writePageSettings(settings) {
   ensureDataDir();
   fs.writeFileSync(pageSettingsPath, JSON.stringify(settings, null, 2), "utf8");
+}
+
+function readQuoteMailbox() {
+  ensureQuoteMailboxFile();
+  return JSON.parse(fs.readFileSync(quoteMailboxPath, "utf8"));
+}
+
+function writeQuoteMailbox(mailbox) {
+  ensureDataDir();
+  fs.writeFileSync(quoteMailboxPath, JSON.stringify(mailbox, null, 2), "utf8");
+}
+
+function getGmailOAuthConfig() {
+  const fileConfig = readJsonFileIfExists(gmailOAuthConfigPath, {}) || {};
+  const clientId = String(process.env.GOOGLE_CLIENT_ID || fileConfig.clientId || "").trim();
+  const clientSecret = String(process.env.GOOGLE_CLIENT_SECRET || fileConfig.clientSecret || "").trim();
+  const redirectUri = String(
+    process.env.GOOGLE_REDIRECT_URI ||
+    fileConfig.redirectUri ||
+    `http://localhost:${basePort}/api/admin/gmail/callback`
+  ).trim();
+
+  return {
+    clientId,
+    clientSecret,
+    redirectUri,
+    configured: Boolean(clientId && clientSecret && redirectUri)
+  };
+}
+
+function readGmailOAuthToken() {
+  return readJsonFileIfExists(gmailOAuthTokenPath, null);
+}
+
+function writeGmailOAuthToken(token) {
+  ensureDataDir();
+  fs.writeFileSync(gmailOAuthTokenPath, JSON.stringify(token, null, 2), "utf8");
+}
+
+function clearGmailOAuthToken() {
+  if (fs.existsSync(gmailOAuthTokenPath)) {
+    fs.unlinkSync(gmailOAuthTokenPath);
+  }
 }
 
 function getPublicOwnerProfile(owner = readOwner()) {
@@ -330,6 +410,12 @@ function clearExpiredSessions() {
   for (const [token, session] of sessionStore.entries()) {
     if (session.expiresAt <= Date.now()) {
       sessionStore.delete(token);
+    }
+  }
+
+  for (const [state, entry] of gmailAuthStateStore.entries()) {
+    if (Date.now() - Number(entry.createdAt || 0) > 1000 * 60 * 15) {
+      gmailAuthStateStore.delete(state);
     }
   }
 }
@@ -396,6 +482,10 @@ function makeLeadId(type, payload) {
 
 function makeReviewId(payload) {
   return `review-${slugify(payload.name || payload.email || "review")}-${Date.now()}`;
+}
+
+function makeOutboxId(payload) {
+  return `quote-mail-${slugify(payload.customerName || payload.recipientEmail || "draft")}-${Date.now()}`;
 }
 
 function readEntries(filePath) {
@@ -572,6 +662,332 @@ function normalizePageSettingsPayload(payload) {
   };
 }
 
+function normalizeOutboxEntry(payload, current = {}) {
+  const status = String(payload.status || current.status || "draft").trim() || "draft";
+  const next = {
+    id: current.id || makeOutboxId(payload),
+    leadId: String(payload.leadId || current.leadId || "").trim(),
+    customerName: String(payload.customerName || current.customerName || "").trim(),
+    recipientEmail: String(payload.recipientEmail || current.recipientEmail || "").trim(),
+    subject: String(payload.subject || current.subject || "").trim(),
+    message: String(payload.message || current.message || "").trim(),
+    service: String(payload.service || current.service || "").trim(),
+    phone: String(payload.phone || current.phone || "").trim(),
+    internalNotes: String(payload.internalNotes || current.internalNotes || "").trim(),
+    status,
+    gmailAccount: String(payload.gmailAccount || current.gmailAccount || "").trim(),
+    updatedAt: nowIso(),
+    createdAt: current.createdAt || nowIso(),
+    sentAt: current.sentAt || null
+  };
+
+  if (status === "sent" && !next.sentAt) {
+    next.sentAt = nowIso();
+  }
+
+  if (status !== "sent" && payload.status && current.sentAt && payload.status !== "sent") {
+    next.sentAt = null;
+  }
+
+  return next;
+}
+
+function getQuoteMailboxPayload() {
+  const mailbox = readQuoteMailbox();
+  const inbox = sortByNewest(readLeads().filter((lead) => lead.type === "quote"));
+  const outbox = sortByNewest(Array.isArray(mailbox.outbox) ? mailbox.outbox : []);
+  return {
+    gmail: {
+      provider: mailbox.provider || "gmail-compose",
+      account: mailbox.gmailAccount || readOwner().email || "agucleanservices@gmail.com",
+      mode: "browser-compose",
+      connected: true
+    },
+    inbox,
+    outbox
+  };
+}
+
+function encodeBase64Url(value) {
+  return Buffer.from(String(value || ""), "utf8")
+    .toString("base64")
+    .replace(/\+/g, "-")
+    .replace(/\//g, "_")
+    .replace(/=+$/g, "");
+}
+
+function decodeBase64Url(value) {
+  const normalized = String(value || "").replace(/-/g, "+").replace(/_/g, "/");
+  const padding = normalized.length % 4 === 0 ? "" : "=".repeat(4 - (normalized.length % 4));
+  return Buffer.from(`${normalized}${padding}`, "base64").toString("utf8");
+}
+
+function parseHeaderMap(headers) {
+  return Array.isArray(headers)
+    ? headers.reduce((acc, header) => {
+        const name = String(header.name || "").toLowerCase();
+        if (name) {
+          acc[name] = String(header.value || "");
+        }
+        return acc;
+      }, {})
+    : {};
+}
+
+function collectBodyText(part) {
+  if (!part) {
+    return "";
+  }
+
+  if (part.body && part.body.data && String(part.mimeType || "").startsWith("text/plain")) {
+    return decodeBase64Url(part.body.data);
+  }
+
+  if (Array.isArray(part.parts)) {
+    for (const child of part.parts) {
+      const value = collectBodyText(child);
+      if (value) {
+        return value;
+      }
+    }
+  }
+
+  if (part.body && part.body.data && String(part.mimeType || "").startsWith("text/html")) {
+    return decodeBase64Url(part.body.data).replace(/<[^>]+>/g, " ").replace(/\s+/g, " ").trim();
+  }
+
+  return "";
+}
+
+function normalizeGmailMessage(message) {
+  const headers = parseHeaderMap(message.payload && message.payload.headers);
+  return {
+    id: message.id,
+    threadId: message.threadId,
+    labelIds: Array.isArray(message.labelIds) ? message.labelIds : [],
+    snippet: message.snippet || "",
+    historyId: message.historyId || "",
+    internalDate: message.internalDate ? Number(message.internalDate) : 0,
+    from: headers.from || "",
+    to: headers.to || "",
+    subject: headers.subject || "",
+    date: headers.date || "",
+    bodyText: collectBodyText(message.payload || {}),
+    rawHeaders: headers
+  };
+}
+
+function getGmailStatusPayload() {
+  const config = getGmailOAuthConfig();
+  const token = readGmailOAuthToken();
+  return {
+    configured: config.configured,
+    connected: Boolean(token && token.refreshToken),
+    redirectUri: config.redirectUri,
+    scopes: gmailScopes,
+    emailAddress: token && token.emailAddress ? token.emailAddress : "",
+    tokenExpiryDate: token && token.expiryDate ? token.expiryDate : null
+  };
+}
+
+function createGmailAuthUrl(ownerId) {
+  const config = getGmailOAuthConfig();
+  if (!config.configured) {
+    throw new Error("Gmail OAuth is not configured");
+  }
+
+  const state = crypto.randomBytes(24).toString("hex");
+  gmailAuthStateStore.set(state, {
+    ownerId,
+    createdAt: Date.now()
+  });
+
+  const params = new URLSearchParams({
+    client_id: config.clientId,
+    redirect_uri: config.redirectUri,
+    response_type: "code",
+    access_type: "offline",
+    prompt: "consent",
+    include_granted_scopes: "true",
+    scope: gmailScopes.join(" "),
+    state
+  });
+
+  return `https://accounts.google.com/o/oauth2/v2/auth?${params.toString()}`;
+}
+
+async function exchangeGoogleOAuthCode(code) {
+  const config = getGmailOAuthConfig();
+  const body = new URLSearchParams({
+    code: String(code || ""),
+    client_id: config.clientId,
+    client_secret: config.clientSecret,
+    redirect_uri: config.redirectUri,
+    grant_type: "authorization_code"
+  });
+
+  const response = await fetch("https://oauth2.googleapis.com/token", {
+    method: "POST",
+    headers: { "Content-Type": "application/x-www-form-urlencoded" },
+    body
+  });
+
+  const payload = await response.json();
+  if (!response.ok) {
+    throw new Error(payload.error_description || payload.error || "Google token exchange failed");
+  }
+
+  return payload;
+}
+
+async function refreshGoogleOAuthToken(refreshToken) {
+  const config = getGmailOAuthConfig();
+  const body = new URLSearchParams({
+    client_id: config.clientId,
+    client_secret: config.clientSecret,
+    refresh_token: String(refreshToken || ""),
+    grant_type: "refresh_token"
+  });
+
+  const response = await fetch("https://oauth2.googleapis.com/token", {
+    method: "POST",
+    headers: { "Content-Type": "application/x-www-form-urlencoded" },
+    body
+  });
+
+  const payload = await response.json();
+  if (!response.ok) {
+    throw new Error(payload.error_description || payload.error || "Google token refresh failed");
+  }
+
+  return payload;
+}
+
+async function getValidGmailAccessToken() {
+  const token = readGmailOAuthToken();
+  if (!token || !token.refreshToken) {
+    throw new Error("Gmail account is not connected");
+  }
+
+  const now = Date.now();
+  if (token.accessToken && token.expiryDate && now < Number(token.expiryDate) - 60 * 1000) {
+    return token;
+  }
+
+  const refreshed = await refreshGoogleOAuthToken(token.refreshToken);
+  const nextToken = {
+    ...token,
+    accessToken: refreshed.access_token,
+    expiryDate: now + (Number(refreshed.expires_in || 3600) * 1000),
+    scope: refreshed.scope || token.scope,
+    tokenType: refreshed.token_type || token.tokenType || "Bearer",
+    updatedAt: nowIso()
+  };
+  writeGmailOAuthToken(nextToken);
+  return nextToken;
+}
+
+async function gmailApiRequest(pathname, options = {}) {
+  const token = await getValidGmailAccessToken();
+  const response = await fetch(`https://gmail.googleapis.com/gmail/v1/users/me/${pathname}`, {
+    headers: {
+      Authorization: `Bearer ${token.accessToken}`,
+      ...(options.headers || {})
+    },
+    method: options.method || "GET",
+    body: options.body
+  });
+
+  const contentType = String(response.headers.get("content-type") || "");
+  const payload = contentType.includes("application/json") ? await response.json() : await response.text();
+
+  if (!response.ok) {
+    const detail = payload && typeof payload === "object"
+      ? payload.error?.message || payload.error_description || payload.error
+      : payload;
+    throw new Error(detail || "Gmail API request failed");
+  }
+
+  return payload;
+}
+
+async function fetchGmailProfileAndPersistEmail() {
+  const profile = await gmailApiRequest("profile");
+  const token = readGmailOAuthToken();
+  if (token) {
+    token.emailAddress = profile.emailAddress || token.emailAddress || "";
+    token.updatedAt = nowIso();
+    writeGmailOAuthToken(token);
+  }
+  return profile;
+}
+
+async function listGmailMessages({ label = "INBOX", query = "", maxResults = 15 } = {}) {
+  const params = new URLSearchParams({
+    maxResults: String(Math.max(1, Math.min(50, Number(maxResults) || 15)))
+  });
+  if (label) {
+    params.append("labelIds", label);
+  }
+  if (query) {
+    params.set("q", String(query));
+  }
+
+  const listPayload = await gmailApiRequest(`messages?${params.toString()}`);
+  const messageRefs = Array.isArray(listPayload.messages) ? listPayload.messages : [];
+  const messages = [];
+  for (const ref of messageRefs) {
+    const detail = await gmailApiRequest(`messages/${encodeURIComponent(ref.id)}?format=full`);
+    messages.push(normalizeGmailMessage(detail));
+  }
+  return messages.sort((a, b) => Number(b.internalDate || 0) - Number(a.internalDate || 0));
+}
+
+async function getGmailMessageById(messageId) {
+  const payload = await gmailApiRequest(`messages/${encodeURIComponent(messageId)}?format=full`);
+  return normalizeGmailMessage(payload);
+}
+
+function buildRawEmail({ to, subject, message, from, replyTo }) {
+  const lines = [];
+  if (from) {
+    lines.push(`From: ${from}`);
+  }
+  lines.push(`To: ${to}`);
+  if (replyTo) {
+    lines.push(`Reply-To: ${replyTo}`);
+  }
+  lines.push(`Subject: ${subject}`);
+  lines.push("MIME-Version: 1.0");
+  lines.push('Content-Type: text/plain; charset="UTF-8"');
+  lines.push("");
+  lines.push(message);
+  return encodeBase64Url(lines.join("\r\n"));
+}
+
+async function sendGmailMessage({ to, subject, message, threadId, replyTo }) {
+  const token = await getValidGmailAccessToken();
+  const profileEmail = token.emailAddress || "";
+  const payload = {
+    raw: buildRawEmail({ to, subject, message, from: profileEmail, replyTo })
+  };
+  if (threadId) {
+    payload.threadId = threadId;
+  }
+
+  const response = await gmailApiRequest("messages/send", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(payload)
+  });
+
+  if (!token.emailAddress) {
+    await fetchGmailProfileAndPersistEmail();
+  }
+
+  return response;
+}
+
 function sanitizePath(baseDir, relativePath) {
   const filePath = path.normalize(path.join(baseDir, relativePath));
   return filePath.startsWith(baseDir) ? filePath : null;
@@ -628,7 +1044,7 @@ function serveStatic(response, pathname) {
   return false;
 }
 
-async function handleApi(request, response, pathname) {
+async function handleApi(request, response, pathname, url) {
   if (pathname === "/api/health" && request.method === "GET") {
     sendJson(response, 200, {
       ok: true,
@@ -656,7 +1072,8 @@ async function handleApi(request, response, pathname) {
       contact: "/contact.html",
       privacy: "/privacy.html",
       terms: "/terms.html",
-      dashboard: "/dashboard.html"
+      dashboard: "/ADMIN/dashboard.html",
+      adminQuotes: "/ADMIN/quotes.html"
     });
     return true;
   }
@@ -693,6 +1110,145 @@ async function handleApi(request, response, pathname) {
       });
     } catch {
       sendJson(response, 400, { ok: false, error: "Invalid JSON payload" });
+    }
+    return true;
+  }
+
+  if (pathname === "/api/admin/gmail/status" && request.method === "GET") {
+    if (!requireAdmin(request, response)) {
+      return true;
+    }
+
+    sendJson(response, 200, {
+      ok: true,
+      gmail: getGmailStatusPayload()
+    });
+    return true;
+  }
+
+  if (pathname === "/api/admin/gmail/connect" && request.method === "GET") {
+    const session = requireAdmin(request, response);
+    if (!session) {
+      return true;
+    }
+
+    try {
+      const authUrl = createGmailAuthUrl(session.ownerId);
+      response.writeHead(302, { Location: authUrl });
+      response.end();
+    } catch (error) {
+      sendJson(response, 400, { ok: false, error: error.message });
+    }
+    return true;
+  }
+
+  if (pathname === "/api/admin/gmail/callback" && request.method === "GET") {
+    const code = url.searchParams.get("code");
+    const state = url.searchParams.get("state");
+    const error = url.searchParams.get("error");
+
+    if (error) {
+      response.writeHead(302, { Location: `/ADMIN/quotes.html?gmail_error=${encodeURIComponent(error)}` });
+      response.end();
+      return true;
+    }
+
+    const stateEntry = state ? gmailAuthStateStore.get(state) : null;
+    if (!code || !stateEntry) {
+      response.writeHead(302, { Location: "/ADMIN/quotes.html?gmail_error=invalid_callback" });
+      response.end();
+      return true;
+    }
+
+    gmailAuthStateStore.delete(state);
+
+    try {
+      const tokenPayload = await exchangeGoogleOAuthCode(code);
+      const token = {
+        accessToken: tokenPayload.access_token,
+        refreshToken: tokenPayload.refresh_token || "",
+        expiryDate: Date.now() + (Number(tokenPayload.expires_in || 3600) * 1000),
+        scope: tokenPayload.scope || gmailScopes.join(" "),
+        tokenType: tokenPayload.token_type || "Bearer",
+        createdAt: nowIso(),
+        updatedAt: nowIso(),
+        emailAddress: ""
+      };
+      writeGmailOAuthToken(token);
+      await fetchGmailProfileAndPersistEmail();
+      response.writeHead(302, { Location: "/ADMIN/quotes.html?gmail_connected=1" });
+      response.end();
+    } catch (exchangeError) {
+      response.writeHead(302, { Location: `/ADMIN/quotes.html?gmail_error=${encodeURIComponent(exchangeError.message)}` });
+      response.end();
+    }
+    return true;
+  }
+
+  if (pathname === "/api/admin/gmail/disconnect" && request.method === "POST") {
+    if (!requireAdmin(request, response)) {
+      return true;
+    }
+
+    clearGmailOAuthToken();
+    sendJson(response, 200, { ok: true, disconnected: true });
+    return true;
+  }
+
+  if (pathname === "/api/admin/gmail/messages" && request.method === "GET") {
+    if (!requireAdmin(request, response)) {
+      return true;
+    }
+
+    try {
+      const label = String(url.searchParams.get("label") || "INBOX").trim();
+      const query = String(url.searchParams.get("q") || "").trim();
+      const maxResults = Number(url.searchParams.get("maxResults") || 15);
+      const messages = await listGmailMessages({ label, query, maxResults });
+      sendJson(response, 200, { ok: true, label, query, messages });
+    } catch (gmailError) {
+      sendJson(response, 400, { ok: false, error: gmailError.message });
+    }
+    return true;
+  }
+
+  if (pathname.startsWith("/api/admin/gmail/messages/") && request.method === "GET") {
+    if (!requireAdmin(request, response)) {
+      return true;
+    }
+
+    try {
+      const messageId = pathname.slice("/api/admin/gmail/messages/".length);
+      const message = await getGmailMessageById(messageId);
+      sendJson(response, 200, { ok: true, message });
+    } catch (gmailError) {
+      sendJson(response, 400, { ok: false, error: gmailError.message });
+    }
+    return true;
+  }
+
+  if (pathname === "/api/admin/gmail/send" && request.method === "POST") {
+    if (!requireAdmin(request, response)) {
+      return true;
+    }
+
+    try {
+      const payload = parseJsonBody(await readRequestBody(request));
+      const to = String(payload.to || "").trim();
+      const subject = String(payload.subject || "").trim();
+      const message = String(payload.message || "").trim();
+      const replyTo = String(payload.replyTo || "").trim();
+      const threadId = String(payload.threadId || "").trim();
+
+      if (!to || !subject || !message) {
+        sendJson(response, 400, { ok: false, error: "To, subject and message are required" });
+        return true;
+      }
+
+      const sent = await sendGmailMessage({ to, subject, message, threadId, replyTo });
+      sendJson(response, 200, { ok: true, sent });
+    } catch (gmailError) {
+      sendJson(response, 400, { ok: false, error: gmailError.message });
     }
     return true;
   }
@@ -996,6 +1552,108 @@ async function handleApi(request, response, pathname) {
     return true;
   }
 
+  if (pathname === "/api/admin/quote-mailbox" && request.method === "GET") {
+    if (!requireAdmin(request, response)) {
+      return true;
+    }
+
+    sendJson(response, 200, {
+      ok: true,
+      ...getQuoteMailboxPayload()
+    });
+    return true;
+  }
+
+  if (pathname === "/api/admin/quote-mailbox/outbox" && request.method === "POST") {
+    if (!requireAdmin(request, response)) {
+      return true;
+    }
+
+    try {
+      const payload = parseJsonBody(await readRequestBody(request));
+      const mailbox = readQuoteMailbox();
+      const entry = normalizeOutboxEntry({
+        ...payload,
+        gmailAccount: payload.gmailAccount || mailbox.gmailAccount || readOwner().email
+      });
+
+      mailbox.gmailAccount = String(payload.gmailAccount || mailbox.gmailAccount || readOwner().email || "").trim();
+      mailbox.updatedAt = nowIso();
+      mailbox.outbox = Array.isArray(mailbox.outbox) ? mailbox.outbox : [];
+      mailbox.outbox.push(entry);
+      writeQuoteMailbox(mailbox);
+
+      sendJson(response, 200, { ok: true, entry });
+    } catch {
+      sendJson(response, 400, { ok: false, error: "Invalid JSON payload" });
+    }
+    return true;
+  }
+
+  if (pathname.startsWith("/api/admin/quote-mailbox/outbox/") && request.method === "PATCH") {
+    if (!requireAdmin(request, response)) {
+      return true;
+    }
+
+    const entryId = pathname.slice("/api/admin/quote-mailbox/outbox/".length);
+
+    try {
+      const payload = parseJsonBody(await readRequestBody(request));
+      const mailbox = readQuoteMailbox();
+      const outbox = Array.isArray(mailbox.outbox) ? mailbox.outbox : [];
+      const entry = outbox.find((item) => item.id === entryId);
+
+      if (!entry) {
+        sendJson(response, 404, { ok: false, error: "Outbox item not found" });
+        return true;
+      }
+
+      const nextEntry = normalizeOutboxEntry(payload, entry);
+      Object.assign(entry, nextEntry);
+      mailbox.gmailAccount = String(payload.gmailAccount || mailbox.gmailAccount || readOwner().email || "").trim();
+      mailbox.updatedAt = nowIso();
+      writeQuoteMailbox(mailbox);
+
+      if (entry.leadId && payload.syncLeadStatus) {
+        const leads = readLeads();
+        const lead = leads.find((item) => item.id === entry.leadId);
+        if (lead) {
+          lead.status = String(payload.syncLeadStatus).trim() || lead.status;
+          lead.updatedAt = nowIso();
+          writeLeads(leads);
+        }
+      }
+
+      sendJson(response, 200, { ok: true, entry });
+    } catch {
+      sendJson(response, 400, { ok: false, error: "Invalid JSON payload" });
+    }
+    return true;
+  }
+
+  if (pathname.startsWith("/api/admin/quote-mailbox/outbox/") && request.method === "DELETE") {
+    if (!requireAdmin(request, response)) {
+      return true;
+    }
+
+    const entryId = pathname.slice("/api/admin/quote-mailbox/outbox/".length);
+    const mailbox = readQuoteMailbox();
+    const outbox = Array.isArray(mailbox.outbox) ? mailbox.outbox : [];
+    const index = outbox.findIndex((item) => item.id === entryId);
+
+    if (index === -1) {
+      sendJson(response, 404, { ok: false, error: "Outbox item not found" });
+      return true;
+    }
+
+    const [removed] = outbox.splice(index, 1);
+    mailbox.outbox = outbox;
+    mailbox.updatedAt = nowIso();
+    writeQuoteMailbox(mailbox);
+    sendJson(response, 200, { ok: true, entry: removed });
+    return true;
+  }
+
   if (pathname === "/api/admin/contacts" && request.method === "GET") {
     if (!requireAdmin(request, response)) {
       return true;
@@ -1115,7 +1773,7 @@ const server = http.createServer(async (request, response) => {
   const pathname = decodeURIComponent(url.pathname);
 
   try {
-    if (await handleApi(request, response, pathname)) {
+    if (await handleApi(request, response, pathname, url)) {
       return;
     }
 
@@ -1142,6 +1800,7 @@ function startServer(port) {
   ensureDataDir();
   ensureOwnerAccount();
   ensurePageSettingsFile();
+  ensureQuoteMailboxFile();
   server.listen(port, () => {
     console.log(`AGU Clean Services app running on http://localhost:${port}`);
   });

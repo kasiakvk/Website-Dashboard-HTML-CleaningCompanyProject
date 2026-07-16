@@ -1,0 +1,13 @@
+services:
+  agu-clean-services:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: agu-clean-services-web
+    ports:
+      - "3000:3000"
+    environment:
+      PORT: "3000"
+    volumes:
+      - ./ASSETS/backend/data:/app/ASSETS/backend/data
+    restart: unless-stopped

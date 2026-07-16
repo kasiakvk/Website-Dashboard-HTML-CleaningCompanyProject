@@ -32,7 +32,7 @@ const translations = {
     "nav.aboutMe": "About Me",
     "nav.services": "Services",
     "nav.prices": "Pricing",
-    "nav.reviews": "Testimonials",
+    "nav.reviews": "Reviews",
     "nav.faq": "FAQ",
     "nav.contact": "Contact Us",
     "nav.privacy": "Privacy Policy",
@@ -82,7 +82,7 @@ const translations = {
     "svc.airbnb.p": "Fast turnaround support for short-stay properties, including reset-ready presentation between guests.",
     "svc.venues.h": "After-hours venues",
     "svc.venues.p": "Cleaning support for clubs, pubs and hospitality spaces that need flexible timing outside normal hours.",
-    "home.whyH": "Why clients choose AGU CLEANING SERVICES",
+    "home.whyH": "Why clients choose AGU Clean Services",
     "home.whyP": "The business should feel calm, trustworthy and professional. That starts with clear pricing, responsive contact and a dependable standard of work.",
     "home.why1": "✔ Fully focused on practical, client-facing cleaning services",
     "home.why2": "✔ Suitable for homes, offices, tenancy and Airbnb work",
@@ -90,7 +90,7 @@ const translations = {
     "home.why4": "✔ Strong fit for local recommendations and repeat bookings",
     "home.aboutEyebrow": "About Agnieszka",
     "home.aboutH": "Friendly service with a professional standard.",
-    "home.aboutP": "AGU CLEANING SERVICES is positioned as a reliable local business that values trust, punctuality and a clean finish clients can immediately feel.",
+    "home.aboutP": "AGU Clean Services is positioned as a reliable local business that values trust, punctuality and a clean finish clients can immediately feel.",
     "home.about1": "✔ Local service for Newcastle, Gateshead, Chester-le-Street and Durham",
     "home.about2": "✔ Clear communication by phone or WhatsApp",
     "home.about3": "✔ Flexible quotes based on property size and scope",
@@ -293,17 +293,17 @@ const translations = {
     "prices.ctaH": "Need an exact quote?",
     "prices.ctaP": "Tell us the property type, location and service needed, and we can provide a tailored price.",
     "prices.back": "Back to Services",
-    "reviews.eyebrow": "Testimonials",
+    "reviews.eyebrow": "Reviews",
     "reviews.h1": "What clients say about AGU Clean Services",
     "reviews.lead": "Friendly, reliable service and strong results are the standards we want every booking to reflect.",
-    "reviews.formH": "Share your testimonial",
+    "reviews.formH": "Share your review",
     "reviews.formP": "Tell us what worked well and how the service helped you.",
     "reviews.name": "Your name",
     "reviews.email": "Your email",
     "reviews.rating": "Rating",
-    "reviews.message": "Your testimonial",
+    "reviews.message": "Your review",
     "reviews.messagePh": "Tell us about your experience.",
-    "reviews.submit": "Send testimonial",
+    "reviews.submit": "Send review",
     "reviews.thanks": "Thank you for helping local customers make informed cleaning choices. All testimonials are reviewed before publication.",
     "reviews.secH": "Why the reviews page matters",
     "reviews.secP": "It reinforces the most important sales message from the business plan: clients buy trust, peace of mind and someone dependable.",
@@ -412,7 +412,7 @@ const translations = {
     "nav.whatsapp": "WhatsApp",
     "home.eyebrow": "Lokalna, rzetelna firma sprzatajaca",
     "home.h1": "Profesjonalne sprzatanie z dopracowanym, spokojnym efektem.",
-    "home.lead": "AGU CLEANING SERVICES pomaga utrzymac domy, biura i nieruchomosci na wynajem w czystosci, porzadku i gotowosci do codziennego uzytku w Newcastle, Gateshead i Durham.",
+    "home.lead": "AGU Clean Services pomaga utrzymac domy, biura i nieruchomosci na wynajem w czystosci, porzadku i gotowosci do codziennego uzytku w Newcastle, Gateshead i Durham.",
     "home.cta1": "Darmowa wycena",
     "home.cta2": "Zobacz uslugi",
     "home.point1": "✔ Sprzatanie domowe i komercyjne",
@@ -448,7 +448,7 @@ const translations = {
     "svc.airbnb.p": "Szybkie przygotowanie nieruchomosci krotkoterminowych pomiedzy pobytami gosci.",
     "svc.venues.h": "Lokale po godzinach",
     "svc.venues.p": "Wsparcie sprzatajace dla klubow, pubow i lokali wymagajacych elastycznych godzin.",
-    "home.whyH": "Dlaczego klienci wybieraja AGU CLEANING SERVICES",
+    "home.whyH": "Dlaczego klienci wybieraja AGU Clean Services",
     "home.whyP": "Firma powinna sprawiac wrazenie spokojnej, godnej zaufania i profesjonalnej. Zaczyna sie to od jasnych cen, sprawnego kontaktu i niezawodnego standardu pracy.",
     "home.why1": "✔ Skupienie na praktycznych uslugach dla klienta",
     "home.why2": "✔ Odpowiednie dla domow, biur, najmu i Airbnb",
@@ -456,7 +456,7 @@ const translations = {
     "home.why4": "✔ Dobra podstawa pod polecenia i stalych klientow",
     "home.aboutEyebrow": "O Agnieszce",
     "home.aboutH": "Przyjazna usluga z profesjonalnym standardem.",
-    "home.aboutP": "AGU CLEANING SERVICES to rzetelna lokalna firma, ktora stawia na zaufanie, punktualnosc i efekt czystosci odczuwalny od razu.",
+    "home.aboutP": "AGU Clean Services to rzetelna lokalna firma, ktora stawia na zaufanie, punktualnosc i efekt czystosci odczuwalny od razu.",
     "home.about1": "✔ Lokalna usluga dla Newcastle, Gateshead i Durham",
     "home.about2": "✔ Jasna komunikacja przez telefon i WhatsApp",
     "home.about3": "✔ Elastyczne wyceny wedlug wielkosci i zakresu pracy",
@@ -506,7 +506,7 @@ const translations = {
     "footer.trade": "AGU Clean Services jest nazwa handlowa Agnieszki Kaliny vel Kalinowskiej.",
     "about.eyebrow": "O firmie",
     "about.h1": "Lokalna marka sprzatajaca zaprojektowana tak, by wygladac profesjonalnie i budzic zaufanie.",
-    "about.lead": "AGU CLEANING SERVICES jest pozycjonowana jako rzetelna lokalna firma dla sprzatania domowego, wynajmu i malych firm, z dopracowanym i spokojnym wizerunkiem.",
+    "about.lead": "AGU Clean Services jest pozycjonowana jako rzetelna lokalna firma dla sprzatania domowego, wynajmu i malych firm, z dopracowanym i spokojnym wizerunkiem.",
     "about.sec1h": "Zbudowane wokol zaufania, powtarzalnosci i jasnej komunikacji",
     "about.sec1p": "Plan biznesowy jest prosty: ludzie nie kupuja tylko sprzatania. Kupują spokoj, niezawodnosc i osobe, ktora ich nie zawiedzie.",
     "about.list1": "✔ Lokalny fokus na Newcastle, Gateshead i Durham",
@@ -528,7 +528,7 @@ const translations = {
     "about.card3h": "Wsparcie Airbnb",
     "about.card3p": "Reset nieruchomosci krotkoterminowych daje elastycznosc i pomaga budowac relacje z hostami i managerami.",
     "about.storyH": "Marka zaprojektowana tak, aby dawala poczucie spokoju, dopracowania i prawdziwej rzetelnosci.",
-    "about.storyP": "AGU CLEANING SERVICES jest zbudowane tak, aby wygladac bardziej profesjonalnie niz typowa mala strona firmy sprzatajacej. Celem jest stworzenie wrazenia uslugi przyjaznej, lokalnej i przystepnej, ale nadal premium i godnej zaufania.",
+    "about.storyP": "AGU Clean Services jest zbudowane tak, aby wygladac bardziej profesjonalnie niz typowa mala strona firmy sprzatajacej. Celem jest stworzenie wrazenia uslugi przyjaznej, lokalnej i przystepnej, ale nadal premium i godnej zaufania.",
     "about.story1H": "Lokalnie i osobiscie",
     "about.story1P": "Firma jest pozycjonowana dla Newcastle, Gateshead i Durham jako lokalna marka o bardziej osobistym charakterze niz korporacyjna konkurencja.",
     "about.story2H": "Profesjonalny standard",
@@ -578,7 +578,7 @@ const translations = {
     "aboutme.values2": "Dbalosc o szczegoly",
     "aboutme.values3": "Stale wysoki standard uslug",
     "aboutme.values4": "Przyjazna komunikacje i profesjonalne podejscie",
-    "aboutme.bandH": "AGA Clean Services",
+    "aboutme.bandH": "AGU Clean Services",
     "aboutme.bandP": "Rzetelne sprzatanie. Profesjonalny efekt.",
     "aboutme.bandP2": "Dom - Biuro - Sprzatanie komercyjne",
     "aboutme.bandP3": "Obsluga Newcastle, Gateshead, Chester-le-Street i Durham.",
@@ -828,16 +828,16 @@ function applyLanguage(lang) {
     "Transparent, competitive prices with free quotes always available.": "Przejrzyste, konkurencyjne ceny z darmową wyceną zawsze dostępną.",
     "Regular Domestic Cleaning": "Sprzątanie domowe",
     "Regular Domestic Cleaning": "Sprzątanie domowe",
-    "From £25/hour": "Od 25 £/h",
+    "£22/hour": "22 £/h",
     "Weekly or fortnightly schedule": "Harmonogram co tydzień albo co dwa tygodnie",
     "Deep Cleaning": "Sprzątanie generalne",
     "From £120": "Od 120 £",
     "Full property clean, around 4-8 hours": "Pełne czyszczenie nieruchomości, około 4-8 godzin",
     "End of Tenancy Cleaning": "Sprzątanie po najmie",
-    "From £180": "Od 180 £",
+    "From £140": "Od 140 £",
     "Move-out clean to agent standard": "Sprzątanie po wyprowadzce do standardu pośrednika",
     "Office and Commercial Cleaning": "Sprzątanie biur i lokali firmowych",
-    "From £25/hour": "Od 25 £/h",
+    "£26/hour": "26 £/h",
     "Offices, shops and salons": "Biura, sklepy i salony",
     "Airbnb & Short-Term Rental Cleaning": "Sprzątanie Airbnb i mieszkań krótkoterminowych",
     "From £45": "Od 45 £",
@@ -853,7 +853,7 @@ function applyLanguage(lang) {
     "Commercial": "Komercyjne",
     "Client Reviews": "Opinie klientów",
     "Frequently asked questions": "Najczęściej zadawane pytania",
-    "Answers about booking, pricing, payment methods, service areas and what to expect from AGU CLEANING SERVICES.": "Odpowiedzi na pytania o rezerwację, ceny, metody płatności, obszar usług i to, czego możesz się spodziewać.",
+    "Answers about booking, pricing, payment methods, service areas and what to expect from AGU Clean Services.": "Odpowiedzi na pytania o rezerwację, ceny, metody płatności, obszar usług i to, czego możesz się spodziewać.",
     "How do I get a quote?": "Jak mogę uzyskać wycenę?",
     "Do you offer free quotes?": "Czy oferujecie darmowe wyceny?",
     "Yes. Every quote is free and comes with no obligation.": "Tak. Każda wycena jest darmowa i nie zobowiązuje do zakupu.",
@@ -1012,53 +1012,119 @@ if (reviewForm) {
     const payload = Object.fromEntries(formData.entries());
     const safeValue = (value) => (typeof value === "string" ? value.trim() : "").trim();
     const selectedRating = Math.min(Math.max(Number(payload.rating || 0), 1), 5) || 0;
-    const stars = selectedRating ? `${"★".repeat(selectedRating)}${"☆".repeat(5 - selectedRating)}` : "No rating";
-    const subject = `AGU Clean Services review: ${safeValue(payload.name) || "New review"}`;
-    const lines = [
-      `Customer: ${safeValue(payload.name) || "Not provided"}`,
-      `Email: ${safeValue(payload.email) || "Not provided"}`,
-      `Rating: ${stars} (${selectedRating || "Not provided"}/5)`,
-      `Opinion: ${safeValue(payload.message) || "Not provided"}`,
-      "",
-      `Submitted from: ${window.location.href}`
-    ];
-    const mailtoUrl = `mailto:agucleanservices@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(lines.join("\n"))}`;
+    const pendingReview = {
+      name: safeValue(payload.name) || "Customer",
+      rating: selectedRating || 5,
+      message: safeValue(payload.message),
+      createdAt: new Date().toISOString(),
+      pending: true
+    };
 
     if (submitButton) {
       submitButton.disabled = true;
-      submitButton.dataset.originalLabel = submitButton.textContent || "Add review";
+      submitButton.dataset.originalLabel = submitButton.textContent || "Send review";
       submitButton.textContent = "Sending...";
     }
 
     try {
-      try {
-        const response = await fetch("/api/review", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json"
-          },
-          body: JSON.stringify({
-            ...payload,
-            kind: "review"
-          })
-        });
+      const response = await fetch("/api/review", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+          ...payload,
+          kind: "review"
+        })
+      });
 
-        if (!response.ok) {
-          console.warn("Review API unavailable, falling back to Gmail connector.");
-        }
-      } catch {
-        console.warn("Review API unavailable, falling back to Gmail connector.");
+      if (!response.ok) {
+        throw new Error("Review could not be saved.");
       }
 
+      sessionStorage.setItem("aguPendingReview", JSON.stringify(pendingReview));
       reviewForm.reset();
-      window.location.href = mailtoUrl;
-    } catch {
-      window.location.href = mailtoUrl;
+      window.location.href = "customer-reviews.html?submitted=1";
+    } catch (error) {
+      window.alert("We could not save your review. Please try again.");
     } finally {
       if (submitButton) {
         submitButton.disabled = false;
-        submitButton.textContent = submitButton.dataset.originalLabel || "Add review";
+        submitButton.textContent = submitButton.dataset.originalLabel || "Send review";
       }
     }
   });
+}
+
+const customerReviewsList = document.querySelector("#customer-reviews-list");
+if (customerReviewsList) {
+  const createReviewCard = (review, isPending = false) => {
+    const rating = Math.min(Math.max(Number(review.rating || 0), 1), 5) || 5;
+    const article = document.createElement("article");
+    article.className = "review-card";
+
+    const stars = document.createElement("div");
+    stars.className = "stars";
+    stars.textContent = `${"★".repeat(rating)}${"☆".repeat(5 - rating)}`;
+
+    const quote = document.createElement("blockquote");
+    quote.textContent = String(review.message || "");
+
+    const author = document.createElement("div");
+    author.className = "review-author";
+
+    const avatar = document.createElement("span");
+    avatar.className = "review-avatar";
+    const customerName = String(review.name || "Customer").trim() || "Customer";
+    avatar.textContent = customerName.charAt(0).toUpperCase();
+
+    const details = document.createElement("div");
+    const strong = document.createElement("strong");
+    strong.textContent = customerName;
+    details.appendChild(strong);
+
+    if (isPending) {
+      const status = document.createElement("div");
+      status.className = "review-pending";
+      status.textContent = "Awaiting publication";
+      details.appendChild(status);
+    }
+
+    author.append(avatar, details);
+    article.append(stars, quote, author);
+    return article;
+  };
+
+  const loadCustomerReviews = async () => {
+    const pendingRaw = sessionStorage.getItem("aguPendingReview");
+    if (pendingRaw) {
+      try {
+        customerReviewsList.appendChild(createReviewCard(JSON.parse(pendingRaw), true));
+      } catch {
+        sessionStorage.removeItem("aguPendingReview");
+      }
+    }
+
+    try {
+      const response = await fetch("/api/reviews", {
+        headers: { Accept: "application/json" }
+      });
+      if (!response.ok) {
+        throw new Error("Published reviews are unavailable.");
+      }
+
+      const reviews = await response.json();
+      if (Array.isArray(reviews) && reviews.length) {
+        reviews.forEach((review) => customerReviewsList.appendChild(createReviewCard(review)));
+      } else if (!pendingRaw) {
+        customerReviewsList.innerHTML = '<article class="contact-card"><p>No customer reviews have been published yet.</p></article>';
+      }
+    } catch {
+      if (!pendingRaw) {
+        customerReviewsList.innerHTML = '<article class="contact-card"><p>Customer reviews are temporarily unavailable.</p></article>';
+      }
+    }
+  };
+
+  loadCustomerReviews();
 }

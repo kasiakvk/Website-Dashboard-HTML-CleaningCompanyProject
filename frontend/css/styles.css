@@ -684,6 +684,25 @@ a {
   line-height: 1;
 }
 
+.pricing-table-figure {
+  width: min(100%, 880px);
+  margin: 48px auto 0;
+}
+
+.pricing-table-figure img {
+  width: 100%;
+  border: 1px solid rgba(199, 165, 91, 0.45);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-soft);
+}
+
+.pricing-table-figure figcaption {
+  margin-top: 14px;
+  color: var(--text-700);
+  font-size: 0.95rem;
+  text-align: center;
+}
+
 .price-note {
   color: var(--text-700);
   font-size: 0.92rem;
@@ -760,6 +779,13 @@ a {
   color: #c9972f;
   letter-spacing: 0.18em;
   margin-bottom: 14px;
+}
+
+.review-pending {
+  margin-top: 4px;
+  color: var(--gold-600);
+  font-size: 0.85rem;
+  font-weight: 700;
 }
 
 .contact-stack {

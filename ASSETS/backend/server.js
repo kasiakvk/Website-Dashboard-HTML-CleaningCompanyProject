@@ -149,10 +149,10 @@ function createDefaultPageSettings() {
         route: "/",
         navLabel: "Home",
         published: true,
-        metaTitle: "AGU CLEANING SERVICES | Home Cleaning Newcastle",
-        metaDescription: "AGU CLEANING SERVICES offers reliable domestic and commercial cleaning in Newcastle, Gateshead, Chester-le-Street and Durham.",
+        metaTitle: "AGU Clean Services | Home Cleaning Newcastle",
+        metaDescription: "AGU Clean Services offers reliable domestic and commercial cleaning in Newcastle, Gateshead, Chester-le-Street and Durham.",
         heroTitle: "Professional cleaning with a calm, polished finish.",
-        heroLead: "AGU CLEANING SERVICES helps homes, offices and rental properties stay clean, presentable and ready for everyday life across Newcastle, Gateshead, Chester-le-Street and Durham."
+        heroLead: "AGU Clean Services helps homes, offices and rental properties stay clean, presentable and ready for everyday life across Newcastle, Gateshead, Chester-le-Street and Durham."
       },
       {
         id: "about",
@@ -161,7 +161,7 @@ function createDefaultPageSettings() {
         route: "/about.html",
         navLabel: "About Us",
         published: true,
-        metaTitle: "About | AGU CLEANING SERVICES",
+        metaTitle: "About | AGU Clean Services",
         metaDescription: "Learn more about AGU Clean Services, our values and our local cleaning offer.",
         heroTitle: "About AGU Clean Services",
         heroLead: "Local, trusted and professional cleaning in Newcastle and beyond."
@@ -173,7 +173,7 @@ function createDefaultPageSettings() {
         route: "/services.html",
         navLabel: "Services",
         published: true,
-        metaTitle: "Services | AGU CLEANING SERVICES",
+        metaTitle: "Services | AGU Clean Services",
         metaDescription: "View domestic, deep, tenancy, Airbnb and commercial cleaning services from AGU Clean Services.",
         heroTitle: "Clear services for homes, rentals and small businesses.",
         heroLead: "The offer is structured to be easy to understand at a glance and strong enough for both private clients and property-related work."
@@ -185,7 +185,7 @@ function createDefaultPageSettings() {
         route: "/prices.html",
         navLabel: "Pricing",
         published: true,
-        metaTitle: "Pricing | AGU CLEANING SERVICES",
+        metaTitle: "Pricing | AGU Clean Services",
         metaDescription: "Starting prices and quote information for AGU Clean Services.",
         heroTitle: "Simple starting prices with flexible quoting.",
         heroLead: "Public rates build trust quickly. Final quotes still depend on property size, condition, frequency and scope of work."
@@ -197,22 +197,34 @@ function createDefaultPageSettings() {
         route: "/areas.html",
         navLabel: "Areas We Cover",
         published: true,
-        metaTitle: "Areas We Cover | AGU CLEANING SERVICES",
+        metaTitle: "Areas We Cover | AGU Clean Services",
         metaDescription: "Areas covered by AGU Clean Services for domestic, deep, tenancy and office cleaning.",
         heroTitle: "Cleaning services across Gateshead and nearby areas",
         heroLead: "AGU Clean Services supports homes, rental properties and small business spaces with dependable cleaning and flexible booking."
       },
       {
         id: "testimonials",
-        label: "Testimonials",
+        label: "Reviews",
         file: "reviews.html",
         route: "/reviews.html",
-        navLabel: "Testimonials",
+        navLabel: "Reviews",
         published: true,
-        metaTitle: "Testimonials | AGU CLEANING SERVICES",
+        metaTitle: "Reviews | AGU Clean Services",
         metaDescription: "Client feedback and testimonials for AGU Clean Services.",
         heroTitle: "What clients say about AGU Clean Services",
         heroLead: "Friendly, reliable service and strong results are the standards we want every booking to reflect."
+      },
+      {
+        id: "customer-reviews",
+        label: "Customer Reviews",
+        file: "customer-reviews.html",
+        route: "/customer-reviews.html",
+        navLabel: "Customer Reviews",
+        published: true,
+        metaTitle: "Customer Reviews | AGU Clean Services",
+        metaDescription: "Published customer reviews for AGU Clean Services.",
+        heroTitle: "Reviews shared by AGU Clean Services customers",
+        heroLead: "Published feedback from customers who have used our local cleaning services."
       },
       {
         id: "contact",
@@ -221,8 +233,8 @@ function createDefaultPageSettings() {
         route: "/contact.html",
         navLabel: "Contact Us",
         published: true,
-        metaTitle: "Contact | AGU CLEANING SERVICES",
-        metaDescription: "Contact AGU CLEANING SERVICES for a free quote by call, WhatsApp or contact form.",
+        metaTitle: "Contact | AGU Clean Services",
+        metaDescription: "Contact AGU Clean Services for a free quote by call, WhatsApp or contact form.",
         heroTitle: "Contact AGU Clean Services",
         heroLead: "Get a free quote by phone, WhatsApp or contact form. We aim to respond quickly and clearly."
       },
@@ -233,7 +245,7 @@ function createDefaultPageSettings() {
         route: "/privacy.html",
         navLabel: "Privacy Policy",
         published: true,
-        metaTitle: "Privacy Policy | AGU CLEANING SERVICES",
+        metaTitle: "Privacy Policy | AGU Clean Services",
         metaDescription: "Privacy policy for AGU Clean Services covering website enquiries and client data.",
         heroTitle: "Privacy Policy",
         heroLead: "This page explains how AGU Clean Services handles website enquiries and basic client data."
@@ -245,7 +257,7 @@ function createDefaultPageSettings() {
         route: "/terms.html",
         navLabel: "Terms & Conditions",
         published: true,
-        metaTitle: "Terms & Conditions | AGU CLEANING SERVICES",
+        metaTitle: "Terms & Conditions | AGU Clean Services",
         metaDescription: "Terms and conditions for AGU Clean Services bookings and cleaning work.",
         heroTitle: "Terms and Conditions",
         heroLead: "These terms outline the basic booking and service conditions for AGU Clean Services."
@@ -1069,6 +1081,7 @@ async function handleApi(request, response, pathname, url) {
       prices: "/prices.html",
       areas: "/areas.html",
       reviews: "/reviews.html",
+      customerReviews: "/customer-reviews.html",
       contact: "/contact.html",
       privacy: "/privacy.html",
       terms: "/terms.html",
@@ -1080,6 +1093,22 @@ async function handleApi(request, response, pathname, url) {
 
   if (pathname === "/api/services" && request.method === "GET") {
     sendJson(response, 200, readContent().services || []);
+    return true;
+  }
+
+  if (pathname === "/api/reviews" && request.method === "GET") {
+    const publicReviews = sortByNewest(readReviews())
+      .filter((review) => review.published)
+      .map((review) => ({
+        id: review.id,
+        name: String(review.name || "Customer").trim() || "Customer",
+        rating: Math.min(Math.max(Number(review.rating || 0), 1), 5) || 5,
+        message: String(review.message || "").trim(),
+        response: String(review.response || "").trim(),
+        createdAt: review.createdAt
+      }));
+
+    sendJson(response, 200, publicReviews);
     return true;
   }
 

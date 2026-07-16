@@ -42,7 +42,7 @@
   "pricing": [
     {
       "service": "Regular cleaning",
-      "price": "£25/hour"
+      "price": "£22/hour"
     },
     {
       "service": "Deep cleaning",
@@ -50,11 +50,11 @@
     },
     {
       "service": "End of tenancy",
-      "price": "£180-£400"
+      "price": "£140-£600"
     },
     {
       "service": "Office cleaning",
-      "price": "£25/hour"
+      "price": "£26/hour"
     },
     {
       "service": "Airbnb cleaning",

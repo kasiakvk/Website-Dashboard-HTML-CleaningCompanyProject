@@ -204,12 +204,12 @@ function createDefaultPageSettings() {
       },
       {
         id: "testimonials",
-        label: "Testimonials",
+        label: "Reviews",
         file: "reviews.html",
         route: "/reviews.html",
-        navLabel: "Testimonials",
+        navLabel: "Reviews",
         published: true,
-        metaTitle: "Testimonials | AGU Clean Services",
+        metaTitle: "Reviews | AGU Clean Services",
         metaDescription: "Client feedback and testimonials for AGU Clean Services.",
         heroTitle: "What clients say about AGU Clean Services",
         heroLead: "Friendly, reliable service and strong results are the standards we want every booking to reflect."
@@ -1069,6 +1069,7 @@ async function handleApi(request, response, pathname, url) {
       prices: "/prices.html",
       areas: "/areas.html",
       reviews: "/reviews.html",
+      customerReviews: "/customer-reviews.html",
       contact: "/contact.html",
       privacy: "/privacy.html",
       terms: "/terms.html",
@@ -1080,6 +1081,22 @@ async function handleApi(request, response, pathname, url) {
 
   if (pathname === "/api/services" && request.method === "GET") {
     sendJson(response, 200, readContent().services || []);
+    return true;
+  }
+
+  if (pathname === "/api/reviews" && request.method === "GET") {
+    const publicReviews = sortByNewest(readReviews())
+      .filter((review) => review.published)
+      .map((review) => ({
+        id: review.id,
+        name: String(review.name || "Customer").trim() || "Customer",
+        rating: Math.min(Math.max(Number(review.rating || 0), 1), 5) || 5,
+        message: String(review.message || "").trim(),
+        response: String(review.response || "").trim(),
+        createdAt: review.createdAt
+      }));
+
+    sendJson(response, 200, publicReviews);
     return true;
   }
 
